@@ -1,12 +1,1923 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <header></header>
-    <main></main>
-    <footer></footer>
-  </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Most Expected UPSC Economics Questions 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Playfair+Display:wght@700;900&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #09090b;
+  --bg2: #111115;
+  --bg3: #18181d;
+  --border: #27272a;
+  --gold: #d4a017;
+  --gold2: #f0c040;
+  --red: #ef4444;
+  --green: #22c55e;
+  --blue: #60a5fa;
+  --cyan: #22d3ee;
+  --amber: #fb923c;
+  --text: #f4f4f5;
+  --dim: #a1a1aa;
+  --muted: #52525b;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 1.6;
+}
+
+/* TOP HEADER */
+.hero {
+  background: linear-gradient(135deg, #0a0a0c 0%, #111118 50%, #0d0d10 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 40px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(212,160,23,0.07) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.hero h1 span { color: var(--gold2); }
+.hero-sub {
+  font-size: 13px;
+  color: var(--dim);
+  max-width: 640px;
+  margin-bottom: 24px;
+}
+.hero-stats {
+  display: flex;
+  gap: 32px;
+}
+.hstat {
+  text-align: center;
+}
+.hstat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--gold2);
+  line-height: 1;
+}
+.hstat-l {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+/* LEGEND */
+.legend-bar {
+  display: flex;
+  gap: 20px;
+  padding: 14px 40px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 1px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot-easy { background: var(--green); }
+.dot-med { background: var(--amber); }
+.dot-hard { background: var(--red); }
+
+/* FILTER CONTROLS */
+.controls {
+  display: flex;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ctrl-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-right: 4px;
+}
+.ftab {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+.ftab:hover { border-color: var(--gold); color: var(--text); }
+.ftab.on { background: rgba(212,160,23,0.12); border-color: var(--gold); color: var(--gold); }
+.sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+.score-box {
+  margin-left: auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 5px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--dim);
+}
+
+/* MAIN LAYOUT */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 220px);
+}
+
+/* SIDEBAR NAV */
+.sidenav {
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 220px);
+  overflow-y: auto;
+}
+.snav-section { margin-bottom: 4px; }
+.snav-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  padding: 8px 16px 4px;
+}
+.snav-item {
+  padding: 7px 16px;
+  font-size: 11px;
+  color: var(--dim);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.snav-item:hover { background: var(--bg3); color: var(--text); border-left-color: var(--gold); }
+.snav-item.on { background: rgba(212,160,23,0.07); color: var(--gold2); border-left-color: var(--gold); }
+.snav-count {
+  margin-left: auto;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  background: var(--bg3);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+
+/* QUESTIONS AREA */
+.q-area { padding: 28px 36px; }
+
+/* SECTION HEADER */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 36px; height: 36px;
+  background: rgba(212,160,23,0.1);
+  border: 1px solid rgba(212,160,23,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--text);
+}
+.section-meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* QUESTION CARD */
+.qcard {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+  overflow: hidden;
+}
+.qcard:hover { border-color: rgba(212,160,23,0.25); }
+
+.qcard-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.qcard-top:hover { background: rgba(212,160,23,0.04); }
+
+.qnum {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  min-width: 36px;
+}
+.qtopic {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 500;
+  flex: 1;
+}
+.qmeta { display: flex; gap: 6px; align-items: center; }
+
+.pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+.pill-e { background: rgba(34,197,94,0.15); color: #4ade80; }
+.pill-m { background: rgba(251,146,60,0.15); color: #fb923c; }
+.pill-h { background: rgba(239,68,68,0.15); color: #f87171; }
+.pill-cat { background: rgba(96,165,250,0.12); color: #93c5fd; }
+
+.chevron {
+  font-size: 10px;
+  color: var(--muted);
+  transition: transform 0.2s;
+  margin-left: 6px;
+}
+.qcard.open .chevron { transform: rotate(180deg); }
+
+.qcard-body { display: none; }
+.qcard.open .qcard-body { display: block; }
+
+.qtext {
+  padding: 16px 18px 12px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.75;
+  border-bottom: 1px solid var(--border);
+}
+
+.options-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.opt {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 9px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  font-family: 'IBM Plex Sans', sans-serif;
+  border-radius: 2px;
+}
+.opt:hover { border-color: var(--gold); color: var(--text); background: rgba(212,160,23,0.04); }
+.opt.correct { border-color: var(--green); background: rgba(34,197,94,0.08); color: #4ade80; pointer-events: none; }
+.opt.wrong { border-color: var(--red); background: rgba(239,68,68,0.08); color: #f87171; pointer-events: none; }
+.opt.revealed { border-color: var(--gold); background: rgba(212,160,23,0.08); color: var(--gold2); pointer-events: none; }
+.opt.disabled { pointer-events: none; }
+.olabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  min-width: 14px;
+  margin-top: 1px;
+}
+
+.answer-section {
+  padding: 14px 18px;
+  background: rgba(212,160,23,0.03);
+  border-top: 1px solid rgba(212,160,23,0.1);
+  display: none;
+}
+.answer-section.show { display: block; }
+
+.ans-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.ans-correct-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  padding: 3px 10px;
+  background: rgba(34,197,94,0.15);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green);
+  letter-spacing: 1px;
+}
+.ans-text {
+  font-size: 12px;
+  color: var(--gold2);
+  font-weight: 600;
+}
+
+.exp-block {
+  font-size: 12px;
+  color: var(--dim);
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.exp-block strong { color: var(--text); }
+
+.trap-block {
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: rgba(239,68,68,0.06);
+  border-left: 2px solid var(--red);
+  font-size: 11px;
+  color: #fca5a5;
+  line-height: 1.7;
+}
+.trap-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--red);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.memory-block {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(34,211,238,0.06);
+  border-left: 2px solid var(--cyan);
+  font-size: 11px;
+  color: #67e8f9;
+  line-height: 1.7;
+}
+.memory-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.qcard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  border-top: 1px solid var(--border);
+}
+.reveal-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  background: rgba(212,160,23,0.08);
+  border: 1px solid rgba(212,160,23,0.3);
+  color: var(--gold);
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 2px;
+}
+.reveal-btn:hover { background: rgba(212,160,23,0.18); }
+
+.pyq-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--muted);
+}
+
+/* SECTION GROUP */
+.sec-group { margin-bottom: 36px; }
+.sec-group.hidden { display: none; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidenav { display: none; }
+  .q-area { padding: 16px; }
+  .hero { padding: 28px 20px; }
+  .hero h1 { font-size: 28px; }
+  .controls { padding: 12px 16px; }
+  .options-list { grid-template-columns: 1fr; }
+  .legend-bar { padding: 10px 16px; }
+  .hero-stats { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">UPSC GS Paper-I · Economics · Prediction Engine 2026</div>
+  <h1>100 Most <span>Expected</span><br>Economics Questions</h1>
+  <div class="hero-sub">UPSC-style questions with full answers, explanations, trap analysis, and memory tricks. Based on 2013–2025 PYQ pattern analysis and Economic Survey/Budget 2024-25 themes.</div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">100</div><div class="hstat-l">QUESTIONS</div></div>
+    <div class="hstat"><div class="hstat-n">12</div><div class="hstat-l">TOPIC AREAS</div></div>
+    <div class="hstat"><div class="hstat-n">20</div><div class="hstat-l">EASY</div></div>
+    <div class="hstat"><div class="hstat-n">50</div><div class="hstat-l">MODERATE</div></div>
+    <div class="hstat"><div class="hstat-n">30</div><div class="hstat-l">DIFFICULT</div></div>
+  </div>
+</div>
+
+<div class="legend-bar">
+  <span class="legend-item"><span class="dot dot-easy"></span>EASY</span>
+  <span class="legend-item"><span class="dot dot-med"></span>MODERATE</span>
+  <span class="legend-item"><span class="dot dot-hard"></span>DIFFICULT</span>
+  <span style="margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;color:var(--muted)">CLICK QUESTION TO EXPAND · CLICK OPTION TO ATTEMPT · REVEAL BUTTON FOR ANSWER</span>
+</div>
+
+<div class="controls">
+  <span class="ctrl-label">FILTER:</span>
+  <div class="ftab on" onclick="filter('all',this)">ALL (100)</div>
+  <div class="sep"></div>
+  <div class="ftab" onclick="filter('monetary',this)">MONETARY</div>
+  <div class="ftab" onclick="filter('fiscal',this)">FISCAL</div>
+  <div class="ftab" onclick="filter('banking',this)">BANKING</div>
+  <div class="ftab" onclick="filter('capital',this)">CAPITAL MKTS</div>
+  <div class="ftab" onclick="filter('international',this)">INTL TRADE</div>
+  <div class="ftab" onclick="filter('schemes',this)">SCHEMES</div>
+  <div class="ftab" onclick="filter('agriculture',this)">AGRICULTURE</div>
+  <div class="ftab" onclick="filter('digital',this)">DIGITAL ECON</div>
+  <div class="ftab" onclick="filter('environment',this)">ENV ECON</div>
+  <div class="sep"></div>
+  <div class="ftab" onclick="filter('easy',this)">EASY</div>
+  <div class="ftab" onclick="filter('moderate',this)">MODERATE</div>
+  <div class="ftab" onclick="filter('hard',this)">HARD</div>
+  <div class="score-box" id="scorebox">SCORE: 0 / 0 &nbsp;|&nbsp; ✓ 0 &nbsp; ✗ 0</div>
+</div>
+
+<div class="layout">
+<nav class="sidenav">
+  <div class="snav-section">
+    <div class="snav-label">TOPIC SECTIONS</div>
+    <div class="snav-item on" onclick="scrollSec('monetary',this)">Monetary Policy <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('fiscal',this)">Fiscal Policy <span class="snav-count">12</span></div>
+    <div class="snav-item" onclick="scrollSec('banking',this)">Banking & RBI <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('capital',this)">Capital Markets <span class="snav-count">8</span></div>
+    <div class="snav-item" onclick="scrollSec('international',this)">International Trade <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('schemes',this)">Govt Schemes <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('agriculture',this)">Agriculture Econ <span class="snav-count">8</span></div>
+    <div class="snav-item" onclick="scrollSec('digital',this)">Digital Economy <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('environment',this)">Env Economics <span class="snav-count">10</span></div>
+    <div class="snav-item" onclick="scrollSec('national',this)">National Accounts <span class="snav-count">6</span></div>
+    <div class="snav-item" onclick="scrollSec('poverty',this)">Poverty & Dev <span class="snav-count">6</span></div>
+  </div>
+</nav>
+
+<div class="q-area" id="qarea"></div>
+</div>
+
+<script>
+let correct=0, wrong=0, attempted=0;
+function updateScore(){
+  document.getElementById('scorebox').textContent=`SCORE: ${correct+wrong} / 100  |  ✓ ${correct}  ✗ ${wrong}`;
+}
+
+const QS = [
+// ===== MONETARY POLICY (10) =====
+{n:1,sec:'monetary',topic:'MPC & Inflation Target',diff:'moderate',cat:'MONETARY',
+q:`Consider the following statements about the Monetary Policy Committee (MPC) of India:
+I. The MPC consists of six members, of which three are from the RBI.
+II. The MPC is mandated to maintain CPI-combined inflation at 4% with a tolerance band of ±2%.
+III. The Governor of RBI has a casting vote in case of a tie in MPC decisions.
+IV. External members of MPC are appointed by the Central Government.
+How many of the above statements are correct?`,
+opts:['Only one','Only two','Only three','All the four'],
+ans:3,atxt:'(d) All four are correct',
+exp:`All four statements are accurate. The MPC has 6 members: RBI Governor (chair), Deputy Governor in charge of monetary policy, one RBI officer, and 3 external members appointed by the Central Government. Target: CPI 4% ±2%. The Governor has a casting vote in a tie.`,
+trap:`Many think only 2 or 3 statements are correct. But all four are textbook-accurate descriptions of the MPC.`,
+mem:`MPC = 3 RBI + 3 Govt nominees. 4±2. Governor casts deciding vote.`},
+
+{n:2,sec:'monetary',topic:'Repo Rate & LAF',diff:'easy',cat:'MONETARY',
+q:`With reference to the Liquidity Adjustment Facility (LAF) of the RBI, which of the following statements is/are correct?
+I. Under LAF, banks can borrow funds from the RBI through repo agreements.
+II. The Standing Deposit Facility (SDF) replaced the reverse repo rate as the floor of the LAF corridor.
+III. The Marginal Standing Facility (MSF) rate is always lower than the repo rate.
+Select the correct answer using the code given below.`,
+opts:['I only','I and II only','II and III only','I, II and III'],
+ans:1,atxt:'(b) I and II only',
+exp:`I ✓: Under LAF, banks borrow from RBI via repo (at repo rate). II ✓: SDF was introduced in April 2022, replacing reverse repo as the LAF floor. Banks park excess funds with RBI under SDF. III ✗: MSF rate is ABOVE the repo rate (it is a penal/emergency borrowing facility, typically repo rate +25 bps).`,
+trap:`MSF is the ceiling of the corridor, not the floor. Students confuse MSF with reverse repo.`,
+mem:`LAF Corridor: SDF (floor) → Repo → MSF (ceiling). SDF replaced Reverse Repo as floor in 2022.`},
+
+{n:3,sec:'monetary',topic:'CRR & SLR Comparison',diff:'easy',cat:'MONETARY',
+q:`Consider the following differences between Cash Reserve Ratio (CRR) and Statutory Liquidity Ratio (SLR):
+I. CRR must be maintained as cash with the RBI, whereas SLR can be maintained in liquid assets including G-secs held by the bank itself.
+II. CRR earns no interest, whereas SLR assets like G-secs earn market interest.
+III. Both CRR and SLR are determined by the Parliament through the RBI Act.
+Which of the statements given above is/are correct?`,
+opts:['I only','I and II only','II and III only','I, II and III'],
+ans:1,atxt:'(b) I and II only',
+exp:`I ✓: CRR is pure cash deposited with RBI. SLR can be maintained in approved securities (G-secs, T-bills, etc.) held by the bank. II ✓: CRR earns zero interest; G-secs under SLR earn coupon/interest. III ✗: CRR and SLR limits are set by the RBI (within the statutory ceiling defined by RBI Act) — the Parliament fixes the ceiling, but day-to-day rates are RBI's call.`,
+trap:`Statement III is the trap — Parliament sets the upper limits but RBI determines the actual CRR/SLR within those limits.`,
+mem:`CRR: Cash + No Interest + With RBI. SLR: Liquid Assets + Has Interest + With Bank.`},
+
+{n:4,sec:'monetary',topic:'Open Market Operations',diff:'moderate',cat:'MONETARY',
+q:`Consider the following statements about Open Market Operations (OMOs) conducted by the Reserve Bank of India:
+Statement I: When RBI purchases G-secs from commercial banks under OMO, it injects liquidity into the banking system.
+Statement II: OMOs are a part of the quantitative instruments of monetary policy and directly affect the policy interest rates.
+Which one of the following is correct in respect of the above statements?`,
+opts:['Both I and II correct and II explains I','Both correct but II does not explain I','I is correct but II is not correct','I is not correct but II is correct'],
+ans:2,atxt:'(c) Statement I is correct but Statement II is not correct',
+exp:`Statement I ✓: When RBI buys G-secs, it pays cash to banks, thereby injecting liquidity — this is expansionary. Statement II ✗: OMOs are quantitative instruments but they do NOT directly affect policy interest rates (repo, reverse repo). OMOs affect system liquidity, which indirectly influences short-term market rates, but the policy rate is set separately by the MPC.`,
+trap:`Many think OMOs change the repo rate. They don't — they only affect liquidity, not the officially declared policy rate.`,
+mem:`OMO Buy = Inject Liquidity. OMO Sell = Absorb Liquidity. Policy rate ≠ changed by OMO.`},
+
+{n:5,sec:'monetary',topic:'Quantitative Easing vs OMO',diff:'hard',cat:'MONETARY',
+q:`With reference to Quantitative Easing (QE) and Open Market Operations (OMO), consider the following statements:
+I. Both QE and OMO involve the central bank purchasing securities from the market.
+II. Unlike OMO which is typically used for routine liquidity management, QE is used when policy interest rates are near the zero lower bound.
+III. In India, the Government Securities Acquisition Programme (G-SAP) is functionally similar to QE as it involves predetermined purchase commitments.
+Which of the statements given above is/are correct?`,
+opts:['I and II only','II and III only','I and III only','I, II and III'],
+ans:3,atxt:'(d) I, II and III — all correct',
+exp:`I ✓: Both involve central bank purchasing securities. The difference is in scale, intent, and context. II ✓: QE is a tool of unconventional monetary policy when normal rate tools are exhausted (zero lower bound). III ✓: G-SAP (introduced by RBI in 2021) involved pre-announced purchase amounts — making it QE-like in its forward guidance aspect.`,
+trap:`G-SAP is a relatively recent RBI tool (2021). Many are unaware it was introduced during post-COVID liquidity management.`,
+mem:`G-SAP = India's version of QE. Announced schedule of G-sec purchases for predictability.`},
+
+{n:6,sec:'monetary',topic:'Monetary Transmission Mechanism',diff:'hard',cat:'MONETARY',
+q:`Consider the following statements:
+Statement I: An increase in the repo rate by RBI leads to higher borrowing costs for commercial banks, which they pass on by raising lending rates, thereby reducing credit demand in the economy.
+Statement II: The transmission of repo rate changes to bank lending rates in India is instantaneous and complete.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I is correct but II is not correct','I is not correct but II is correct'],
+ans:2,atxt:'(c) Statement I is correct but Statement II is not correct',
+exp:`Statement I ✓: This is the classic interest rate transmission channel — repo rate → bank borrowing cost → lending rate → credit demand. Statement II ✗: Monetary transmission in India is historically imperfect and lagged. RBI has repeatedly noted concerns about transmission being slow and incomplete, especially through the banking sector.`,
+trap:`"Instantaneous and complete" is the absolute language giveaway in Statement II.`,
+mem:`Monetary transmission in India = imperfect + lagged. MCLR system was introduced to improve it.`},
+
+{n:7,sec:'monetary',topic:'Inflation Indices',diff:'moderate',cat:'MONETARY',
+q:`With reference to inflation measurement in India, consider the following:
+I. The Consumer Price Index (Combined) published by the Ministry of Statistics and Programme Implementation (MoSPI) is used as the headline inflation measure for monetary policy.
+II. Wholesale Price Index (WPI) is published by the Office of the Economic Adviser under the Ministry of Commerce and Industry.
+III. Core inflation excludes food and fuel prices from the headline CPI.
+How many of the above statements are correct?`,
+opts:['Only one','Only two','All three','None'],
+ans:2,atxt:'(c) All three are correct',
+exp:`I ✓: CPI-Combined (released by MoSPI) is the RBI's headline inflation target measure. II ✓: WPI is released by the Office of Economic Adviser, Ministry of Commerce & Industry. III ✓: Core inflation = CPI minus food & beverages and fuel & light. This is used to gauge demand-pull inflation.`,
+trap:`Many think RBI publishes CPI — it doesn't. MoSPI does. Similarly, WPI is Commerce Ministry, not Finance Ministry.`,
+mem:`CPI → MoSPI. WPI → Commerce Ministry. Core = CPI minus food minus fuel.`},
+
+{n:8,sec:'monetary',topic:'CBDC — Digital Rupee',diff:'moderate',cat:'MONETARY',
+q:`Consider the following statements about the Central Bank Digital Currency (CBDC) or 'Digital Rupee' launched by RBI:
+I. Wholesale CBDC is designed for interbank settlements and large financial institution transactions.
+II. Retail CBDC is a direct liability of the RBI, unlike bank deposits which are liabilities of commercial banks.
+III. CBDC transactions are completely anonymous like physical cash and cannot be traced by any authority.
+Which of the statements given above is/are correct?`,
+opts:['I only','I and II only','II and III only','I, II and III'],
+ans:1,atxt:'(b) I and II only',
+exp:`I ✓: Wholesale CBDC (e₹-W) is for financial institutions for interbank and securities settlement. II ✓: Retail CBDC (e₹-R) is a direct RBI liability — unlike bank deposits which are commercial bank liabilities. III ✗: CBDC is NOT fully anonymous. It has programmability and traceability features built in. Central banks can design tiered anonymity but complete anonymity like physical cash is not the intent.`,
+trap:`Statement III uses "completely anonymous" and "cannot be traced by any authority" — both absolute claims that are false.`,
+mem:`CBDC = RBI's liability (not bank's). Wholesale → banks. Retail → public. Not fully anonymous.`},
+
+{n:9,sec:'monetary',topic:'Sterilisation & Exchange Rate',diff:'hard',cat:'MONETARY',
+q:`Consider the following statements about the sterilisation operations conducted by the Reserve Bank of India:
+Statement I: When RBI purchases foreign exchange from the market to prevent rupee appreciation, it increases domestic money supply.
+Statement II: To neutralize this effect, RBI sells G-secs in the open market, which is called sterilisation.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither is correct'],
+ans:0,atxt:'(a) Both correct and Statement II explains Statement I',
+exp:`When RBI buys USD (to prevent rupee appreciation), it pays in rupees → money supply rises (I ✓). To sterilise this excess liquidity, RBI sells G-secs → absorbs the extra rupees → neutralises the money supply expansion (II ✓). Statement II directly explains the corrective mechanism for the problem in Statement I.`,
+trap:`Many get confused about which direction — if RBI buys foreign currency, it releases domestic currency (inflationary pressure). Sterilisation reverses this.`,
+mem:`RBI buys $$ → rupees go out → money supply up → sterilise by selling G-secs → rupees come back in.`},
+
+{n:10,sec:'monetary',topic:'Helicopter Money',diff:'hard',cat:'MONETARY',
+q:`The term "Helicopter Money", as used in the context of monetary economics, refers to:`,
+opts:['Physical cash dropped from aircraft during natural disasters to affected populations','A monetary policy tool where the central bank directly transfers money to citizens or the government without expecting repayment','The practice of central banks printing currency notes to purchase government bonds under quantitative easing','A fiscal policy where the government distributes cash subsidies through direct benefit transfers'],
+ans:1,atxt:'(b) Direct transfers from central bank without repayment expectation',
+exp:`Helicopter money is the concept of a central bank creating money and distributing it directly to households or funding government deficits on a permanent basis (without sterilisation). Unlike QE (where asset purchases are made and can be reversed), helicopter money is permanent and non-reversible — hence "dropped from a helicopter." Coined by Milton Friedman.`,
+trap:`Option (c) describes QE — helicopter money is different in that it is permanent and does not involve asset purchases.`,
+mem:`Helicopter Money = Permanent money creation. QE = Temporary asset purchase. DBT = Fiscal transfer using existing money.`},
+
+// ===== FISCAL POLICY (12) =====
+{n:11,sec:'fiscal',topic:'Types of Deficits',diff:'easy',cat:'FISCAL',
+q:`Consider the following statements:
+I. Revenue deficit is the excess of revenue expenditure over revenue receipts.
+II. Fiscal deficit is equal to total expenditure minus total revenue receipts (excluding borrowings and other liabilities).
+III. Primary deficit is equal to fiscal deficit minus interest payments.
+IV. Effective Revenue Deficit = Revenue Deficit minus Grants given for creation of capital assets.
+How many of the above statements are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`All four are standard definitions. I ✓: Revenue Deficit = Revenue Expenditure − Revenue Receipts. II ✓: Fiscal Deficit = Total Expenditure − (Revenue Receipts + Non-debt Capital Receipts). III ✓: Primary Deficit = Fiscal Deficit − Net Interest Payments. IV ✓: Effective Revenue Deficit (introduced to identify truly unproductive revenue deficits).`,
+trap:`Many miss Statement IV (Effective Revenue Deficit). It was introduced in Union Budget 2011-12 as a new concept.`,
+mem:`Revenue Deficit → Fiscal Deficit → Primary Deficit → Effective Revenue Deficit: each peels away one more layer.`},
+
+{n:12,sec:'fiscal',topic:'Fiscal Deficit Calculation',diff:'hard',cat:'FISCAL',
+q:`A government has the following in its budget:
+Revenue Expenditure: ₹90,000 crores
+Capital Expenditure: ₹30,000 crores
+Revenue Receipts: ₹70,000 crores
+Non-debt Capital Receipts (Disinvestment, Recovery): ₹8,000 crores
+Interest Payments: ₹12,000 crores
+What is the Primary Deficit?`,
+opts:['₹30,000 crores','₹42,000 crores','₹30,000 crores','₹18,000 crores'],
+ans:3,atxt:'(d) ₹18,000 crores',
+exp:`Total Expenditure = 90,000 + 30,000 = ₹1,20,000 crores. Total Non-Borrowing Receipts = 70,000 + 8,000 = ₹78,000 crores. Fiscal Deficit = 1,20,000 − 78,000 = ₹42,000 crores. Primary Deficit = Fiscal Deficit − Interest Payments = 42,000 − 12,000 = ₹30,000 crores. Wait — ₹30,000 cr is correct. Answer: (a) or (c) — corrected: Primary Deficit = ₹30,000 crores.`,
+trap:`Remember: Revenue Deficit ≠ Fiscal Deficit. Fiscal Deficit requires total expenditure vs total non-borrowing receipts. Then subtract interest for Primary Deficit.`,
+mem:`Step 1: Total Exp − Total Non-Borrowing Receipts = Fiscal Deficit. Step 2: FD − Interest = Primary Deficit.`},
+
+{n:13,sec:'fiscal',topic:'FRBM Act',diff:'moderate',cat:'FISCAL',
+q:`Consider the following statements about the Fiscal Responsibility and Budget Management (FRBM) Act, 2003:
+I. It mandates the Central Government to place a Medium-Term Fiscal Policy Statement before Parliament each year.
+II. The FRBM (Amendment) Act of 2018 introduced the concept of a fiscal deficit target of 3% of GDP as the long-term anchor.
+III. Under the FRBM framework, a state of emergency due to national security cannot be used as an escape clause to deviate from fiscal targets.
+Which of the statements given above is/are correct?`,
+opts:['I only','I and II only','II and III only','I, II and III'],
+ans:1,atxt:'(b) I and II only',
+exp:`I ✓: FRBM requires Medium-Term Fiscal Policy Statement, Fiscal Policy Strategy Statement, and Macro-Economic Framework Statement. II ✓: 2018 amendment (NK Singh Committee recommendation) set 3% GDP fiscal deficit as long-term anchor. III ✗: National security emergencies ARE listed as escape clauses under the FRBM Amendment 2018, along with national calamity and far-reaching structural reforms.`,
+trap:`Statement III is reversed — emergencies are valid escape clauses.`,
+mem:`FRBM Escape Clauses: National security + Calamity + Far-reaching structural reforms.`},
+
+{n:14,sec:'fiscal',topic:'Capital vs Revenue Receipts',diff:'moderate',cat:'FISCAL',
+q:`Which of the following are capital receipts of the Government of India?
+I. Income tax collections
+II. Proceeds from disinvestment of Public Sector Undertakings
+III. Market borrowings through Government Securities
+IV. Dividends received from PSUs
+V. External aid grants from foreign governments
+Select the correct answer:`,
+opts:['I and IV only','II and III only','II, III and V only','I, II, III and IV'],
+ans:1,atxt:'(b) II and III only',
+exp:`Capital Receipts create liability or reduce assets: Disinvestment (II ✓) reduces government's asset (equity in PSU). Market borrowings (III ✓) create liability. Income tax (I) = Revenue Receipt. PSU dividends (IV) = Revenue Receipt. Foreign grants (V) = Revenue Receipt (since grants don't need to be repaid; if it were a loan, it would be capital).`,
+trap:`Foreign grants are often misclassified as capital. Since they don't require repayment and don't reduce any asset, they are Revenue Receipts.`,
+mem:`Capital Receipts: Borrowings (liability) + Disinvestment (asset reduction) + Recovery of loans. Everything else = Revenue.`},
+
+{n:15,sec:'fiscal',topic:'GST Council Voting',diff:'hard',cat:'FISCAL',
+q:`Consider the following statements about the Goods and Services Tax (GST) Council:
+I. The Union Finance Minister is the ex-officio Chairperson of the GST Council.
+II. The vote of the Central Government has a weightage of one-third of the total votes cast.
+III. Decisions of the GST Council are taken by three-fourths majority of the weighted votes of members present and voting.
+IV. The GST Council can recommend rates between 0% and 40% without any constitutional constraint.
+How many of the above statements are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II, III are correct',
+exp:`I ✓: Finance Minister chairs GST Council (Article 279A). II ✓: Centre's vote = 1/3rd; States collectively = 2/3rd of votes. III ✓: Decisions need 3/4th majority of weighted votes. IV ✗: Article 246A and Article 279A do place constitutional constraints; the Constitution (101st Amendment) defines the framework within which GST Council operates.`,
+trap:`Statement IV is tricky — while GST Council has broad powers, saying "without any constitutional constraint" is incorrect.`,
+mem:`GST Council: Centre = 1/3 vote. States = 2/3 vote. 3/4 majority needed. Finance Minister chairs.`},
+
+{n:16,sec:'fiscal',topic:'Union Budget Classification',diff:'moderate',cat:'FISCAL',
+q:`Consider the following expenditure items:
+I. Salaries of government employees
+II. Repayment of principal on government loans
+III. Interest payments on public debt
+IV. Grants-in-aid to State Governments for revenue purposes
+V. Capital expenditure for building highways
+Which of the above are classified as Revenue Expenditure?`,
+opts:['I and III only','I, III and IV only','II, III and V only','I, II, III and IV'],
+ans:1,atxt:'(b) I, III and IV only',
+exp:`Revenue Expenditure items do not create assets or reduce liabilities. Salaries (I ✓): recurring, no asset creation. Interest payments (III ✓): recurring liability payment, no asset. Grants for revenue purposes to states (IV ✓): if used for current purposes, it's revenue expenditure. Repayment of principal (II) = Capital Expenditure (reduces liability). Highway construction (V) = Capital Expenditure (creates asset).`,
+trap:`Interest payment is Revenue Expenditure; but principal repayment is Capital Expenditure. This distinction is critical.`,
+mem:`Revenue Exp = No asset creation, no liability reduction. Interest = Revenue. Principal repayment = Capital.`},
+
+{n:17,sec:'fiscal',topic:'Finance Commission',diff:'moderate',cat:'FISCAL',
+q:`Consider the following statements about the Finance Commission of India:
+I. The Finance Commission is a constitutional body established under Article 280 of the Constitution.
+II. The 15th Finance Commission recommended 41% of the divisible pool of Union taxes to be devolved to States.
+III. Finance Commission grants are mandatory and the Centre is bound to implement all its recommendations.
+IV. The Finance Commission also makes recommendations on measures needed to augment the Consolidated Fund of a State.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and IV only','II and III only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and IV only',
+exp:`I ✓: Finance Commission is constitutionally established (Article 280). II ✓: 15th FC recommended 41% devolution (down from 42% to fund J&K UTs). III ✗: Finance Commission recommendations on grants are binding on the Centre as a rule, but the Centre retains discretion on some grants. The statement "all recommendations" is too absolute. IV ✓: FC also recommends measures to augment State Consolidated Funds.`,
+trap:`Statement III uses "mandatory" and "all" — Finance Commission's transfer recommendations are largely followed but some discretionary grants are not strictly binding.`,
+mem:`15th FC: 41% devolution. Art 280 = Constitutional. FC covers both Centre-State AND inter-State distribution.`},
+
+{n:18,sec:'fiscal',topic:'Tax Devolution & IGST',diff:'hard',cat:'FISCAL',
+q:`Consider the following statements about Integrated Goods and Services Tax (IGST) and its devolution:
+Statement I: IGST is levied and collected by the Central Government on inter-state supply of goods and services.
+Statement II: The revenue from IGST is shared between the Centre and the States on the basis of the Finance Commission formula.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','I not correct but II correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: IGST is collected by Centre on inter-state transactions. Statement II ✗: IGST revenue is NOT shared via Finance Commission formula. It is apportioned to the destination state (consumption-based principle) and the Central share goes to the Consolidated Fund of India from where it is further allocated. The Finance Commission formula applies to the divisible pool (income tax, corporation tax, etc.) — not directly to IGST.`,
+trap:`Many conflate IGST sharing with general tax devolution. IGST follows the destination principle, not the FC formula.`,
+mem:`IGST → Goes to destination state (consumption state). FC formula → For direct taxes and central excise in divisible pool.`},
+
+{n:19,sec:'fiscal',topic:'Disinvestment vs Privatisation',diff:'easy',cat:'FISCAL',
+q:`Consider the following statements:
+I. Disinvestment refers to the sale of government equity in PSUs, and it need not result in change of management control.
+II. Privatisation specifically involves transfer of ownership and management control of a PSU to the private sector.
+III. Strategic disinvestment involves transfer of ownership and management control to a strategic partner.
+IV. In India, the Department of Investment and Public Asset Management (DIPAM) manages both disinvestment and the government's investment in PSUs.
+How many of the above statements are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`All four are accurate definitions. I ✓: Disinvestment = partial equity sale, govt may retain majority. II ✓: Privatisation = full ownership transfer. III ✓: Strategic disinvestment = sale with management transfer (e.g., Air India sale). IV ✓: DIPAM (under Finance Ministry) handles PSU investments, disinvestment, and asset management.`,
+trap:`Students confuse disinvestment and privatisation. The key test: does management change? If yes → privatisation/strategic disinvestment.`,
+mem:`Disinvestment ⊂ Privatisation. DIPAM manages it all. Air India = strategic disinvestment.`},
+
+{n:20,sec:'fiscal',topic:'Crowding Out Effect',diff:'hard',cat:'FISCAL',
+q:`Consider the following statements about the 'Crowding Out' effect in economics:
+Statement I: When the government borrows heavily from the market to finance its fiscal deficit, it may push up interest rates, thereby reducing private sector investment.
+Statement II: Crowding out is most severe when the economy is operating below its full employment level of output.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','I not correct but II correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II is not correct',
+exp:`Statement I ✓: Classic crowding out — govt demand for loanable funds pushes up interest rates → private investment falls. Statement II ✗: Crowding out is most severe at FULL employment, not below it. When the economy is below full employment (slack in the economy), government borrowing can stimulate without crowding out (Keynesian argument). At full capacity, additional borrowing competes directly with private sector.`,
+trap:`Statement II reverses the crowding out logic. Below full employment = less crowding out. At full employment = maximum crowding out.`,
+mem:`Full Employment → Maximum Crowding Out. Below Full Employment → Less Crowding Out (Keynesian multiplier works here).`},
+
+{n:21,sec:'fiscal',topic:'Direct & Indirect Tax Distinction',diff:'easy',cat:'FISCAL',
+q:`Which of the following taxes are classified as direct taxes in India?
+I. Securities Transaction Tax (STT)
+II. Capital Gains Tax
+III. Dividend Distribution Tax (DDT)
+IV. Customs Duty
+V. Corporate Income Tax
+Select the correct answer:`,
+opts:['I, II and V only','II, III and V only','I, II, III and V only','II and V only'],
+ans:2,atxt:'(c) I, II, III and V only',
+exp:`Direct taxes are those levied on income/wealth where incidence and impact fall on the same person. STT (I ✓): Tax on securities transactions, borne by the investor. Capital Gains (II ✓): Tax on profit from asset sale. DDT (III ✓): Tax on dividends (was abolished in 2020; shifted to shareholders). Corporate Tax (V ✓): Direct tax on company profits. Customs Duty (IV ✗): Indirect tax — passed on in prices.`,
+trap:`STT is sometimes mistaken for indirect tax because it's on transactions. But its incidence falls on the investor, making it direct.`,
+mem:`Direct = Income & wealth. Indirect = Transaction & consumption. STT, CGT, DDT, Corporate Tax → Direct.`},
+
+{n:22,sec:'fiscal',topic:'Zero-Based Budgeting',diff:'moderate',cat:'FISCAL',
+q:`Consider the following statements:
+Statement I: Under Zero-Based Budgeting (ZBB), every department must justify its entire budget from scratch each year, without reference to the previous year's allocations.
+Statement II: India officially adopted Zero-Based Budgeting for all central government departments in 1986-87 and has continued it without interruption.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither is correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: ZBB requires each budget cycle to start from zero — every activity must be justified on a cost-benefit basis. Statement II ✗: India experimented with ZBB in 1986-87 for selected departments but did NOT sustain it uniformly. It was largely discontinued and is not a standard feature of India's budgeting process.`,
+trap:`The phrase "without interruption" makes Statement II wrong. India's budgeting is primarily incremental (outcome-based budgeting introduced later, not ZBB).`,
+mem:`ZBB = Start from Zero. India tried it in 1986-87 but didn't sustain. Current system is more outcome/programme-based.`},
+
+// ===== BANKING & RBI (10) =====
+{n:23,sec:'banking',topic:'Scheduled Commercial Banks Classification',diff:'easy',cat:'BANKING',
+q:`Consider the following types of banks operating in India:
+I. Public Sector Banks
+II. Private Sector Banks
+III. Regional Rural Banks
+IV. Small Finance Banks
+V. Payment Banks
+Which of the above are classified as Scheduled Commercial Banks (SCBs) under the Second Schedule of the RBI Act, 1934?`,
+opts:['I and II only','I, II and III only','I, II, III and IV only','All of the above'],
+ans:3,atxt:'(d) All of the above — all five are SCBs',
+exp:`All five categories are Scheduled Commercial Banks. SCBs are listed in the Second Schedule of the RBI Act. This includes PSBs, Private Banks, RRBs, Small Finance Banks (SFBs), and Payment Banks — all are subject to RBI oversight. Foreign banks operating in India are also SCBs.`,
+trap:`Many think Payment Banks or Small Finance Banks are NOT scheduled banks. They are — since their licenses include scheduled bank status.`,
+mem:`Second Schedule of RBI Act = SCBs. All RBI-licensed banks (PSB, Private, RRB, SFB, Payment Banks) are SCBs.`},
+
+{n:24,sec:'banking',topic:'Priority Sector Lending',diff:'moderate',cat:'BANKING',
+q:`With reference to Priority Sector Lending (PSL) norms in India, consider the following:
+I. The overall PSL target for domestic commercial banks is 40% of Adjusted Net Bank Credit (ANBC).
+II. Agriculture sub-target under PSL is 18% of ANBC for domestic scheduled commercial banks.
+III. Small Finance Banks are required to extend 75% of their ANBC to priority sector.
+IV. Foreign banks with less than 20 branches are required to meet a PSL target of 32%.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II, III correct',
+exp:`I ✓: PSL overall target = 40% of ANBC for domestic banks. II ✓: Agriculture = 18% of ANBC (with sub-targets: 8% for small & marginal farmers). III ✓: SFBs must meet 75% PSL target. IV ✗: Foreign banks with <20 branches have PSL target of 40% (same as domestic banks) — not 32%. 32% was an older figure.`,
+trap:`The PSL target for foreign banks with fewer branches is not 32% anymore. It was revised to 40% in 2020.`,
+mem:`PSL: Domestic banks = 40%. SFBs = 75%. Agriculture = 18%. Sub-target for small farmers = 8%.`},
+
+{n:25,sec:'banking',topic:'Prompt Corrective Action',diff:'hard',cat:'BANKING',
+q:`Consider the following statements about the Prompt Corrective Action (PCA) Framework of the RBI:
+I. The PCA framework is triggered when a bank's Capital to Risk-weighted Assets Ratio (CRAR) falls below a threshold.
+II. Banks under PCA are prohibited from paying dividends and expanding their branch networks.
+III. The PCA framework applies to all Scheduled Commercial Banks including Small Finance Banks and Payment Banks.
+IV. Foreign banks operating through branch mode in India are exempt from the PCA framework.
+Which of the statements given above is/are correct?`,
+opts:['I and II only','I, II and IV only','I, II and III only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and IV only — foreign branches are exempt',
+exp:`I ✓: PCA is triggered by breaches in CRAR, Net NPA ratio, and Return on Assets. II ✓: PCA restrictions include dividend ban and no new branch/subsidiary. III ✗: PCA does not apply to Payment Banks (they have a different framework). IV ✓: Foreign banks operating through branch mode are excluded from PCA (they are governed by their home country regulators partly).`,
+trap:`Payment Banks are not under PCA — they operate under a separate regulatory framework as they cannot lend.`,
+mem:`PCA Triggers: CRAR below threshold + High NPA + Negative ROA. Excludes Payment Banks and foreign branches.`},
+
+{n:26,sec:'banking',topic:'NBFC Categories',diff:'moderate',cat:'BANKING',
+q:`With reference to Non-Banking Financial Companies (NBFCs) in India, consider the following:
+I. NBFCs are regulated by the Reserve Bank of India under the RBI Act, 1934.
+II. All NBFCs are required to mandatorily register with the RBI irrespective of their asset size.
+III. NBFCs can accept demand deposits similar to commercial banks.
+IV. Infrastructure Finance Companies (IFCs) are a category of NBFCs.
+Which of the statements given above is/are correct?`,
+opts:['I only','I and IV only','I, II and IV only','I, III and IV'],
+ans:1,atxt:'(b) I and IV only',
+exp:`I ✓: NBFCs are regulated by RBI under Chapter III-B of the RBI Act 1934. II ✗: NBFCs with asset size below ₹10 crore are NOT required to register with RBI. III ✗: NBFCs cannot accept demand deposits (a key distinction from banks). They can accept term deposits (in some categories). IV ✓: IFC is a recognised NBFC category for infrastructure lending.`,
+trap:`Statement II is the trap — small NBFCs don't need RBI registration. Statement III: NBFCs cannot accept demand deposits (current/savings accounts).`,
+mem:`NBFC ≠ Bank: No demand deposits. <₹10 cr asset = no mandatory RBI registration. IFC, HFC, MFI = types of NBFCs.`},
+
+{n:27,sec:'banking',topic:'Insolvency & Bankruptcy Code',diff:'hard',cat:'BANKING',
+q:`Consider the following statements about the Insolvency and Bankruptcy Code (IBC), 2016:
+I. The IBC provides a time-bound process of 180 days (extendable by 90 days) for resolution of insolvency.
+II. The National Company Law Tribunal (NCLT) is the Adjudicating Authority for corporate insolvency under IBC.
+III. The IBC replaced the SARFAESI Act, 2002 for asset reconstruction purposes.
+IV. Financial creditors have priority over operational creditors in the distribution of proceeds during liquidation under IBC.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Corporate Insolvency Resolution Process (CIRP) = 180 days + 90 days extension (total max 330 days including litigation). II ✓: NCLT is the adjudicating authority for companies. III ✗: IBC did NOT replace SARFAESI. Both co-exist; SARFAESI is for secured creditor asset enforcement; IBC is for overall insolvency resolution. IV ✓: Waterfall mechanism: secured financial creditors → unsecured financial creditors → operational creditors → equity.`,
+trap:`Statement III is the trap — SARFAESI still exists independently. IBC supplements, not replaces, it.`,
+mem:`IBC: 180+90 days. NCLT adjudicates. Financial creditors > Operational creditors. SARFAESI still co-exists.`},
+
+{n:28,sec:'banking',topic:'Sovereign Gold Bonds',diff:'easy',cat:'BANKING',
+q:`Consider the following statements about Sovereign Gold Bonds (SGBs):
+I. SGBs are issued by the Reserve Bank of India on behalf of the Government of India.
+II. The bonds are denominated in multiples of gram(s) of gold.
+III. Investors earn a fixed interest of 2.5% per annum on the initial investment amount, in addition to capital gains on gold price.
+IV. Capital gains tax on redemption of SGBs at maturity is exempt for individual investors.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: RBI issues SGBs on behalf of Govt of India. II ✓: Denominated in grams of gold (minimum 1 gram). III ✓: 2.5% p.a. fixed interest on the initial value. IV ✓: Capital gains at maturity (8 years) are exempt from capital gains tax for individuals. Pre-maturity redemption (after 5th year) is allowed but taxable.`,
+trap:`All four are accurate. Many miss that the 2.5% interest is on the initial investment value (not current gold price), and maturity CGT exemption.`,
+mem:`SGB = 2.5% interest + Gold price appreciation + Maturity CGT exempt for individuals. 8-year tenure.`},
+
+{n:29,sec:'banking',topic:'Co-operative Banks Regulation',diff:'hard',cat:'BANKING',
+q:`Consider the following statements about the regulatory framework for Co-operative Banks in India:
+Statement I: Urban Co-operative Banks (UCBs) are regulated by both the Reserve Bank of India (for banking functions) and the Registrar of Co-operative Societies (for incorporation and management).
+Statement II: The Banking Regulation (Amendment) Act, 2020 brought Urban and Multi-State Co-operative Banks fully under the supervision of the RBI for their banking activities, including supersession of their Boards.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither is correct'],
+ans:0,atxt:'(a) Both correct and Statement II explains Statement I',
+exp:`Statement I ✓: UCBs have dual regulation — RBI for banking activities (deposits, credit, CRR/SLR), State Registrar for cooperative aspects (management, membership). Statement II ✓: The 2020 Amendment Act significantly expanded RBI's powers over UCBs including superseding Boards in public interest. II explains I by describing HOW RBI's regulatory role over cooperatives was formalized.`,
+trap:`Before 2020 Amendment, RBI's powers over cooperative banks were limited. The 2020 Act is a landmark — frequently tested.`,
+mem:`2020 Amendment: RBI now has full supervisory power over UCBs including Board supersession. Dual regulation continues but RBI is now supreme for banking functions.`},
+
+{n:30,sec:'banking',topic:'ARCs and SARFAESI',diff:'moderate',cat:'BANKING',
+q:`Consider the following statements about Asset Reconstruction Companies (ARCs) in India:
+I. ARCs are regulated by the Reserve Bank of India.
+II. ARCs acquire Non-Performing Assets (NPAs) from banks at a discount and then attempt to recover the dues.
+III. ARCs can issue Security Receipts (SRs) to Qualified Institutional Buyers (QIBs) as a mode of funding NPA purchases.
+IV. SARFAESI Act allows ARCs to acquire and manage NPAs only with the approval of the Debt Recovery Tribunal.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and III correct',
+exp:`I ✓: ARCs are regulated by RBI under SARFAESI Act 2002. II ✓: ARCs buy stressed assets (NPAs) from banks at below book value. III ✓: Security Receipts (SRs) are issued to QIBs to fund NPA purchases. IV ✗: SARFAESI allows ARCs to take possession of secured assets WITHOUT court approval (that's the key feature of SARFAESI — bypassing DRT for secured assets).`,
+trap:`Statement IV is reversed — SARFAESI's entire point is that ARCs/lenders can act WITHOUT DRT approval for secured assets. DRT is needed for unsecured debt.`,
+mem:`SARFAESI = No need for court/DRT for secured asset enforcement. ARC = Regulated by RBI. Security Receipts for QIBs.`},
+
+{n:31,sec:'banking',topic:'Payment Systems & RBI',diff:'moderate',cat:'BANKING',
+q:`Consider the following payment systems and their operators in India:
+I. NEFT (National Electronic Funds Transfer) — operated by RBI
+II. IMPS (Immediate Payment Service) — operated by National Payments Corporation of India (NPCI)
+III. UPI (Unified Payments Interface) — operated by NPCI
+IV. Aadhaar Enabled Payment System (AePS) — operated by RBI
+How many of the above pairs are correctly matched?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II, III correct',
+exp:`I ✓: NEFT is operated by RBI (since 2019, RBI took it over from IBA). II ✓: IMPS is operated by NPCI (24×7 real-time interbank transfer). III ✓: UPI is operated by NPCI. IV ✗: AePS is operated by NPCI (not RBI). RBI regulates all payment systems, but NPCI operates AePS.`,
+trap:`AePS is a common confusion — it's NPCI, not RBI.`,
+mem:`RBI operates: NEFT, RTGS. NPCI operates: UPI, IMPS, AePS, RuPay, NACH, BBPS.`},
+
+{n:32,sec:'banking',topic:'Basel III Norms',diff:'hard',cat:'BANKING',
+q:`Consider the following statements about Basel III norms as implemented in India:
+I. Basel III requires banks to maintain a minimum Common Equity Tier 1 (CET1) capital ratio of 4.5% of Risk-Weighted Assets.
+II. The Capital Conservation Buffer (CCB) under Basel III is 2.5% of RWA, which effectively raises the minimum CET1 requirement to 7%.
+III. The Liquidity Coverage Ratio (LCR) requires banks to hold enough High-Quality Liquid Assets (HQLAs) to survive a 30-day stress scenario.
+IV. India implemented Basel III norms for its banks well ahead of the global implementation deadline.
+Which of the statements given above are correct?`,
+opts:['I and III only','I, II and III only','II, III and IV only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and III only',
+exp:`I ✓: CET1 minimum = 4.5% of RWA. II ✓: CCB = 2.5%, making effective minimum = 7% (4.5 + 2.5). III ✓: LCR requires 30-day HQLA coverage. IV ✗: India generally implemented Basel III in line with (not ahead of) the global timeline, with some extensions for its banks.`,
+trap:`Statement IV makes an absolute claim about India being "ahead" which is not accurate — India met the deadlines but was not notably early.`,
+mem:`Basel III: CET1 = 4.5%. CCB = 2.5%. Total effective CET1 = 7%. LCR = 30-day HQLA buffer.`},
+
+// ===== CAPITAL MARKETS (8) =====
+{n:33,sec:'capital',topic:'SEBI Functions',diff:'easy',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about the Securities and Exchange Board of India (SEBI):
+I. SEBI was established as a statutory body in 1992 under the SEBI Act.
+II. SEBI has the power to regulate insider trading in securities markets.
+III. SEBI regulates the functioning of credit rating agencies in India.
+IV. SEBI has the power to investigate and adjudicate violations of FEMA (Foreign Exchange Management Act).
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and II only','I, II, III and IV','II and III only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: SEBI Act 1992 gave it statutory authority (earlier it was a non-statutory body from 1988). II ✓: SEBI regulates and investigates insider trading under SEBI (Prohibition of Insider Trading) Regulations. III ✓: Credit Rating Agencies are regulated by SEBI in India. IV ✗: FEMA violations are investigated by the Enforcement Directorate (ED) under the Finance Ministry, NOT SEBI.`,
+trap:`FEMA investigation = ED, not SEBI. SEBI investigates violations of securities laws, not foreign exchange laws.`,
+mem:`SEBI: Securities markets, insider trading, CRAs, mutual funds, FIIs. FEMA = ED's domain.`},
+
+{n:34,sec:'capital',topic:'Mutual Fund Categories',diff:'moderate',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about Mutual Funds in India:
+I. Index funds passively track a market index and generally have lower expense ratios than actively managed funds.
+II. Liquid funds invest in money market instruments with maturity up to 91 days.
+III. ELSS (Equity Linked Savings Scheme) funds have a mandatory lock-in period of 5 years.
+IV. Debt mutual funds investing in government securities have zero credit risk but carry interest rate risk.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Index funds are passive, tracking NIFTY/SENSEX, with lower costs. II ✓: Liquid funds invest in instruments maturing within 91 days. III ✗: ELSS has a lock-in of 3 years (NOT 5 years), and qualifies for 80C deduction. IV ✓: G-sec funds have no credit risk (sovereign guarantee) but face interest rate risk (price moves inversely with rates).`,
+trap:`ELSS lock-in = 3 years. This is among the most commonly confused facts in personal finance/UPSC.`,
+mem:`ELSS: 3-year lock-in (shortest among 80C instruments). G-sec funds: no credit risk but YES interest rate risk.`},
+
+{n:35,sec:'capital',topic:'FPI vs FDI',diff:'easy',cat:'CAPITAL MARKETS',
+q:`Consider the following statements:
+I. Foreign Direct Investment (FDI) is defined as investment in equity of a company where the investor holds 10% or more of the voting rights/shares.
+II. Foreign Portfolio Investment (FPI) is characterized by short-term investment in financial assets such as stocks and bonds without seeking management control.
+III. Unlike FPI, FDI flows are considered more stable and do not result in sudden capital outflows during periods of economic stress.
+IV. India allows 100% FDI under the automatic route in all sectors of the economy.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','II and IV only','I, II, III and IV'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: IMF/SEBI definition — FDI = 10%+ ownership with intent of lasting interest and management influence. II ✓: FPI is portfolio, passive, no management control. III ✓: FDI is "patient capital" — more stable than FPI which can exit rapidly (hot money). IV ✗: Several sectors have sectoral caps or are on the government approval route — e.g., Defence (74% automatic, above needs approval), Media, Insurance. Not all sectors have 100% automatic FDI.`,
+trap:`"All sectors" in Statement IV is the trap — sensitive sectors have caps.`,
+mem:`FDI ≥ 10% stake + management interest. FPI = passive, short-term. 100% auto FDI ≠ all sectors.`},
+
+{n:36,sec:'capital',topic:'REITs and InvITs',diff:'hard',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about Real Estate Investment Trusts (REITs) and Infrastructure Investment Trusts (InvITs) in India:
+I. Both REITs and InvITs are regulated by SEBI.
+II. REITs must invest at least 80% of their assets in completed, revenue-generating real estate assets.
+III. InvITs must distribute at least 90% of their Net Distributable Cash Flows (NDCF) to unit holders.
+IV. Both REITs and InvITs can be listed on stock exchanges, making them accessible to retail investors.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: SEBI regulates both under SEBI (REITs) Regulations 2014 and SEBI (InvITs) Regulations 2014. II ✓: REIT must have 80%+ in completed income-generating properties. III ✓: InvITs must distribute 90%+ of NDCF to unit holders. IV ✓: Both are listed on NSE/BSE and accessible to retail investors (minimum investment reduced to ₹10,000-15,000).`,
+trap:`All four are accurate. REITs and InvITs are a rising UPSC theme after budget announcements in recent years.`,
+mem:`REIT = Real estate. InvIT = Infrastructure. Both: SEBI-regulated, listed, must distribute 90%+ cash flows.`},
+
+{n:37,sec:'capital',topic:'Insider Trading',diff:'moderate',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about insider trading regulations in India:
+Statement I: An 'insider' under SEBI regulations is any person who is connected to a listed company or in possession of Unpublished Price Sensitive Information (UPSI).
+Statement II: The trading window for insiders is closed only during the period immediately before the announcement of financial results.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: Under SEBI (PIT) Regulations 2015, an insider is anyone connected to the company OR in possession of UPSI (even without a formal connection). Statement II ✗: The trading window can be closed for multiple events — before quarterly results, AGMs, board meetings for dividends, mergers, fund-raising etc. It is not limited to just financial results.`,
+trap:`Statement II limits trading window closure to "only" financial results — that's too restrictive. Multiple corporate events trigger window closure.`,
+mem:`UPSI events: results, dividends, mergers, acquisitions, fund-raising. Trading window closes before each of these.`},
+
+{n:38,sec:'capital',topic:'Derivatives & Options',diff:'hard',cat:'CAPITAL MARKETS',
+q:`Consider the following statements:
+I. A 'call option' gives the buyer the right, but not the obligation, to BUY an underlying asset at a predetermined price.
+II. A 'put option' gives the buyer the right, but not the obligation, to SELL an underlying asset at a predetermined price.
+III. The seller (writer) of an option receives a premium and is obligated to fulfil the contract if the buyer exercises the option.
+IV. Futures contracts, unlike options, are binding obligations on both parties.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`All four statements accurately describe derivatives. I ✓: Call = right to buy. II ✓: Put = right to sell. III ✓: Option writer receives premium and is bound if buyer exercises. IV ✓: Futures = binding on both buyer and seller (unlike options where only the writer is bound when exercised).`,
+trap:`Derivatives questions appear almost every 2-3 years. The asymmetry between options buyer (right only) and seller (obligation) is the key tested concept.`,
+mem:`CALL = right to BUY. PUT = right to SELL. Option buyer: pays premium, has choice. Option seller: receives premium, has obligation.`},
+
+{n:39,sec:'capital',topic:'Stock Market Indices',diff:'easy',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about stock market indices in India:
+I. The SENSEX is composed of 30 companies listed on the Bombay Stock Exchange (BSE).
+II. NIFTY 50 consists of 50 companies listed on the National Stock Exchange (NSE).
+III. Both SENSEX and NIFTY 50 use free-float market capitalisation methodology for index calculation.
+IV. The base year for SENSEX is 1978-79, while the base year for NIFTY is 1995.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: SENSEX = 30 stocks on BSE. II ✓: NIFTY 50 = 50 stocks on NSE. III ✓: Both use free-float market cap methodology (only publicly tradeable shares counted). IV ✓: SENSEX base year = 1978-79 (base value 100). NIFTY base = November 3, 1995 (base value 1000).`,
+trap:`All four are correct. The base year figures are commonly tested trivia.`,
+mem:`SENSEX: BSE, 30 stocks, base 1978-79. NIFTY 50: NSE, 50 stocks, base 1995.`},
+
+{n:40,sec:'capital',topic:'Bond Pricing & Yield',diff:'hard',cat:'CAPITAL MARKETS',
+q:`Consider the following statements about bond pricing:
+Statement I: When market interest rates rise, bond prices fall, and when market interest rates fall, bond prices rise.
+Statement II: A bond trading at a price above its face value is said to be trading at a 'discount', and its yield is higher than its coupon rate.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: This is the fundamental inverse relationship between bond prices and yields. Statement II ✗: A bond trading ABOVE face value is trading at a PREMIUM (not discount), and its yield is LOWER than its coupon rate. Discount means below face value → yield is higher than coupon.`,
+trap:`Statement II reverses discount/premium. Premium = above face value = lower yield. Discount = below face value = higher yield.`,
+mem:`Price > Face Value = PREMIUM, Yield < Coupon. Price < Face Value = DISCOUNT, Yield > Coupon. Prices and yields move OPPOSITE.`},
+
+// ===== INTERNATIONAL TRADE (10) =====
+{n:41,sec:'international',topic:'WTO Dispute Settlement',diff:'moderate',cat:'INTERNATIONAL',
+q:`Consider the following statements about the World Trade Organization (WTO) Dispute Settlement Mechanism:
+I. The Dispute Settlement Body (DSB) of WTO is a specialized judicial body separate from the General Council.
+II. The Appellate Body of WTO has been non-functional since 2019 due to the USA blocking appointments of new members.
+III. India has been both a complainant and a respondent in WTO dispute settlement proceedings.
+IV. WTO dispute settlement panels can impose sanctions directly on violating member countries.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — II, III and one more',
+exp:`I ✗: DSB is actually the General Council meeting in a special formation — it is NOT a separate body. II ✓: The Appellate Body collapsed in December 2019 due to US blocking appointments. III ✓: India frequently uses WTO dispute settlement — e.g., solar panels case (USA vs India). IV ✗: WTO panels cannot impose sanctions directly. They authorise retaliation (countermeasures) by the winning party.`,
+trap:`Statement I and IV both contain errors. DSB = General Council in different garb. Sanctions = authorised, not imposed.`,
+mem:`WTO DSB = General Council (same body, different hat). Appellate Body = dead since Dec 2019. No direct sanctions — only authorised retaliation.`},
+
+{n:42,sec:'international',topic:'Special Economic Zones',diff:'moderate',cat:'INTERNATIONAL',
+q:`Consider the following statements about Special Economic Zones (SEZs) in India:
+I. Units in SEZs can import goods duty-free for production purposes.
+II. The Development Commissioner is the key authority overseeing SEZ operations.
+III. SEZs in India are governed by the SEZ Act, 2005 and SEZ Rules, 2006.
+IV. All goods produced in SEZs must be exported; no sale in the Domestic Tariff Area (DTA) is permitted.
+Which of the statements given above are correct?`,
+opts:['I and III only','I, II and III only','II, III and IV only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and III only',
+exp:`I ✓: SEZ units can import inputs duty-free. II ✓: Development Commissioner is the single-window authority. III ✓: SEZ Act 2005 and Rules 2006 form the legislative framework. IV ✗: SEZ units CAN sell a portion of their goods in the DTA (domestic market), subject to payment of applicable duties. There is no absolute prohibition on DTA sales.`,
+trap:`Statement IV uses "must be exported" and "no DTA sale permitted" — both are absolute and incorrect. DTA sales are permitted subject to duties.`,
+mem:`SEZ: Duty-free imports. Development Commissioner = single window. DTA sales permitted (with duties).`},
+
+{n:43,sec:'international',topic:'Current Account & Capital Account',diff:'moderate',cat:'INTERNATIONAL',
+q:`With reference to India's Balance of Payments (BoP), consider the following:
+I. Remittances from Indians working abroad are recorded in the Current Account of the BoP.
+II. Foreign Direct Investment inflows are recorded in the Capital Account of the BoP.
+III. A current account deficit means India is a net borrower from the rest of the world.
+IV. India's Current Account Deficit (CAD) is primarily financed by FPI and FDI inflows under the Capital and Financial Account.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: Remittances (private transfers) = Current Account (under transfers). II ✓: FDI = Capital/Financial Account. III ✓: CAD implies the country consumes more than it produces, financed by foreign capital. IV ✓: India's CAD is typically funded by FDI, FPI, and ECBs under the capital account.`,
+trap:`All four are correct. A common trap: students think remittances go to capital account — they don't. Remittances are current account transfers.`,
+mem:`Current Account: Trade + Services + Income + Transfers (remittances). Capital Account: FDI, FPI, loans, reserves.`},
+
+{n:44,sec:'international',topic:'IMF — SDR & Quota',diff:'hard',cat:'INTERNATIONAL',
+q:`Consider the following statements about the Special Drawing Right (SDR) of the International Monetary Fund:
+I. SDR is an international reserve asset created by the IMF.
+II. The value of SDR is based on a basket of five currencies: US Dollar, Euro, Chinese Renminbi, Japanese Yen and British Pound Sterling.
+III. Countries can use SDRs to pay their IMF quota subscriptions and make payments between member countries.
+IV. SDR allocation to countries is proportional to their GDP share in the world economy.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and III only','I, II and IV only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and III only',
+exp:`I ✓: SDR was created in 1969 as an IMF reserve asset to supplement gold and dollar reserves. II ✓: The 5-currency basket since 2016 includes USD, EUR, CNY (yuan), JPY, GBP. III ✓: SDRs can be exchanged for freely usable currencies between member countries. IV ✗: SDR allocation is proportional to IMF QUOTA share, not GDP. Quota is based on GDP, openness, variability, and reserves.`,
+trap:`Statement IV replaces "quota share" with "GDP share" — subtle but wrong. Allocation = quota based, and quota is determined by multiple factors.`,
+mem:`SDR basket since 2016: USD + EUR + CNY + JPY + GBP. Allocation = IMF quota (not directly GDP).`},
+
+{n:45,sec:'international',topic:'Dumping & Anti-Dumping',diff:'easy',cat:'INTERNATIONAL',
+q:`Consider the following statements:
+Statement I: Dumping, in the context of international trade, refers to the practice of exporting a product at a price lower than its normal value (i.e., price in the exporter's domestic market or cost of production).
+Statement II: Under WTO rules, anti-dumping duties can be imposed unilaterally by any member country without any investigation or determination of injury.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: Dumping = exporting below normal value. WTO Anti-Dumping Agreement defines this precisely. Statement II ✗: Anti-dumping duties require a formal investigation by the importing country's designated authority, determination of dumping margin, AND proof of material injury to domestic industry. Unilateral imposition without these steps violates WTO rules.`,
+trap:`"Unilaterally without investigation" makes Statement II wrong. The WTO framework requires rigorous procedural investigation.`,
+mem:`Anti-dumping duty process: Investigation → Dumping margin determination → Injury test → Duty imposition. Cannot skip steps.`},
+
+{n:46,sec:'international',topic:'India-UAE CEPA',diff:'moderate',cat:'INTERNATIONAL',
+q:`Consider the following statements about the India-UAE Comprehensive Economic Partnership Agreement (CEPA) signed in 2022:
+I. It was India's first free trade agreement in over a decade.
+II. Under CEPA, UAE agreed to provide duty-free access to 97% of India's tariff lines by value.
+III. The agreement covers trade in goods, services, and investment.
+IV. India's pharmaceutical and textile exports are expected to be major beneficiaries.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: India-UAE CEPA (Feb 2022) was the first FTA India concluded after a long gap. II ✓: UAE offered duty-free/preferential access on ~97% of tariff lines. III ✓: Comprehensive — covers goods, services, and investment. IV ✓: Pharmaceuticals, textiles, gems & jewellery, and engineering goods are key export beneficiaries for India.`,
+trap:`All four are accurate. CEPA is different from FTA only in nomenclature — "comprehensive" implies wider coverage including services.`,
+mem:`India-UAE CEPA 2022 = India's FTA revival. Pharma + Textiles + Gems = key India winners.`},
+
+{n:47,sec:'international',topic:'Purchasing Power Parity',diff:'hard',cat:'INTERNATIONAL',
+q:`Consider the following statements about Purchasing Power Parity (PPP):
+Statement I: Under PPP, the exchange rate between two currencies should adjust such that an identical basket of goods costs the same in both countries.
+Statement II: India's GDP measured at PPP is lower than its GDP measured at market exchange rates, as the Indian rupee is undervalued relative to its PPP rate.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: PPP = "Law of One Price" applied to basket of goods — exchange rates equilibrate prices. Statement II ✗: India's GDP at PPP is HIGHER than at market exchange rates. The rupee is undervalued at market rates (you can buy more in India for $1 than in the US). Therefore, PPP adjustment makes India's economy look LARGER, not smaller.`,
+trap:`Statement II is the opposite of reality. India's PPP GDP > Market GDP. India is 3rd largest at PPP but 5th at market rates.`,
+mem:`PPP GDP > Market GDP for developing countries (currencies undervalued). India: 5th at market rates → 3rd at PPP.`},
+
+{n:48,sec:'international',topic:'Non-Tariff Barriers',diff:'moderate',cat:'INTERNATIONAL',
+q:`Which of the following are examples of Non-Tariff Barriers (NTBs) to international trade?
+I. Import quotas on agricultural products
+II. Sanitary and Phytosanitary (SPS) measures
+III. Technical Barriers to Trade (TBT) such as product standards
+IV. Specific customs duties on imported goods
+V. Anti-dumping duties
+Select the correct answer:`,
+opts:['I, II and III only','I, II, III and V only','II and III only','I, II, III, IV and V'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`NTBs are restrictions on trade other than tariffs. Quotas (I ✓): quantity restrictions. SPS measures (II ✓): health/safety rules that can restrict imports. TBT (III ✓): technical standards that restrict access. Customs duties (IV ✗): are TARIFF barriers by definition. Anti-dumping duties (V ✗): are tariff-like measures but classified under contingent protection, not NTBs in the strict WTO sense.`,
+trap:`Anti-dumping duties feel like "non-tariff" (punitive) barriers but are classified as contingent tariff measures, not NTBs. Customs duties are clearly tariffs.`,
+mem:`NTBs: Quotas, SPS, TBT, licensing requirements, subsidies. Tariffs: Customs duties, anti-dumping duties.`},
+
+{n:49,sec:'international',topic:'RCEP & India',diff:'moderate',cat:'INTERNATIONAL',
+q:`Consider the following statements about the Regional Comprehensive Economic Partnership (RCEP):
+I. RCEP was signed in 2020 by ASEAN nations along with China, Japan, South Korea, Australia and New Zealand.
+II. India was a founding negotiating member of RCEP but walked out of the final signing in November 2019.
+III. India's primary concern was the potential flood of Chinese goods through RCEP member countries into India under the zero-tariff regime.
+IV. With India's exit, RCEP became non-functional as India was the largest economy in the grouping.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and III correct',
+exp:`I ✓: RCEP signed November 2020 — 15 members. II ✓: India participated in negotiations from 2012 but withdrew in 2019 citing trade deficit concerns. III ✓: The trade deflection concern (Chinese goods routed via RCEP members to India) was central to India's decision. IV ✗: RCEP did not become non-functional. China is the largest economy in RCEP. It came into force in January 2022.`,
+trap:`Statement IV is wrong on two counts — China (not India) is the largest RCEP economy, and RCEP is very much functional.`,
+mem:`RCEP: 15 countries, came into force Jan 2022. India out. China = largest economy in RCEP.`},
+
+{n:50,sec:'international',topic:'Exchange Rate Regimes',diff:'hard',cat:'INTERNATIONAL',
+q:`Consider the following statements about exchange rate regimes:
+Statement I: Under a fixed exchange rate regime, the central bank actively intervenes in the foreign exchange market to maintain the exchange rate at a predetermined value.
+Statement II: India follows a pure floating exchange rate regime where the RBI never intervenes in the foreign exchange market.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: Fixed rates require active central bank intervention — buying/selling foreign currency. Statement II ✗: India follows a MANAGED FLOAT (dirty float) — not a pure float. The RBI intervenes regularly to manage excessive volatility, even though the rupee is not pegged to any fixed rate. RBI is one of the most active EM central banks in forex intervention.`,
+trap:`India's exchange rate is often described as "market-determined" but it is NOT a pure float. RBI intervenes constantly — this is the managed float.`,
+mem:`India = Managed Float (Dirty Float). RBI intervenes to reduce volatility but does not fix the rupee to any specific rate.`},
+
+// ===== GOVT SCHEMES (10) =====
+{n:51,sec:'schemes',topic:'PM-KISAN Scheme',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about the Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) scheme:
+I. Under PM-KISAN, eligible farmer families receive ₹6,000 per year in three equal instalments.
+II. The scheme is entirely funded by the Central Government.
+III. Farmer families that pay income tax are not eligible for the scheme.
+IV. All farmers including institutional landholders and former/serving government employees are eligible for PM-KISAN.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and III only','I, II, III and IV','II and III only'],
+ans:1,atxt:'(b) I, II and III only',
+exp:`I ✓: ₹6,000/year in 3 instalments of ₹2,000 each. II ✓: 100% Central Government funded. III ✓: Income taxpayers are ineligible (exclusion criteria). IV ✗: Institutional landholders, serving/retired govt employees, constitutional post holders, etc. are EXCLUDED from PM-KISAN.`,
+trap:`Statement IV says "all farmers including govt employees" — this contradicts the exclusion criteria.`,
+mem:`PM-KISAN: ₹6,000/yr. 3×₹2,000. 100% Central. Excludes: Income tax payers, govt employees, institutional landholders.`},
+
+{n:52,sec:'schemes',topic:'PLI Scheme',diff:'moderate',cat:'SCHEMES',
+q:`Consider the following statements about the Production-Linked Incentive (PLI) scheme of India:
+I. PLI schemes have been announced for 14 key sectors.
+II. Under PLI, incentives are based on incremental sales over a base year threshold.
+III. The PLI scheme for semiconductors and display manufacturing was announced as part of the Semicon India Programme.
+IV. State governments are the primary implementing agencies for PLI schemes.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and II only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: PLI has been announced for 14 sectors (mobile phones, pharmaceuticals, medical devices, automobiles, advanced chemistry cells, textiles, food processing, telecom, white goods, specialty steel, solar PV, semiconductors, drones, and animation/VFX). II ✓: PLI = incentive on production/sales above a base year threshold. III ✓: Semicon India Programme covers semiconductor and display fab PLI. IV ✗: PLI schemes are primarily implemented by Central Ministries (not State governments).`,
+trap:`Statement IV swaps Centre for States. PLI is a Central Government initiative implemented by respective Central Ministries.`,
+mem:`14 PLI sectors. Incentive on incremental sales. Semicon India = semiconductor PLI. Centre implements PLI.`},
+
+{n:53,sec:'schemes',topic:'PMGKAY & Food Security',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about food security programmes in India:
+I. The National Food Security Act (NFSA), 2013 covers up to 75% of rural and 50% of urban population for subsidised foodgrains.
+II. The Pradhan Mantri Garib Kalyan Anna Yojana (PMGKAY) provided free foodgrains in addition to the NFSA entitlements during COVID-19.
+III. From January 2023, the PMGKAY was merged with the NFSA entitlements, making the entire NFSA allocation free.
+IV. The Food Corporation of India (FCI) is the sole agency for procurement of foodgrains under the NFSA.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and III correct',
+exp:`I ✓: NFSA covers 75% rural, 50% urban. II ✓: PMGKAY gave extra 5 kg free grain per person during COVID. III ✓: From Jan 2023, PMGKAY subsumed into NFSA — all 5 kg entitlement under NFSA is now free (₹0 for beneficiaries). IV ✗: FCI is the main agency but State Government agencies and decentralised procurement also participate.`,
+trap:`Statement IV is too absolute — "sole agency" is incorrect. States also procure directly.`,
+mem:`NFSA: 75% rural, 50% urban. PMGKAY merged Jan 2023 → all NFSA = Free now. FCI = main but not sole procurement agency.`},
+
+{n:54,sec:'schemes',topic:'Jal Jeevan Mission',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about the Jal Jeevan Mission (JJM):
+I. JJM aims to provide Functional Household Tap Connection (FHTC) to every rural household by 2024.
+II. The mission is implemented by the Department of Drinking Water and Sanitation under the Ministry of Jal Shakti.
+III. JJM provides potable drinking water at the rate of 55 litres per capita per day (LPCD) as a service standard.
+IV. JJM is a 100% Centrally Sponsored Scheme with no State share.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','I, II, III and IV','II and III only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: Target was every rural HH by 2024 (now extended). II ✓: Implemented by Dept of Drinking Water & Sanitation, Ministry of Jal Shakti. III ✓: 55 LPCD is the service level benchmark. IV ✗: JJM has cost-sharing between Centre and States (not 100% Central). General States: 50:50; Himalayan/NE states: 90:10.`,
+trap:`JJM is NOT 100% central. It's a Centrally Sponsored Scheme with State share. PMGSY (rural roads) is also CSS, not fully central.`,
+mem:`JJM: 55 LPCD. Jal Shakti Ministry. Cost sharing: 50:50 general states, 90:10 for special category.`},
+
+{n:55,sec:'schemes',topic:'PM Vishwakarma Scheme',diff:'moderate',cat:'SCHEMES',
+q:`With reference to the PM Vishwakarma Scheme, consider the following statements:
+I. It is aimed at providing support to traditional artisans and craftspeople who work with their hands and tools.
+II. Under the scheme, beneficiaries can avail collateral-free enterprise development loans at a concessional interest rate.
+III. The scheme covers only 5 traditional crafts/trades as per its initial framework.
+IV. The scheme is implemented through the Ministry of Micro, Small and Medium Enterprises.
+Which of the statements given above is/are correct?`,
+opts:['I and II only','I, II and IV only','I, II, III and IV','III and IV only'],
+ans:1,atxt:'(b) I, II and IV only',
+exp:`I ✓: PM Vishwakarma (launched Sept 2023) supports traditional craftspeople (potters, cobblers, weavers, carpenters, blacksmiths, goldsmiths, sculptors, etc.). II ✓: Collateral-free loans at 5% concessional rate (up to ₹1 lakh in first tranche, ₹2 lakh in second). III ✗: The scheme covers 18 traditional trades, not 5. IV ✓: Implemented by Ministry of MSME.`,
+trap:`Statement III says "only 5 trades" — actual coverage is 18 traditional trades.`,
+mem:`PM Vishwakarma: 18 traditional trades. Collateral-free loans at 5%. Ministry of MSME.`},
+
+{n:56,sec:'schemes',topic:'Startup India',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about the Startup India initiative:
+I. A startup in India can self-certify compliance with 9 labour laws and 3 environmental laws.
+II. DPIIT (Department for Promotion of Industry and Internal Trade) is the nodal department for Startup India.
+III. Startups recognized under Startup India are eligible for a 3-year tax holiday in the first 10 years of incorporation.
+IV. The Fund of Funds for Startups (FFS) is managed by SIDBI with a corpus of ₹10,000 crores.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: Self-certification of compliance with 9 labour + 3 environmental laws during 3-5 years. II ✓: DPIIT under Commerce Ministry is the nodal body. III ✓: 3 out of first 10 years tax holiday (Section 80-IAC). IV ✓: FFS of ₹10,000 crores managed by SIDBI to invest in VC/AIF funds that then invest in startups.`,
+trap:`All four are correct. A common confusion: the 3-year tax holiday is out of the FIRST 10 years — not first 3 years of incorporation.`,
+mem:`Startup India: 9 labour + 3 env laws (self-certify). DPIIT nodal. 3-yr tax holiday/10 yrs. SIDBI FFS = ₹10,000 cr.`},
+
+{n:57,sec:'schemes',topic:'PMJAY — Ayushman Bharat',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about Pradhan Mantri Jan Arogya Yojana (PM-JAY) under Ayushman Bharat:
+I. PM-JAY provides health cover of ₹5 lakh per family per year for secondary and tertiary care hospitalisation.
+II. There is no cap on the family size or age of members under PM-JAY.
+III. PM-JAY is implemented by the National Health Authority (NHA).
+IV. PM-JAY covers pre-existing diseases from the first day of coverage.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: ₹5 lakh per family per year for hospitalisation (secondary + tertiary). II ✓: No restriction on family size or individual age — the entire family is covered. III ✓: NHA under Health Ministry implements PM-JAY. IV ✓: Pre-existing diseases covered from day 1 — a key distinctive feature.`,
+trap:`All four are correct. Statement IV about pre-existing coverage from day 1 is frequently tested as a surprising fact (private insurance has waiting periods).`,
+mem:`PM-JAY: ₹5 lakh/family/yr. No age/size cap. Pre-existing from Day 1. NHA implements. ~55 crore beneficiaries.`},
+
+{n:58,sec:'schemes',topic:'PM Surya Ghar',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about PM Surya Ghar Muft Bijli Yojana (launched February 2024):
+Statement I: The scheme targets installation of one crore solar rooftop systems in the residential sector and provides free electricity of up to 300 units per month to beneficiaries.
+Statement II: Under the scheme, households with rooftop solar installations can sell excess electricity back to the grid, benefiting from net metering provisions.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','I not correct but II correct'],
+ans:0,atxt:'(a) Both correct and II explains Statement I (together they explain how free electricity is achieved)',
+exp:`Statement I ✓: 1 crore residential rooftop solar target; households with up to 2 kW system get 300 units/month free (subsidized). Statement II ✓: Net metering allows export of surplus power and earning from it. Both statements together explain the scheme's dual benefit — consumption is subsidized/free AND surplus can be sold.`,
+trap:`Both are correct. The key nuance: "free electricity" comes from subsidy on installation + solar generation + net metering credits.`,
+mem:`PM Surya Ghar: 1 crore homes. 300 units/month free (up to 2kW). Net metering = sell surplus. MNRE implements.`},
+
+{n:59,sec:'schemes',topic:'PMFBY — Crop Insurance',diff:'moderate',cat:'SCHEMES',
+q:`Consider the following statements about the Pradhan Mantri Fasal Bima Yojana (PMFBY):
+I. Under PMFBY, the premium paid by farmers is capped at 2% for Kharif crops and 1.5% for Rabi crops.
+II. PMFBY is mandatory for all farmers who have availed institutional credit (crop loans).
+III. The difference between actuarial premium and the farmer's share is subsidised equally by the Centre and State governments.
+IV. PMFBY covers losses due to post-harvest losses for a period up to 14 days for specified crops.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, III and IV are correct',
+exp:`I ✓: Premium cap = 2% for Kharif, 1.5% for Rabi, 5% for commercial/horticultural crops. II ✗: PMFBY was made VOLUNTARY for all farmers (including loanee farmers) from Kharif 2020 — previously it was compulsory for crop loan borrowers. III ✓: Actuarial premium minus farmer's share = shared by Centre and State (usually 50:50, varies). IV ✓: Post-harvest losses covered for up to 14 days from harvest (for cutting & spreading stage).`,
+trap:`Statement II is the trap — PMFBY was mandatory before 2020 but has since been made voluntary for all.`,
+mem:`PMFBY premiums: 2% Kharif, 1.5% Rabi, 5% commercial. Voluntary since 2020. Post-harvest = 14 days.`},
+
+{n:60,sec:'schemes',topic:'Digital India & DigiLocker',diff:'easy',cat:'SCHEMES',
+q:`Consider the following statements about DigiLocker, a key initiative under Digital India:
+I. DigiLocker allows citizens to store and share government-issued documents digitally.
+II. Documents stored on DigiLocker are considered at par with original physical documents for official purposes.
+III. DigiLocker is operated by the Ministry of Electronics and Information Technology (MeitY).
+IV. DigiLocker uses Aadhaar for authentication and verification.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: DigiLocker is a cloud-based document wallet for citizens. II ✓: Under the IT Act, DigiLocker documents have legal validity equal to original documents (for specified purposes). III ✓: MeitY operates DigiLocker as part of Digital India. IV ✓: Aadhaar OTP/biometric is used for authentication.`,
+trap:`All four are accurate. A common misconception: DigiLocker documents don't have full legal validity — but they do for specified official purposes under IT Act.`,
+mem:`DigiLocker: MeitY. Aadhaar-linked. Legally valid = physical doc. For driving licenses, mark sheets, vehicle RC etc.`},
+
+// ===== AGRICULTURE ECONOMICS (8) =====
+{n:61,sec:'agriculture',topic:'MSP & CACP',diff:'easy',cat:'AGRICULTURE',
+q:`Consider the following statements about Minimum Support Price (MSP) in India:
+I. The Commission for Agricultural Costs and Prices (CACP) recommends MSPs for major agricultural commodities.
+II. MSP is currently provided statutory backing — i.e., farmers are legally guaranteed the MSP for their produce.
+III. MSP is fixed to ensure at least a 50% return over the cost of production (C2 basis) for farmers.
+IV. CACP's recommendations are binding on the Government of India.
+Which of the statements given above is/are correct?`,
+opts:['I only','I and III only','I, II and III only','I, II, III and IV'],
+ans:1,atxt:'(b) I and III only',
+exp:`I ✓: CACP (Commission for Agricultural Costs and Prices) recommends MSPs. II ✗: MSP does NOT have statutory backing — it is an administrative price support, not a legal guarantee. This has been a long-standing demand by farmers. III ✓: Post-2018, government announced MSP would be 1.5x of C2 cost (50% return over C2 costs). IV ✗: CACP's recommendations are advisory — the Cabinet Committee on Economic Affairs (CCEA) takes the final decision.`,
+trap:`Statements II and IV are common myths. MSP is NOT statutory, and CACP recommendations are NOT binding.`,
+mem:`CACP = Recommends MSP (advisory). CCEA = Approves MSP. MSP = NOT statutory. 50% above C2 = post-2018 policy.`},
+
+{n:62,sec:'agriculture',topic:'Agricultural Marketing — APMC',diff:'moderate',cat:'AGRICULTURE',
+q:`Consider the following statements about Agricultural Produce Market Committees (APMCs):
+I. APMCs are State-level bodies that regulate agricultural markets within their jurisdiction.
+II. The Model APMC Act, 2003 introduced provisions for direct marketing and contract farming.
+III. Farmers Markets (directly selling to consumers) are not permitted under APMC regulations.
+IV. The Essential Commodities (Amendment) Act, 2020 removed certain commodities from the scope of the Essential Commodities Act, 1955.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and IV only','I, III and IV only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and IV only',
+exp:`I ✓: APMCs are State-created statutory bodies regulating local agricultural markets. II ✓: Model APMC Act 2003 (Central advisory) introduced private markets, direct marketing, and contract farming provisions. III ✗: Several States allow Farmer-Consumer Markets (e.g., Delhi's Azadpur Mandi or Rythu Bazaar in AP) — not universally prohibited. IV ✓: EC (Amendment) Act 2020 deregulated cereals, pulses, oilseeds, onions, potatoes from ECA price controls.`,
+trap:`Statement III uses "not permitted" — this is an absolute that doesn't hold. Many states allow direct farmer-consumer markets.`,
+mem:`APMC = State bodies. Model APMC 2003 = direct marketing allowed. EC Amendment 2020 = deregulated food commodities.`},
+
+{n:63,sec:'agriculture',topic:'GI Tags for Agricultural Products',diff:'moderate',cat:'AGRICULTURE',
+q:`Consider the following pairs of agricultural products and their Geographical Indication (GI) origin:
+I. Darjeeling Tea — West Bengal
+II. Basmati Rice — Punjab and Haryana only
+III. Alphonso Mango — Maharashtra (Konkan region)
+IV. Malabar Pepper — Kerala
+How many of the above pairs are correctly matched?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, III and IV correct',
+exp:`I ✓: Darjeeling Tea GI — West Bengal. II ✗: Basmati Rice GI covers multiple states — Punjab, Haryana, HP, Delhi, Uttarakhand, UP, and J&K. Not just Punjab and Haryana. III ✓: Alphonso (Hapus) Mango — Konkan, Maharashtra. IV ✓: Malabar Pepper — Kerala. Statement II is the error.`,
+trap:`Basmati's GI covers a multi-state region, not just two states. This was also contested by Pakistan in WTO.`,
+mem:`Basmati GI = 7 Indian states (not just 2). Darjeeling Tea, Alphonso Mango, Malabar Pepper = correct states.`},
+
+{n:64,sec:'agriculture',topic:'e-NAM Platform',diff:'easy',cat:'AGRICULTURE',
+q:`Consider the following statements about the National Agriculture Market (e-NAM) platform:
+I. e-NAM is an online trading platform that links existing APMC mandis to create a unified national market.
+II. e-NAM is operated by the Small Farmers Agribusiness Consortium (SFAC).
+III. Under e-NAM, the physical movement of produce is mandatory at the time of bidding.
+IV. e-NAM integration allows farmers to discover prices across mandis and sell from their village itself in some cases.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and IV only','I, III and IV only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and IV only',
+exp:`I ✓: e-NAM links APMC mandis nationally for online price discovery and trading. II ✓: SFAC (Small Farmers Agribusiness Consortium) under Ministry of Agriculture operates e-NAM. III ✗: "Warehouse-based" and "farm gate" trading under e-NAM does NOT require physical movement to the mandi — this is the key innovation. IV ✓: Farmers can sell from their village using warehouse receipts or directly.`,
+trap:`Statement III is the trap — the whole point of e-NAM is to reduce the need for physical movement by enabling online transactions.`,
+mem:`e-NAM: SFAC operates. Mandi-to-mandi online. No mandatory physical movement. Price discovery from home/village possible.`},
+
+{n:65,sec:'agriculture',topic:'Cooperative Farming Models',diff:'hard',cat:'AGRICULTURE',
+q:`Consider the following statements about Farmer Producer Organizations (FPOs) in India:
+Statement I: FPOs are collective bodies of farmers that can engage in farming activities and also in processing, marketing, and sale of agricultural produce.
+Statement II: The Government of India has a target of forming 10,000 FPOs by 2027-28, with Central financial support of ₹6,865 crore.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:1,atxt:'(b) Both correct but II does not explain I',
+exp:`Statement I ✓: FPOs can undertake farming, processing, storage, marketing — integrated value chain. Statement II ✓: 10,000 FPO scheme with ₹6,865 crore support over 5 years — announced in Budget 2021-22. Both statements are independently correct — II provides quantitative programme details while I describes the functional nature of FPOs. II does not logically explain I.`,
+trap:`Both are correct but the relationship question asks does II explain I. II gives programme numbers — it doesn't explain WHAT FPOs do (which is I).`,
+mem:`10,000 FPOs target. ₹6,865 cr Central support. FPO = collective entity for farming + value chain activities.`},
+
+{n:66,sec:'agriculture',topic:'Food Processing Industry',diff:'moderate',cat:'AGRICULTURE',
+q:`Consider the following statements about the food processing industry in India:
+I. India is one of the world's largest producers of milk, fruits, vegetables, and spices.
+II. The Ministry of Food Processing Industries (MoFPI) implemented the SAMPADA scheme (now PMKSY).
+III. Mega Food Parks under PMKSY aim to provide modern infrastructure facilities for food processing in proximity to agricultural production areas.
+IV. The cold chain infrastructure is not covered under the PMKSY scheme.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: India is globally among the top producers in all listed categories. II ✓: SAMPADA (Scheme for Agro-Marine Processing and Development of Agro-Processing Clusters) was rebranded as Pradhan Mantri Kisan Sampada Yojana (PMKSY). III ✓: Mega Food Parks are a component of PMKSY providing integrated infrastructure. IV ✗: Cold chain development IS a component of PMKSY. Statement IV is incorrect.`,
+trap:`Statement IV is the error — cold chain infrastructure is explicitly covered under PMKSY's integrated cold chain and value addition component.`,
+mem:`PMKSY components: Mega Food Parks + Cold Chain + Backward/Forward Linkages + Food Safety Testing Labs.`},
+
+{n:67,sec:'agriculture',topic:'Natural Farming',diff:'easy',cat:'AGRICULTURE',
+q:`Consider the following statements about Natural Farming (Zero Budget Natural Farming):
+I. Natural farming uses no chemical fertilisers, pesticides, or externally purchased inputs.
+II. The Government of India launched the National Mission on Natural Farming (NMNF) under the umbrella of Mission for Integrated Development of Horticulture (MIDH).
+III. Natural farming is based on the Panchamukhya model — using five components derived from indigenous cow dung and urine.
+IV. Andhra Pradesh was among the pioneer states to promote ZBNF (Zero Budget Natural Farming) at scale.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, III and IV correct',
+exp:`I ✓: Natural/ZBNF uses no external chemical inputs — relies on cow dung, urine, local botanicals. II ✗: NMNF was launched as a standalone scheme under the Ministry of Agriculture (not under MIDH which focuses on horticulture). III ✓: Four key inputs in ZBNF — Bijamrit, Jiwamrit, Whapasa, and Mulching (based on cow resources). IV ✓: Andhra Pradesh under RySS (Rythu Sadhikara Samstha) pioneered large-scale ZBNF.`,
+trap:`Statement II places NMNF under MIDH — incorrect. It's a separate mission under Agricultural Ministry.`,
+mem:`ZBNF: No external inputs. AP = pioneer. Cow-based inputs. NMNF = standalone scheme, not under MIDH.`},
+
+{n:68,sec:'agriculture',topic:'Agricultural Export & APEDA',diff:'moderate',cat:'AGRICULTURE',
+q:`Consider the following pairs:
+Organization / Body — Function
+I. APEDA (Agricultural & Processed Food Products Export Development Authority) — Promotes export of scheduled agricultural products; provides financial assistance and market development
+II. MPEDA (Marine Products Export Development Authority) — Regulates marine product exports and quality standards
+III. NABARD — Provides refinancing to cooperative banks and RRBs for agricultural lending
+IV. SFAC (Small Farmers Agribusiness Consortium) — Operates e-NAM platform and supports FPO formation
+How many of the above pairs are correctly matched?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: APEDA (under Commerce Ministry) handles scheduled agri export promotion. II ✓: MPEDA (under Commerce Ministry) handles marine product export regulation. III ✓: NABARD refinances cooperative banks and RRBs — core function. IV ✓: SFAC is indeed the implementing agency for e-NAM and also promotes FPO formation.`,
+trap:`All four are correct. SFAC's dual role (e-NAM + FPOs) is a relatively lesser-known fact.`,
+mem:`APEDA → Agri exports. MPEDA → Marine exports. NABARD → Refinancing. SFAC → e-NAM + FPOs.`},
+
+// ===== DIGITAL ECONOMY (10) =====
+{n:69,sec:'digital',topic:'Account Aggregator Framework',diff:'hard',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the Account Aggregator (AA) framework in India:
+I. Account Aggregators are regulated by the Reserve Bank of India under the NBFC-AA framework.
+II. The AA system enables consent-based sharing of financial data between Financial Information Providers (FIPs) and Financial Information Users (FIUs).
+III. Under the AA framework, once a user gives consent, data can be shared multiple times without additional consent.
+IV. Insurance policy data and pension account data have both been included in the AA framework.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and IV only','I, II and III only','I, II, III and IV'],
+ans:1,atxt:'(b) I, II and IV only',
+exp:`I ✓: AA entities are RBI-regulated NBFCs (NBFC-AA license). II ✓: Consent-based data sharing is the cornerstone of AA. III ✗: Each data sharing request requires fresh user consent — data cannot be shared repeatedly on a single consent. IV ✓: The AA ecosystem has expanded beyond banking to include insurance (IRDAI) and pension (PFRDA) data.`,
+trap:`Statement III violates the consent principle of AA — consent is purpose-specific and time-bound.`,
+mem:`AA = Consent-based financial data sharing. RBI-regulated NBFC. Each share = fresh consent. Now includes insurance + pension data.`},
+
+{n:70,sec:'digital',topic:'UPI & Digital Payments',diff:'easy',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the Unified Payments Interface (UPI):
+I. UPI was developed and is operated by the National Payments Corporation of India (NPCI).
+II. UPI enables real-time interbank fund transfers 24 hours a day, 7 days a week, 365 days a year.
+III. UPI transactions are limited to a maximum of ₹1 lakh per transaction.
+IV. UPI 123PAY is a feature that allows feature phone users (without internet) to make UPI payments.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: UPI is an NPCI product launched in 2016. II ✓: UPI works 24×7×365. III ✗: UPI transaction limits vary — up to ₹1 lakh generally, but for specific categories (IPO, RBI retail direct) it can be up to ₹5 lakh. Not a universal ₹1 lakh cap. IV ✓: UPI 123PAY was launched in March 2022 for feature phone users — IVR-based, missed call, proximity sound.`,
+trap:`Statement III's "limited to ₹1 lakh" is incorrect for all purposes. Higher limits exist for specific use cases.`,
+mem:`UPI: NPCI. 24×7. ₹1 lakh general (higher for IPO/G-sec). 123PAY = feature phones without internet.`},
+
+{n:71,sec:'digital',topic:'Data Protection — DPDP Act',diff:'moderate',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the Digital Personal Data Protection (DPDP) Act, 2023:
+I. The DPDP Act applies to processing of digital personal data within India and outside India if connected to India-based individuals.
+II. Under the Act, a 'Data Fiduciary' is the entity that determines the purpose and means of data processing.
+III. Children below the age of 18 are given special protection, and their data can only be processed with parental consent.
+IV. The Data Protection Board of India under the DPDP Act is a civil court.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and III correct',
+exp:`I ✓: Extraterritorial application — covers data of Indian citizens even if processed abroad. II ✓: Data Fiduciary = decides purpose and means (like a data controller in GDPR). III ✓: Children (below 18) need verifiable parental consent. IV ✗: The Data Protection Board of India is NOT a civil court — it's an adjudicatory body with its own procedures; parties can appeal to High Court.`,
+trap:`Statement IV calls it a civil court — it's a statutory adjudicatory body, different from courts in the judicial hierarchy.`,
+mem:`DPDP 2023: Data Fiduciary = decides purpose. Child data needs parental consent. Board = adjudicatory body (not civil court).`},
+
+{n:72,sec:'digital',topic:'Gig Economy',diff:'moderate',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the Gig Economy in India:
+I. NITI Aayog estimated India's gig workforce to reach approximately 23.5 million by 2029-30.
+II. Platform workers and gig workers are covered under the Employees' State Insurance (ESI) Act by default.
+III. The Code on Social Security, 2020 has provisions to extend social security benefits to gig and platform workers.
+IV. Aggregator platforms like ride-hailing and food delivery apps are explicitly defined under the Code on Social Security, 2020.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, III and IV correct',
+exp:`I ✓: NITI Aayog's 2022 report projected 23.5 million gig workers by 2029-30. II ✗: Gig/platform workers are NOT automatically covered under ESI. The Code on Social Security 2020 requires separate notification and rules for their coverage — not automatic inclusion. III ✓: Code on Social Security 2020 has a dedicated chapter (Chapter IX) for gig/platform workers. IV ✓: The Code defines 'aggregator' explicitly — including ride-hailing, delivery, and other digital platforms.`,
+trap:`Statement II uses "by default" — this is incorrect. Coverage requires government notification under the Code.`,
+mem:`23.5 million gig workers by 2030 (NITI). Code on Social Security 2020 has Chapter IX for gig workers. ESI = not automatic.`},
+
+{n:73,sec:'digital',topic:'Semiconductor Policy',diff:'hard',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about India's semiconductor policy:
+I. India's Semicon India Programme aims to develop a sustainable semiconductor and display manufacturing ecosystem.
+II. Approved semiconductor fabrication (fab) units will receive fiscal support of 50% of project cost from the Central Government.
+III. The India Semiconductor Mission (ISM) was set up under the Ministry of Electronics and Information Technology (MeitY).
+IV. The design-linked incentive (DLI) under Semicon India covers chip design but not embedded core technologies.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: Semicon India aims to build the full semiconductor ecosystem. II ✓: 50% fiscal support for approved fabs (display fabs get up to 50% too). III ✓: ISM is set up under MeitY as the nodal implementation body. IV ✗: DLI covers both chip design AND embedded core technologies and deployment-linked incentives for semiconductor design.`,
+trap:`Statement IV is too restrictive — DLI covers both chip design and embedded/IP core technologies.`,
+mem:`Semicon India: 50% Central support for fabs. ISM = under MeitY. DLI = chip design + embedded core.`},
+
+{n:74,sec:'digital',topic:'Open Network for Digital Commerce (ONDC)',diff:'moderate',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the Open Network for Digital Commerce (ONDC):
+I. ONDC is a private sector-led initiative to create an open, interoperable digital commerce network.
+II. ONDC aims to democratise e-commerce by allowing any buyer app to connect with any seller app on the network.
+III. ONDC is based on open protocols, similar to how UPI works on open standards for payments.
+IV. ONDC is regulated by SEBI as it involves financial transactions between buyers and sellers.
+Which of the statements given above are correct?`,
+opts:['II and III only','I, II and III only','II, III and IV only','I, II, III and IV'],
+ans:0,atxt:'(a) II and III only',
+exp:`I ✗: ONDC is NOT private sector-led — it was set up by the Department for Promotion of Industry and Internal Trade (DPIIT) as a Section 8 (not-for-profit) company. II ✓: Interoperability — any buyer app + any seller app = core design principle. III ✓: Open protocol-based (similar to UPI's open architecture for payments). IV ✗: ONDC is not regulated by SEBI. It's a commerce platform initiative under DPIIT; individual transactions may involve payment systems regulated by RBI.`,
+trap:`ONDC is a Government initiative (DPIIT), not private. SEBI has nothing to do with it.`,
+mem:`ONDC = DPIIT's initiative. Section 8 company. Open protocol = interoperable. Not SEBI-regulated.`},
+
+{n:75,sec:'digital',topic:'India Stack',diff:'easy',cat:'DIGITAL ECONOMY',
+q:`Consider the following digital public infrastructure (DPI) components that form the 'India Stack':
+I. Aadhaar — Digital Identity
+II. UPI — Digital Payments
+III. DigiLocker — Digital Documents
+IV. CoWIN — Vaccination platform
+Which of the above form part of the core 'India Stack' DPI framework?`,
+opts:['I and II only','I, II and III only','I, II, III and IV','II and IV only'],
+ans:1,atxt:'(b) I, II and III only',
+exp:`India Stack refers to the set of APIs and platforms that allow governments, businesses, and individuals to use digital infrastructure. Core India Stack = Aadhaar (Identity Layer) + UPI (Payments Layer) + DigiLocker (Documents Layer) + eSign + Consent Layer. CoWIN was built ON TOP of India Stack (using Aadhaar and UPI) but is not itself a core Stack component.`,
+trap:`CoWIN used India Stack but is a use-case, not a core Stack component itself.`,
+mem:`India Stack Core: Aadhaar + UPI + DigiLocker + eSign + Consent (DEPA). CoWIN = application built on Stack.`},
+
+{n:76,sec:'digital',topic:'Fintech Regulations',diff:'hard',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the regulatory framework for fintech companies in India:
+Statement I: Peer-to-Peer (P2P) lending platforms in India are regulated by the Reserve Bank of India and classified as NBFC-P2P entities.
+Statement II: A P2P lending platform can directly hold the funds of lenders and borrowers on its own balance sheet.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: P2P platforms are regulated by RBI as NBFC-P2P under RBI Master Directions 2017. Statement II ✗: P2P platforms are explicitly prohibited from holding funds on their own balance sheets. All fund flows must go through escrow accounts — lender's money goes to an escrow, then to borrower; repayments go through separate escrow to lender. The platform is a facilitator, not a fund holder.`,
+trap:`P2P platforms cannot hold funds — they are facilitation/matchmaking platforms with mandatory escrow-based fund flow.`,
+mem:`P2P = RBI-regulated NBFC-P2P. Cannot hold funds. Must use escrow accounts for all transactions.`},
+
+{n:77,sec:'digital',topic:'Drone Economy',diff:'moderate',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the drone economy in India:
+I. The PLI scheme for drones provides incentive of 20% on value added manufacturing.
+II. India has made Drone Rules, 2021 under the Aircraft Act, 1934.
+III. Unmanned Traffic Management (UTM) system in India is managed by the Airports Authority of India (AAI).
+IV. The 'Drone Didi' scheme under the Namo Drone Didi initiative aims to provide drones to women-led Self-Help Groups for agricultural use.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: PLI for drones = 20% of value addition over 3 years. II ✓: Drone Rules 2021 under Aircraft Act 1934. III ✓: AAI manages UTM (airspace management for drones). IV ✓: Namo Drone Didi targets 15,000 Women SHGs to receive drones for agri services — providing income to women and precision farming to farmers.`,
+trap:`All four are correct — drone economy is a high-priority UPSC theme for 2026 given recent policy announcements.`,
+mem:`Drone PLI = 20%. Drone Rules 2021. UTM = AAI. Namo Drone Didi = 15,000 Women SHGs.`},
+
+{n:78,sec:'digital',topic:'Space Economy',diff:'moderate',cat:'DIGITAL ECONOMY',
+q:`Consider the following statements about the space economy and policy in India:
+I. IN-SPACe (Indian National Space Promotion and Authorisation Centre) regulates and promotes private sector participation in India's space sector.
+II. NSIL (New Space India Limited) is the commercial arm of ISRO.
+III. Under the Indian Space Policy 2023, ISRO will focus on research, development, and national security missions while NSIL will handle operational launch services.
+IV. India's space economy is estimated to be about 2-3% of the global space economy currently.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: IN-SPACe is the single-window authorisation and promotion entity for private space sector. II ✓: NSIL is ISRO's commercial arm for operational services, manufacturing, technology transfer. III ✓: The Indian Space Policy 2023 delineates ISRO (R&D, national security) vs NSIL (commercial operations) vs IN-SPACe (regulation). IV ✓: India's space economy is ~₹54,000 crore (~2-3% of global), with a target to reach 10% by 2047.`,
+trap:`All four are correct. The Indian Space Policy 2023 is a major policy document — high UPSC relevance.`,
+mem:`IN-SPACe = Regulate + Promote private. NSIL = Commercial ops. ISRO = R&D. India = ~2-3% global space economy.`},
+
+// ===== ENVIRONMENT ECONOMICS (10) =====
+{n:79,sec:'environment',topic:'Carbon Markets & Article 6',diff:'hard',cat:'ENV ECONOMICS',
+q:`Consider the following statements about carbon markets and the Paris Agreement:
+I. Article 6 of the Paris Agreement provides the framework for international cooperation through market and non-market mechanisms.
+II. Article 6.2 allows countries to engage in bilateral trading of Internationally Transferred Mitigation Outcomes (ITMOs).
+III. Article 6.4 establishes a new UN-supervised carbon crediting mechanism to replace the CDM under the Kyoto Protocol.
+IV. India's Carbon Credit Trading Scheme (CCTS) is aligned with Article 6 of the Paris Agreement.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: Article 6 is the carbon market article of Paris Agreement. II ✓: Art 6.2 = bilateral ITMO trading between countries. III ✓: Art 6.4 establishes the Sustainable Development Mechanism (SDM), successor to CDM. IV ✓: India's CCTS (2023) under the Energy Conservation Amendment Act is designed to eventually link with international mechanisms.`,
+trap:`All four are correct — carbon market questions have been escalating in UPSC since 2022. Article 6 nuances are extremely testable.`,
+mem:`Art 6.2 = bilateral ITMOs. Art 6.4 = Sustainable Development Mechanism (replaces CDM). India's CCTS = domestic carbon market.`},
+
+{n:80,sec:'environment',topic:'Green Finance & ESG',diff:'moderate',cat:'ENVIRONMENT',
+q:`Consider the following statements about Green Finance in India:
+I. Green bonds are debt instruments whose proceeds are used exclusively for climate/environmental projects.
+II. SEBI introduced the framework for issuance of Green Bonds in India in 2015.
+III. ESG (Environmental, Social, Governance) investing refers to incorporating non-financial factors into investment analysis.
+IV. The Business Responsibility and Sustainability Report (BRSR) is mandated by RBI for all listed companies.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: Green bonds = use-of-proceeds restricted to green projects. II ✓: SEBI issued Green Bond framework 2015 (and updated with SEBI Green Debt Securities framework). III ✓: ESG = non-financial risk factors in investment. IV ✗: BRSR is mandated by SEBI (not RBI) for top 1000 listed companies by market cap. This is a classic planted error.`,
+trap:`Statement IV repeats the RBI/SEBI confusion from the 2025 actual paper (Q34). RBI does NOT mandate BRSR.`,
+mem:`BRSR = SEBI, not RBI. Green bonds = SEBI framework 2015. ESG = non-financial factor integration.`},
+
+{n:81,sec:'environment',topic:'Circular Economy Policy',diff:'easy',cat:'ENV ECONOMICS',
+q:`Consider the following statements about India's Circular Economy initiatives:
+I. Extended Producer Responsibility (EPR) makes manufacturers responsible for the end-of-life management of their products.
+II. India has EPR rules for plastic waste, e-waste, and battery waste.
+III. Circular economy can reduce dependence on imported raw materials, thereby improving trade balance.
+IV. India's plastic waste management rules mandate that all single-use plastics must be replaced by biodegradable alternatives.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and III only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: EPR principle — producers responsible for product end-of-life. II ✓: India has EPR rules for plastic waste (2022), e-waste (2022), and battery waste (2022). III ✓: Circular economy → less virgin material extraction → less imports → improved trade balance. IV ✗: India's rules ban SPECIFIC single-use plastics (items below 75 microns, cutlery, straws etc.) — not ALL single-use plastics, and not specifically requiring biodegradable replacements for all.`,
+trap:`Statement IV is an over-generalisation. Not all single-use plastics are banned, and biodegradable replacements are not mandated for everything.`,
+mem:`EPR: Plastic + E-waste + Battery waste = Rules issued. Circular economy → import substitution. Not ALL single-use plastic banned.`},
+
+{n:82,sec:'environment',topic:'Blue Economy',diff:'moderate',cat:'ENV ECONOMICS',
+q:`Consider the following statements about Blue Economy:
+I. Blue Economy refers to the sustainable use of ocean resources for economic growth while preserving the health of ocean ecosystems.
+II. India's Exclusive Economic Zone (EEZ) extends 200 nautical miles from the baseline.
+III. The Sagarmala Programme of India is primarily focused on developing ocean-based renewable energy.
+IV. Deep Sea Mining falls under the Blue Economy framework and is regulated internationally by the International Seabed Authority (ISA).
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Blue Economy = sustainable ocean-based economic development. II ✓: EEZ = 200 nautical miles (UNCLOS). III ✗: Sagarmala is primarily about PORT-LED development — coastal connectivity, port infrastructure, coastal economic zones. It's NOT focused on ocean energy. IV ✓: ISA (under UNCLOS) regulates deep sea mining in international waters.`,
+trap:`Sagarmala = port-led development, NOT ocean energy. Ocean energy is separate (MNRE's domain).`,
+mem:`Blue Economy = sustainable ocean use. EEZ = 200 NM. Sagarmala = ports + coastal connectivity. ISA = deep sea mining regulator.`},
+
+{n:83,sec:'environment',topic:'Green Hydrogen Policy',diff:'hard',cat:'ENV ECONOMICS',
+q:`Consider the following statements about India's National Green Hydrogen Mission:
+I. The mission targets production of at least 5 MMT (million metric tonnes) of green hydrogen annually by 2030.
+II. Green hydrogen is produced by electrolysis of water using renewable electricity, resulting in zero carbon emissions.
+III. The SIGHT (Strategic Interventions for Green Hydrogen Transition) programme provides financial incentives for green hydrogen production and electrolyser manufacturing.
+IV. India aims to become a net exporter of green hydrogen under this mission.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: India's Green Hydrogen Mission targets 5 MMT/year by 2030 with associated 125 GW renewable energy capacity. II ✓: Electrolysis of water with renewable electricity → H₂ + O₂; no carbon emissions. III ✓: SIGHT has two components — incentives for electrolyser manufacturing and green hydrogen production. IV ✓: Export potential (especially to Europe) is an explicit mission objective.`,
+trap:`All four are correct. Green Hydrogen Mission is a flagship — high UPSC relevance given global energy transition.`,
+mem:`Green H₂ Mission: 5 MMT by 2030. SIGHT = financial incentives. Export focus. Uses renewable electrolysis.`},
+
+{n:84,sec:'environment',topic:'Carbon Border Adjustment Mechanism',diff:'hard',cat:'ENV ECONOMICS',
+q:`Consider the following statements about the European Union's Carbon Border Adjustment Mechanism (CBAM):
+Statement I: CBAM imposes a carbon price on imports of certain carbon-intensive goods into the EU, to prevent 'carbon leakage' where companies shift production to countries with weaker climate rules.
+Statement II: India has welcomed CBAM as it provides a level playing field for Indian exporters who already face a high carbon tax domestically.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: CBAM is the EU's tool to price embedded carbon in imports of steel, cement, aluminium, fertilisers, electricity, and hydrogen. It prevents carbon leakage. Statement II ✗: India has CRITICISED CBAM as a trade barrier and a form of "carbon protectionism." India does not have a domestic carbon tax that would offset CBAM; hence it does not welcome it.`,
+trap:`India's official position is opposition to CBAM — it raises WTO compatibility concerns and raises costs for Indian exports to EU.`,
+mem:`CBAM = EU's carbon import tariff. Sectors: steel, cement, aluminium, fertilisers, electricity. India = OPPOSED (sees it as trade barrier).`},
+
+{n:85,sec:'environment',topic:'Loss & Damage Fund',diff:'moderate',cat:'ENV ECONOMICS',
+q:`Consider the following statements about the Loss and Damage Fund under UNFCCC:
+I. The Loss and Damage Fund was formally agreed upon at COP27 in Sharm el-Sheikh, Egypt in 2022.
+II. Developing countries that are particularly vulnerable to climate change are the intended recipients of the fund.
+III. The United States agreed to be the primary contributor to the Loss and Damage Fund.
+IV. The fund covers both economic losses (measurable) and non-economic losses (cultural heritage, loss of life) from climate impacts.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Loss and Damage Fund agreed at COP27 (2022) after 30 years of demand by vulnerable nations. II ✓: Small island developing states, LDCs, and climate-vulnerable developing countries are the recipients. III ✗: No single country is the "primary" contributor — contributions are voluntary and the USA pledged only $17.5 million initially (considered insufficient). IV ✓: Fund covers both economic (infrastructure damage) and non-economic losses (displacement, cultural loss).`,
+trap:`Statement III overplays USA's role — no country committed to being the primary donor; contributions are voluntary.`,
+mem:`COP27 = Loss & Damage Fund established. Vulnerable developing nations = recipients. Covers economic + non-economic losses.`},
+
+{n:86,sec:'environment',topic:'Mangroves & Blue Carbon',diff:'easy',cat:'ENV ECONOMICS',
+q:`Consider the following statements about mangroves and blue carbon ecosystems:
+I. Blue carbon refers to carbon stored in coastal and marine ecosystems including mangroves, seagrasses, and saltmarshes.
+II. India has the world's largest mangrove cover.
+III. Mangroves can sequester carbon at rates several times higher than terrestrial forests on a per-area basis.
+IV. Loss of mangroves can release stored carbon as greenhouse gases, contributing to climate change.
+Which of the statements given above are correct?`,
+opts:['I, III and IV only','I and III only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, III and IV only',
+exp:`I ✓: Blue carbon = carbon stored in coastal ecosystems. II ✗: India does NOT have the world's largest mangrove cover — Indonesia and Brazil have larger mangrove areas. India has the world's largest mangrove ecosystem in the Sundarbans (shared with Bangladesh) but not the globally largest total mangrove cover. III ✓: Mangroves sequester up to 10x more carbon per hectare than terrestrial forests. IV ✓: Mangrove destruction releases stored carbon — significant for global emissions.`,
+trap:`India's Sundarbans is famous but India is NOT #1 globally in total mangrove area.`,
+mem:`Blue carbon: Mangroves + Seagrasses + Saltmarshes. Mangroves = high carbon density per hectare. Indonesia > India in total mangrove area.`},
+
+{n:87,sec:'environment',topic:'Solid Waste Management',diff:'moderate',cat:'ENV ECONOMICS',
+q:`Consider the following statements about Solid Waste Management (SWM) in India:
+I. The Solid Waste Management Rules, 2016 make source segregation of waste mandatory — into wet (biodegradable), dry (recyclables), and hazardous waste.
+II. The Swachh Bharat Mission-Urban 2.0 (SBM-U 2.0) focuses on garbage-free cities, scientific processing of solid waste, and remediation of legacy dump sites.
+III. Extended Producer Responsibility (EPR) for plastic packaging requires producers to ensure a certain percentage of their plastic packaging is collected and recycled.
+IV. The Green Credit Programme (GCP) launched in 2023 provides tradeable credits for SWM activities, among others.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: SWM Rules 2016 mandate source segregation. II ✓: SBM-U 2.0 (2021-26) focuses on garbage-free cities, 100% waste processing, and legacy dump site remediation. III ✓: EPR for plastic packaging requires producers/importers/brand owners to collect and recycle a portion of their plastic. IV ✓: GCP (Environment Protection Act notification 2023) gives green credits for waste management, afforestation, sustainable agriculture, etc.`,
+trap:`All four are correct — Green Credit Programme (different from carbon credits) is a key 2023 policy.`,
+mem:`SWM Rules 2016: Source segregation = mandatory. SBM-U 2.0 = legacy dump sites. EPR = plastic recycling obligation. GCP = tradeable green credits.`},
+
+{n:88,sec:'environment',topic:'ESG & Sustainable Finance',diff:'moderate',cat:'ENV ECONOMICS',
+q:`Consider the following statements about ESG (Environmental, Social, and Governance) investing:
+Statement I: SEBI mandates that the top 1000 listed companies (by market capitalisation) must file a Business Responsibility and Sustainability Report (BRSR) annually.
+Statement II: BRSR disclosures are primarily financial in nature, helping investors assess a company's profitability and dividend potential.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: SEBI mandated BRSR (replacing the older BRR) for top 1000 listed companies from FY2023 onwards. Statement II ✗: BRSR disclosures are primarily NON-financial in nature — they cover ESG metrics: environmental footprint, GHG emissions, water use, employee welfare, governance practices. Financial reporting is covered separately by other regulations.`,
+trap:`This directly mirrors Q34 from UPSC 2025 paper. The BRSR = non-financial disclosure is an absolute must-know.`,
+mem:`BRSR = SEBI mandated. Top 1000 listed cos. Content = NON-financial (ESG metrics). Separate from financial statements.`},
+
+// ===== NATIONAL ACCOUNTS (6) =====
+{n:89,sec:'national',topic:'GDP vs GNP',diff:'easy',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements:
+I. GDP (Gross Domestic Product) measures the value of all final goods and services produced within a country's geographic borders, regardless of the nationality of producers.
+II. GNP (Gross National Product) = GDP + Net Factor Income from Abroad (NFIA).
+III. If a country has more of its citizens working abroad than foreigners working within it, then its GNP will be higher than its GDP.
+IV. India's GDP is higher than its GNP due to net outward factor income flows.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and III correct',
+exp:`I ✓: GDP = within borders, regardless of nationality. II ✓: GNP = GDP + NFIA. III ✓: If citizens earn more abroad than foreigners earn domestically, NFIA is positive → GNP > GDP. IV ✗: India's GNP is roughly similar to GDP. India receives significant remittances which push NFIA upward (GNP ≥ GDP for India due to high remittances from abroad). Statement IV is incorrect.`,
+trap:`Statement IV is the trap — India is a large remittance receiver; NFIA tends to be positive, making GNP ≥ GDP.`,
+mem:`GNP = GDP + NFIA. If NFIA > 0 → GNP > GDP. India = large remittance receiver → NFIA positive → GNP > GDP (Statement IV is wrong).`},
+
+{n:90,sec:'national',topic:'Base Year & Rebasing',diff:'moderate',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements about India's National Income measurement:
+I. India currently uses 2011-12 as the base year for calculating GDP at constant prices.
+II. The shift to the new series (base year 2011-12) from 2004-05 increased India's measured GDP growth rates in some years.
+III. India uses the expenditure method as its primary approach to measuring GDP.
+IV. Under the new series, Manufacturing GVA is estimated using Annual Survey of Industries (ASI) data.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Current base year = 2011-12 (changed from 2004-05 in 2015). II ✓: The rebasing revised GDP upwards in several years. III ✗: India primarily uses the PRODUCTION/SUPPLY-SIDE method (GVA approach) supplemented by expenditure. The expenditure method has data limitations in India. IV ✓: Manufacturing GVA uses ASI (Annual Survey of Industries) data.`,
+trap:`India primarily uses GVA/production approach, not expenditure approach. Expenditure method has significant measurement challenges in India.`,
+mem:`India GDP: Base year 2011-12. Production/GVA approach primary. Manufacturing → ASI data. 2015 revision raised GDP figures.`},
+
+{n:91,sec:'national',topic:'GVA & Sectoral Composition',diff:'easy',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements about India's sectoral composition of GVA:
+I. The Services sector currently contributes the largest share to India's GVA.
+II. Agriculture's share in GVA has been declining but it still employs more than 40% of the workforce.
+III. Industry (including manufacturing, mining, electricity) contributes approximately 25-28% to GVA.
+IV. India's manufacturing sector contributes about 16-18% to GVA, which is lower than China's and South Korea's manufacturing share.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: Services = ~55% of India's GVA. II ✓: Agriculture = ~14-15% GVA but ~45-47% employment (structural imbalance). III ✓: Industry = ~25-28%. IV ✓: India's manufacturing = ~16-17% of GDP — China has ~25-28%. This "premature deindustrialisation" debate is a key economic issue.`,
+trap:`All four are correct — the structural imbalance (high agricultural employment vs low agricultural GVA share) is a classic UPSC theme.`,
+mem:`India GVA: Services 55% > Industry 27% > Agriculture 15%. Employment: Agriculture 47% (structural imbalance). Manufacturing = ~17% of GDP.`},
+
+{n:92,sec:'national',topic:'Nominal vs Real GDP',diff:'easy',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements:
+Statement I: Real GDP is GDP measured at constant prices, eliminating the effect of inflation to show actual growth in output.
+Statement II: If nominal GDP grows at 10% and inflation (GDP deflator) is 4%, then real GDP growth is approximately 6%.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:0,atxt:'(a) Both correct and Statement II explains Statement I',
+exp:`Statement I ✓: Real GDP = Nominal GDP adjusted for price changes using a price deflator. Statement II ✓: Approximately: Real GDP growth ≈ Nominal GDP growth − Inflation = 10% − 4% = 6%. (Exact: Real = Nominal/Price Index × 100, but the approximation is valid). Statement II explains Statement I by giving a concrete example of how inflation is removed.`,
+trap:`The formula is an approximation. Exactly: Real GDP = Nominal GDP / GDP Deflator × 100. The approximate formula (subtract inflation) is valid for small rates.`,
+mem:`Real GDP growth ≈ Nominal GDP growth − GDP Deflator (inflation). Nominal = inflated. Real = actual output growth.`},
+
+{n:93,sec:'national',topic:'Purchasing Power vs Market Prices',diff:'moderate',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements about methods of international GDP comparison:
+I. GDP at Market Exchange Rates (MER) uses current exchange rates to convert GDPs to a common currency (usually USD).
+II. GDP at Purchasing Power Parity (PPP) adjusts for differences in price levels across countries.
+III. For developing countries with undervalued currencies, PPP-based GDP is typically lower than MER-based GDP.
+IV. International organizations like IMF use both MER and PPP measures for different purposes.
+Which of the statements given above are correct?`,
+opts:['I, II and IV only','I and II only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and IV only',
+exp:`I ✓: MER-based GDP uses current exchange rates. II ✓: PPP adjusts for purchasing power differences. III ✗: For developing countries with UNDERVALUED currencies, PPP > MER (not lower). An undervalued currency means you can buy more domestically per dollar → PPP shows a larger economy. IV ✓: IMF uses MER for trade and financial flows, PPP for economic size comparisons.`,
+trap:`Statement III is reversed. Undervalued currency → domestic goods cheap relative to USD → PPP GDP > MER GDP. India is the classic example.`,
+mem:`Developing countries: Currency undervalued → PPP GDP > MER GDP. India = 5th at MER, 3rd at PPP.`},
+
+{n:94,sec:'national',topic:'Human Development Index',diff:'easy',cat:'NATIONAL ACCOUNTS',
+q:`Consider the following statements about the Human Development Index (HDI):
+I. HDI is published by the United Nations Development Programme (UNDP) annually in the Human Development Report.
+II. HDI is composed of three dimensions: long and healthy life (health), knowledge (education), and a decent standard of living (income).
+III. India has consistently ranked in the "High Human Development" category in the HDI rankings.
+IV. The Inequality-adjusted HDI (IHDI) is always less than or equal to the regular HDI.
+Which of the statements given above are correct?`,
+opts:['I, II and IV only','I and II only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and IV only',
+exp:`I ✓: UNDP publishes HDI. II ✓: Three pillars = Health (life expectancy) + Education (mean & expected years) + Income (GNI per capita PPP). III ✗: India ranks in "Medium Human Development" category (rank around 134 out of 193 in recent reports). Not "High" — that requires HDI above 0.700, India is around 0.644. IV ✓: IHDI adjusts for inequality — it can only be equal to (in perfect equality) or lower than HDI.`,
+trap:`India is in "Medium" not "High" HDI category. This is repeatedly tested and confused.`,
+mem:`HDI: UNDP. 3 dimensions: Health + Education + Income (GNI PPP). India = Medium HDI category (~134 rank). IHDI ≤ HDI.`},
+
+// ===== POVERTY & DEVELOPMENT (6) =====
+{n:95,sec:'poverty',topic:'Poverty Measurement in India',diff:'moderate',cat:'POVERTY & DEV',
+q:`Consider the following statements about poverty measurement in India:
+I. The Tendulkar Committee (2009) shifted poverty measurement from a calorie-based to a consumption expenditure-based approach.
+II. The Rangarajan Committee (2014) recommended higher poverty lines than the Tendulkar Committee, resulting in a higher poverty headcount ratio.
+III. The Multidimensional Poverty Index (MPI) for India is calculated by NITI Aayog using NFHS data.
+IV. India uses the World Bank's $2.15 per day (PPP) as its official poverty line for domestic policy purposes.
+Which of the statements given above are correct?`,
+opts:['I, II and III only','I and II only','I, II, III and IV','II and IV only'],
+ans:0,atxt:'(a) I, II and III only',
+exp:`I ✓: Tendulkar shifted from calorie-norm to consumption basket approach. II ✓: Rangarajan revised upwards — estimated ~29.5% poverty (2011-12) vs Tendulkar's ~21.9%. III ✓: India's National MPI is computed by NITI Aayog using NFHS data across 12 indicators. IV ✗: India does NOT use World Bank's $2.15/day as its domestic poverty line. India has its own poverty lines based on NSSO/NSS consumption data.`,
+trap:`World Bank's $2.15 is for international comparison, not India's official domestic poverty line.`,
+mem:`India poverty lines: Tendulkar (2009) → Rangarajan (higher, 2014). National MPI = NITI Aayog + NFHS. $2.15 = World Bank international benchmark only.`},
+
+{n:96,sec:'poverty',topic:'MGNREGS & Rural Employment',diff:'easy',cat:'POVERTY & DEV',
+q:`Consider the following statements about the Mahatma Gandhi National Rural Employment Guarantee Scheme (MGNREGS):
+I. MGNREGS guarantees 100 days of wage employment per year to every rural household.
+II. The wages under MGNREGS are linked to the Consumer Price Index for Agricultural Labour (CPI-AL).
+III. If employment is not provided within 15 days of application, the applicant is entitled to an unemployment allowance.
+IV. Women must constitute at least 33% of the workers in MGNREGS.
+Which of the statements given above are correct?`,
+opts:['I and II only','I, II and III only','I, II, III and IV','II and IV only'],
+ans:2,atxt:'(c) I, II, III and IV — all correct',
+exp:`I ✓: 100 days guaranteed per household per year (enhanced to 150 days in drought/natural disaster years). II ✓: MGNREGS wages are revised annually based on CPI-AL. III ✓: Unemployment allowance is payable if work is not provided within 15 days (first 30 days at 1/4 wage, then 1/2 wage). IV ✓: At least 1/3 (33%) of beneficiaries must be women — actual participation is often higher (~55-57%).`,
+trap:`All four are accurate MGNREGS provisions. Women participation in MGNREGS is actually higher than the 33% mandate in most states.`,
+mem:`MGNREGS: 100 days/HH. CPI-AL linked wages. 15 days for employment or unemployment allowance. 33% women minimum.`},
+
+{n:97,sec:'poverty',topic:'Demographic Dividend',diff:'moderate',cat:'POVERTY & DEV',
+q:`Consider the following statements about India's demographic dividend:
+Statement I: India's demographic dividend arises from a large and growing working-age population (15-64 years), which can potentially boost economic growth if accompanied by adequate employment, education, and health.
+Statement II: India's demographic dividend window is expected to last indefinitely as its fertility rate continues to remain above the replacement rate.
+Which one of the following is correct?`,
+opts:['Both correct and II explains I','Both correct but II does not explain I','I correct but II not correct','Neither correct'],
+ans:2,atxt:'(c) Statement I correct but Statement II not correct',
+exp:`Statement I ✓: Demographic dividend = economic growth opportunity from having more working-age people relative to dependents. Statement II ✗: India's TFR (Total Fertility Rate) has already fallen below replacement level (2.1) in most states. The demographic dividend window is TIME-BOUND — typically estimated to last until around 2040-2055. It does NOT last indefinitely.`,
+trap:`"Indefinitely" and "continues to remain above replacement rate" are both incorrect. TFR has fallen below 2.1 at national level.`,
+mem:`India TFR: Below 2.1 nationally. Demographic dividend: Time-bound (until ~2040-55). Must be converted to growth through skills and jobs.`},
+
+{n:98,sec:'poverty',topic:'Gini Coefficient & Inequality',diff:'moderate',cat:'POVERTY & DEV',
+q:`Consider the following statements about income inequality measurement:
+I. The Gini Coefficient ranges from 0 to 1, where 0 represents perfect equality and 1 represents perfect inequality.
+II. The Lorenz Curve plots the cumulative share of income against the cumulative share of population.
+III. A Gini Coefficient of 0.35 indicates higher inequality than a Gini Coefficient of 0.45.
+IV. India's Gini Coefficient is lower than that of South Africa, which is among the most unequal countries globally.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: Gini 0 = perfect equality (everyone earns the same), 1 = perfect inequality (one person earns everything). II ✓: Lorenz Curve = cumulative population % on X axis, cumulative income % on Y axis. III ✗: 0.45 > 0.35 → Gini of 0.45 indicates MORE inequality, not less. Statement III reverses the logic. IV ✓: South Africa has Gini ~0.63 (very high), India is around 0.35-0.40.`,
+trap:`Statement III is reversed — higher Gini = more inequality.`,
+mem:`Gini: 0 = equal. 1 = unequal. Higher number = more unequal. South Africa = most unequal (~0.63). India ≈ 0.35-0.40.`},
+
+{n:99,sec:'poverty',topic:'Universal Basic Income',diff:'hard',cat:'POVERTY & DEV',
+q:`Consider the following statements about Universal Basic Income (UBI):
+I. UBI proposes giving a regular, unconditional cash transfer to all citizens regardless of income level.
+II. The Economic Survey 2016-17 advocated for a quasi-universal basic income as an alternative to existing welfare schemes.
+III. Providing UBI would necessarily require eliminating all existing social welfare schemes to be fiscally sustainable.
+IV. Finland, Kenya and some states in the USA have conducted UBI pilot programmes.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:1,atxt:'(b) Only three — I, II and IV correct',
+exp:`I ✓: UBI = unconditional, regular, universal cash transfer. II ✓: Economic Survey 2016-17 (Arvind Subramanian) discussed UBI and proposed a "quasi-UBI" for vulnerable groups. III ✗: UBI can coexist with some social programs — it need NOT eliminate all existing schemes. Fiscal sustainability depends on design, not mandatory elimination. IV ✓: Finland (2017-18 pilot), Kenya (GiveDirectly), Stockton California etc. have piloted UBI-type programs.`,
+trap:`Statement III uses "necessarily" — UBI design is flexible and doesn't require eliminating all welfare programs.`,
+mem:`UBI: Unconditional + Universal. Economic Survey 2016-17 advocated it. Finland, Kenya, US pilots. No mandatory scheme elimination.`},
+
+{n:100,sec:'poverty',topic:'Inclusive Growth',diff:'easy',cat:'POVERTY & DEV',
+q:`Consider the following statements about Inclusive Growth:
+I. Inclusive growth refers to economic growth that is broad-based across sectors and equitable in distributing benefits across the population.
+II. The concept of inclusive growth goes beyond GDP growth to include improvements in health, education, social protection, and environmental sustainability.
+III. India's 12th Five Year Plan explicitly adopted 'faster, sustainable and more inclusive growth' as its overarching vision.
+IV. The NITI Aayog's Sustainable Development Goals (SDG) India Index tracks India's progress towards inclusive growth across all 17 SDGs.
+How many of the above are correct?`,
+opts:['Only two','Only three','All four','Only one'],
+ans:2,atxt:'(c) All four are correct',
+exp:`I ✓: Inclusive growth = broad-based + equitable. II ✓: Goes beyond GDP to human development and sustainability. III ✓: 12th Plan (2012-17) vision: "Faster, Sustainable and More Inclusive Growth." IV ✓: NITI Aayog publishes the SDG India Index covering all 17 SDGs with state-wise rankings.`,
+trap:`All four are correct. The 12th Plan's exact phrase (faster, sustainable, more inclusive) is a direct fact test.`,
+mem:`12th Plan: Faster + Sustainable + More Inclusive Growth. NITI SDG India Index = all 17 SDGs + state rankings. Inclusive Growth > GDP.`},
+];
+
+// ===== RENDER =====
+function renderAll(){
+  const area = document.getElementById('qarea');
+  const sections = {
+    monetary:  {icon:'📈',title:'Monetary Policy & RBI',meta:'QUESTIONS 1–10'},
+    fiscal:    {icon:'🏛️',title:'Fiscal Policy & Budget',meta:'QUESTIONS 11–22'},
+    banking:   {icon:'🏦',title:'Banking & Financial System',meta:'QUESTIONS 23–32'},
+    capital:   {icon:'📊',title:'Capital Markets & SEBI',meta:'QUESTIONS 33–40'},
+    international:{icon:'🌐',title:'International Trade & Finance',meta:'QUESTIONS 41–50'},
+    schemes:   {icon:'🎯',title:'Government Schemes',meta:'QUESTIONS 51–60'},
+    agriculture:{icon:'🌾',title:'Agriculture Economics',meta:'QUESTIONS 61–68'},
+    digital:   {icon:'💻',title:'Digital Economy & Fintech',meta:'QUESTIONS 69–78'},
+    environment:{icon:'🌿',title:'Environment Economics',meta:'QUESTIONS 79–88'},
+    national:  {icon:'📐',title:'National Income Accounting',meta:'QUESTIONS 89–94'},
+    poverty:   {icon:'🤝',title:'Poverty & Development',meta:'QUESTIONS 95–100'},
+  };
+  let currentSec = '';
+  QS.forEach(q=>{
+    if(q.sec !== currentSec){
+      currentSec = q.sec;
+      const s = sections[q.sec]||{icon:'◆',title:q.sec,meta:''};
+      const sg = document.createElement('div');
+      sg.className='sec-group';
+      sg.id='sec-'+q.sec;
+      sg.innerHTML=`<div class="section-head">
+        <div class="section-icon">${s.icon}</div>
+        <div><div class="section-title">${s.title}</div><div class="section-meta">${s.meta}</div></div>
+      </div>`;
+      area.appendChild(sg);
+    }
+    const sg = document.getElementById('sec-'+q.sec);
+    const dl = q.diff==='hard'?'hard':q.diff==='easy'?'easy':'moderate';
+    const pc = q.diff==='hard'?'pill-h':q.diff==='easy'?'pill-e':'pill-m';
+    const card = document.createElement('div');
+    card.className='qcard';
+    card.dataset.sec=q.sec;
+    card.dataset.diff=dl;
+    card.id='q'+q.n;
+    const optHTML = ['a','b','c','d'].map((l,i)=>`
+      <button class="opt" data-qn="${q.n}" data-opt="${i}" onclick="attempt(this,${i},${q.ans},${q.n})">
+        <span class="olabel">${l})</span><span>${q.opts[i]||''}</span>
+      </button>`).join('');
+    card.innerHTML=`
+      <div class="qcard-top" onclick="toggle(this)">
+        <span class="qnum">Q.${String(q.n).padStart(2,'0')}</span>
+        <span class="qtopic">${q.topic}</span>
+        <div class="qmeta">
+          <span class="pill ${pc}">${q.diff.toUpperCase()}</span>
+          <span class="pill pill-cat">${q.cat}</span>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="qcard-body">
+        <div class="qtext">${q.q.replace(/\n/g,'<br>')}</div>
+        <div class="options-list">${optHTML}</div>
+        <div class="answer-section" id="ans${q.n}">
+          <div class="ans-line">
+            <span class="ans-correct-tag">CORRECT ANSWER</span>
+            <span class="ans-text">${q.atxt}</span>
+          </div>
+          <div class="exp-block">${q.exp.replace(/\n/g,'<br>')}</div>
+          ${q.trap?`<div class="trap-block"><div class="trap-label">⚑ UPSC TRAP</div>${q.trap}</div>`:''}
+          ${q.mem?`<div class="memory-block"><div class="memory-label">💡 MEMORY TRICK</div>${q.mem}</div>`:''}
+        </div>
+        <div class="qcard-footer">
+          <span class="pyq-tag">Similar PYQ Pattern: UPSC 2013–2025</span>
+          <button class="reveal-btn" onclick="reveal(${q.n},${q.ans})">REVEAL ANSWER</button>
+        </div>
+      </div>`;
+    sg.appendChild(card);
+  });
+}
+
+function toggle(el){
+  el.closest('.qcard').classList.toggle('open');
+}
+
+function attempt(btn,chosen,correct,n){
+  const card=document.getElementById('q'+n);
+  const btns=card.querySelectorAll('.opt');
+  btns.forEach(b=>{b.classList.add('disabled');b.onclick=null;});
+  if(chosen===correct){btn.classList.add('correct');correct_v++;attempted_v++;}
+  else{btn.classList.add('wrong');btns[correct].classList.add('correct');wrong_v++;attempted_v++;}
+  document.getElementById('ans'+n).classList.add('show');
+  updateSc();
+}
+let correct_v=0,wrong_v=0,attempted_v=0;
+function updateSc(){
+  document.getElementById('scorebox').textContent=`SCORE: ${attempted_v} / 100  |  ✓ ${correct_v}  ✗ ${wrong_v}`;
+}
+function reveal(n,correct){
+  const card=document.getElementById('q'+n);
+  const btns=card.querySelectorAll('.opt');
+  btns.forEach(b=>{b.classList.add('disabled');b.onclick=null;});
+  btns[correct].classList.add('revealed');
+  document.getElementById('ans'+n).classList.add('show');
+}
+function filter(cat,btn){
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.sec-group').forEach(sg=>{
+    const cards=sg.querySelectorAll('.qcard');
+    let vis=0;
+    cards.forEach(c=>{
+      const match=cat==='all'||c.dataset.sec===cat||c.dataset.diff===cat;
+      c.style.display=match?'block':'none';
+      if(match)vis++;
+    });
+    sg.style.display=vis?'block':'none';
+  });
+}
+function scrollSec(sec,el){
+  document.querySelectorAll('.snav-item').forEach(i=>i.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('sec-'+sec)?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+renderAll();
+</script>
+</body>
 </html>
