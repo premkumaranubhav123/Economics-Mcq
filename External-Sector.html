@@ -1,0 +1,2490 @@
+bash
+
+cat > /mnt/user-data/outputs/external_sector_upsc.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>External Sector — UPSC Prelims Master Portal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1422;
+    --bg3: #141926;
+    --card: #181e2e;
+    --card2: #1d2438;
+    --border: #252d42;
+    --border2: #2e3855;
+    --text: #e8eaf6;
+    --text2: #9ba3c2;
+    --text3: #6b7399;
+    --accent: #5c7cfa;
+    --accent2: #748ffc;
+    --gold: #ffd43b;
+    --gold2: #ffe066;
+    --green: #51cf66;
+    --red: #ff6b6b;
+    --orange: #ff922b;
+    --purple: #cc5de8;
+    --teal: #20c997;
+    --pink: #f06595;
+    --glow: rgba(92,124,250,0.15);
+    --glow2: rgba(255,212,59,0.12);
+  }
+  [data-theme="light"] {
+    --bg: #f0f2fa;
+    --bg2: #e8ecf7;
+    --bg3: #dde3f5;
+    --card: #ffffff;
+    --card2: #f5f7ff;
+    --border: #d0d8f0;
+    --border2: #c0cbeb;
+    --text: #1a1f3c;
+    --text2: #3d4870;
+    --text3: #6b7399;
+    --glow: rgba(92,124,250,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+  #sidebar.collapsed { transform: translateX(-260px); }
+
+  .sidebar-logo {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(92,124,250,0.1), rgba(255,212,59,0.05));
+  }
+  .sidebar-logo .logo-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .sidebar-logo h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .sidebar-logo .sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 4px;
+  }
+
+  #search-box {
+    margin: 12px 12px 8px;
+    padding: 8px 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Outfit', sans-serif;
+    outline: none;
+    width: calc(100% - 24px);
+    transition: border-color 0.2s;
+  }
+  #search-box:focus { border-color: var(--accent); }
+  #search-box::placeholder { color: var(--text3); }
+
+  .nav-section-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 10px 18px 4px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text2);
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-item:hover, .nav-item.active {
+    background: var(--glow);
+    color: var(--accent2);
+    border-left-color: var(--accent);
+  }
+  .nav-item .nav-num {
+    font-size: 10px;
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 20px;
+  }
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    margin: 4px 18px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 2px;
+  }
+  .sidebar-footer {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+    font-size: 11px;
+    color: var(--text3);
+  }
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* MAIN CONTENT */
+  #main {
+    margin-left: 260px;
+    flex: 1;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+  }
+  #main.full { margin-left: 0; }
+
+  #topbar {
+    position: sticky;
+    top: 0;
+    background: rgba(10,14,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 24px;
+    z-index: 50;
+  }
+  [data-theme="light"] #topbar { background: rgba(240,242,250,0.92); }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  #sidebar-toggle {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  #sidebar-toggle:hover { background: var(--card2); color: var(--text); }
+  .topbar-title { font-size: 14px; font-weight: 600; color: var(--text2); }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .btn-sm {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    background: var(--bg3);
+  }
+  .btn-sm:hover { background: var(--card2); color: var(--text); }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn-primary:hover { background: var(--accent2); }
+
+  /* CONTENT AREA */
+  #content { padding: 32px 36px 80px; max-width: 1000px; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f1830 0%, #141926 40%, #0a1020 100%);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(92,124,250,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: 50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,212,59,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(92,124,250,0.15);
+    border: 1px solid rgba(92,124,250,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--accent2); }
+  .hero p { font-size: 15px; color: var(--text2); max-width: 600px; line-height: 1.7; }
+  .hero-stats {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .hero-stat .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* SECTIONS */
+  .section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+  }
+  .section-sub {
+    font-size: 12px;
+    color: var(--text3);
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { border-color: var(--border2); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title .badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge-gold { background: rgba(255,212,59,0.15); color: var(--gold); }
+  .badge-blue { background: rgba(92,124,250,0.15); color: var(--accent2); }
+  .badge-green { background: rgba(81,207,102,0.15); color: var(--green); }
+  .badge-red { background: rgba(255,107,107,0.15); color: var(--red); }
+  .badge-orange { background: rgba(255,146,43,0.15); color: var(--orange); }
+  .badge-purple { background: rgba(204,93,232,0.15); color: var(--purple); }
+  .badge-teal { background: rgba(32,201,151,0.15); color: var(--teal); }
+
+  .card p, .card li { font-size: 13.5px; color: var(--text2); line-height: 1.75; }
+  .card ul, .card ol { padding-left: 20px; }
+  .card ul li, .card ol li { margin-bottom: 4px; }
+  .card strong { color: var(--text); font-weight: 600; }
+
+  /* ACCORDION */
+  .accordion { margin-bottom: 10px; }
+  .accordion-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .accordion-header:hover { background: var(--card2); border-color: var(--border2); }
+  .accordion-header.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: var(--accent);
+    background: var(--card2);
+  }
+  .accordion-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .accordion-icon { transition: transform 0.3s; font-size: 12px; color: var(--text3); }
+  .accordion-header.open .accordion-icon { transform: rotate(180deg); }
+  .accordion-body {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 18px 22px;
+    animation: fadeIn 0.2s ease;
+  }
+  .accordion-body.open { display: block; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--bg3); }
+  th {
+    padding: 10px 14px;
+    text-align: left;
+    color: var(--text2);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border2);
+  }
+  td {
+    padding: 10px 14px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--glow); }
+  td strong { color: var(--text); }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-content { font-size: 13.5px; line-height: 1.7; }
+  .callout-content strong { display: block; font-size: 13px; margin-bottom: 4px; }
+  .callout.tip { background: rgba(81,207,102,0.08); border: 1px solid rgba(81,207,102,0.2); color: var(--text2); }
+  .callout.warning { background: rgba(255,146,43,0.08); border: 1px solid rgba(255,146,43,0.2); color: var(--text2); }
+  .callout.danger { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); color: var(--text2); }
+  .callout.info { background: rgba(92,124,250,0.08); border: 1px solid rgba(92,124,250,0.2); color: var(--text2); }
+  .callout.gold { background: rgba(255,212,59,0.08); border: 1px solid rgba(255,212,59,0.2); color: var(--text2); }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: rgba(255,107,107,0.06);
+    border: 1px solid rgba(255,107,107,0.25);
+    border-left: 4px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .trap-box .trap-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .trap-box p, .trap-box li { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* PYQ BOX */
+  .pyq-box {
+    background: rgba(255,212,59,0.05);
+    border: 1px solid rgba(255,212,59,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+  .pyq-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .pyq-box p { font-size: 13.5px; color: var(--text); line-height: 1.7; }
+  .pyq-year {
+    display: inline-block;
+    background: var(--gold);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow-container {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+
+  /* MCQ */
+  .mcq-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 18px;
+    transition: all 0.2s;
+  }
+  .mcq-number {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mcq-difficulty {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .diff-easy { background: rgba(81,207,102,0.15); color: var(--green); }
+  .diff-medium { background: rgba(255,146,43,0.15); color: var(--orange); }
+  .diff-hard { background: rgba(255,107,107,0.15); color: var(--red); }
+  .mcq-q {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+  .mcq-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+  .mcq-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--text2);
+    transition: all 0.2s;
+    background: var(--bg3);
+    user-select: none;
+  }
+  .mcq-opt:hover { border-color: var(--accent); color: var(--text); background: var(--card2); }
+  .mcq-opt.selected { border-color: var(--accent); background: rgba(92,124,250,0.1); color: var(--text); }
+  .mcq-opt.correct { border-color: var(--green); background: rgba(81,207,102,0.1); color: var(--green); }
+  .mcq-opt.wrong { border-color: var(--red); background: rgba(255,107,107,0.1); color: var(--red); }
+  .opt-key {
+    min-width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .mcq-reveal-btn {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text3);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .mcq-reveal-btn:hover { background: var(--card2); color: var(--text); border-color: var(--accent); }
+  .mcq-explanation {
+    display: none;
+    margin-top: 12px;
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.7;
+    border: 1px solid var(--border);
+  }
+  .mcq-explanation.visible { display: block; animation: fadeIn 0.3s ease; }
+  .mcq-explanation strong { color: var(--green); }
+  .mcq-explanation .wrong-label { color: var(--red); }
+
+  /* REVISION SHEET */
+  .revision-sheet {
+    background: linear-gradient(135deg, rgba(255,212,59,0.05), rgba(92,124,250,0.05));
+    border: 1px solid rgba(255,212,59,0.2);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 20px 0;
+  }
+  .revision-sheet .rev-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rev-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .rev-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .rev-item strong { color: var(--text); display: block; font-size: 12px; margin-bottom: 3px; }
+
+  /* MINDMAP */
+  .mindmap-svg { width: 100%; display: block; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* STAT BOXES */
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .stat-box .stat-val {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .stat-box .stat-label {
+    font-size: 11.5px;
+    color: var(--text3);
+    line-height: 1.4;
+  }
+
+  /* TOPPER BOX */
+  .topper-box {
+    background: linear-gradient(135deg, rgba(204,93,232,0.08), rgba(92,124,250,0.08));
+    border: 1px solid rgba(204,93,232,0.25);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 16px 0;
+  }
+  .topper-box .topper-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--purple);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .topper-box p, .topper-box li { font-size: 13.5px; color: var(--text2); line-height: 1.75; }
+
+  /* STICKY NOTES */
+  #sticky-panel {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  #sticky-btn {
+    background: var(--gold);
+    color: #000;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(255,212,59,0.3);
+    transition: all 0.2s;
+  }
+  #sticky-btn:hover { transform: scale(1.1); }
+  #sticky-notes {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 14px;
+    width: 300px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    animation: slideUp 0.2s ease;
+  }
+  #sticky-notes.visible { display: block; }
+  #sticky-notes h4 { font-size: 13px; color: var(--gold); margin-bottom: 8px; }
+  #sticky-textarea {
+    width: 100%;
+    height: 120px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: 'Outfit', sans-serif;
+    padding: 10px;
+    resize: none;
+    outline: none;
+  }
+  #sticky-textarea:focus { border-color: var(--gold); }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  /* CODE */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--teal);
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--text3);
+    margin: 2px;
+  }
+  .tag-accent { border-color: rgba(92,124,250,0.3); color: var(--accent2); background: rgba(92,124,250,0.08); }
+
+  /* SEPARATOR */
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  /* HIDDEN */
+  .section-content[data-hidden="true"] { display: none; }
+
+  /* HIGHLIGHT */
+  .hl-gold { color: var(--gold); font-weight: 600; }
+  .hl-blue { color: var(--accent2); font-weight: 600; }
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-red { color: var(--red); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+  .hl-teal { color: var(--teal); font-weight: 600; }
+  .hl-orange { color: var(--orange); font-weight: 600; }
+
+  /* MNEMONIC */
+  .mnemonic {
+    background: linear-gradient(135deg, rgba(32,201,151,0.08), rgba(92,124,250,0.08));
+    border: 1px solid rgba(32,201,151,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: var(--text2);
+  }
+  .mnemonic strong { color: var(--teal); font-size: 15px; display: block; margin-bottom: 5px; }
+
+  /* QUIZ ENGINE */
+  #quiz-section .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .quiz-score-box {
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 10px 18px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .quiz-score-box .qs-item { text-align: center; }
+  .quiz-score-box .qs-num { font-size: 20px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+  .quiz-score-box .qs-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    #sidebar { width: 240px; }
+    #main { margin-left: 0; }
+    #sidebar { transform: translateX(-240px); }
+    #sidebar.mobile-open { transform: translateX(0); }
+    #content { padding: 20px 16px 60px; }
+    .hero { padding: 24px 20px; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-tag">📘 UPSC CSE 2025–26</div>
+    <h2>External Sector<br>Master Portal</h2>
+    <div class="sub">Based on Sanjiv Verma • Economic Survey • RBI</div>
+  </div>
+
+  <input type="text" id="search-box" placeholder="🔍 Search topics..." oninput="searchTopics(this.value)">
+
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div style="font-size:11px; color:var(--text3); padding:2px 18px 8px; display:flex; justify-content:space-between;">
+    <span>Progress</span><span id="progress-text">0%</span>
+  </div>
+
+  <div class="nav-section-label">Foundations</div>
+  <a class="nav-item active" href="#s1" onclick="setActive(this)"><span class="nav-num">01</span>Foundation of External Sector</a>
+  <a class="nav-item" href="#s2" onclick="setActive(this)"><span class="nav-num">02</span>Balance of Payments (BoP)</a>
+  <a class="nav-item" href="#s3" onclick="setActive(this)"><span class="nav-num">03</span>Foreign Exchange Rates</a>
+
+  <div class="nav-section-label">Reserves & Policy</div>
+  <a class="nav-item" href="#s4" onclick="setActive(this)"><span class="nav-num">04</span>Forex Reserves</a>
+  <a class="nav-item" href="#s5" onclick="setActive(this)"><span class="nav-num">05</span>Convertibility</a>
+  <a class="nav-item" href="#s6" onclick="setActive(this)"><span class="nav-num">06</span>International Organizations</a>
+
+  <div class="nav-section-label">Trade Architecture</div>
+  <a class="nav-item" href="#s7" onclick="setActive(this)"><span class="nav-num">07</span>Trade Agreements</a>
+  <a class="nav-item" href="#s8" onclick="setActive(this)"><span class="nav-num">08</span>Exports, Imports & Barriers</a>
+  <a class="nav-item" href="#s9" onclick="setActive(this)"><span class="nav-num">09</span>WTO & Global Trade</a>
+
+  <div class="nav-section-label">Capital & RBI</div>
+  <a class="nav-item" href="#s10" onclick="setActive(this)"><span class="nav-num">10</span>External Debt & Capital Flows</a>
+  <a class="nav-item" href="#s11" onclick="setActive(this)"><span class="nav-num">11</span>RBI & External Sector</a>
+  <a class="nav-item" href="#s12" onclick="setActive(this)"><span class="nav-num">12</span>Current Affairs 2024–25</a>
+
+  <div class="nav-section-label">Practice</div>
+  <a class="nav-item" href="#quiz-section" onclick="setActive(this)"><span class="nav-num">🎯</span>MCQ Practice Engine</a>
+  <a class="nav-item" href="#prediction" onclick="setActive(this)"><span class="nav-num">🔮</span>UPSC Prediction Engine</a>
+
+  <div class="sidebar-footer">
+    <div style="margin-bottom:6px;">Quiz Score</div>
+    <div class="score-display"><span id="sidebar-score">0</span> / <span id="sidebar-total">0</span></div>
+    <div style="font-size:10px; color:var(--text3); margin-top:4px;">Topics completed: <span id="completed-count">0</span></div>
+  </div>
+</nav>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-left">
+    <button id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <span class="topbar-title">External Sector — UPSC Prelims</span>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-sm" onclick="toggleTheme()">🌓 Theme</button>
+    <button class="btn-sm btn-primary" onclick="scrollToQuiz()">Take Quiz</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+<div id="content">
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-badge">⚡ Elite UPSC Preparation</div>
+  <h1>Master the <span>External Sector</span><br>for UPSC Prelims</h1>
+  <p>Complete conceptual mastery from BoP to WTO — built on Sanjiv Verma, Economic Survey, RBI Reports & PYQ analysis. Think like a macroeconomist, solve like a topper.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">12</div><div class="label">Core Sections</div></div>
+    <div class="hero-stat"><div class="num">60+</div><div class="label">MCQ Questions</div></div>
+    <div class="hero-stat"><div class="num">2013–25</div><div class="label">PYQ Coverage</div></div>
+    <div class="hero-stat"><div class="num">100%</div><div class="label">Prelims Focused</div></div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 1 ==================== -->
+<div class="section" id="s1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Foundation of External Sector</div>
+    <div class="section-sub">CORE CONCEPTS</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌍 What is the External Sector? <span class="badge badge-blue">Fundamental</span></div>
+    <p>The <strong>external sector</strong> refers to all economic transactions between a country and the <em>rest of the world</em>. It encompasses trade in goods & services, financial flows, and transfer payments crossing national borders.</p>
+    <div class="callout info" style="margin-top:12px;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-content"><strong>Intuitive Analogy:</strong> Think of a country like a household. Just as a household earns income and buys goods from outside, a country earns from exports and spends on imports. The external sector is the country's "economic relationship with the neighbourhood."</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🚀 Why Countries Trade</div>
+      <ul>
+        <li><strong>No country is self-sufficient</strong> — every economy has limited resources</li>
+        <li><strong>Comparative Advantage</strong> — produce what you're relatively better at</li>
+        <li><strong>Economies of scale</strong> — larger production lowers costs</li>
+        <li><strong>Variety gains</strong> — consumers access more products</li>
+        <li><strong>Technology diffusion</strong> — trade spreads innovation</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">⚖️ Comparative vs Absolute Advantage</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Concept</th><th>Meaning</th><th>By</th></tr>
+          <tr><td><strong>Absolute Advantage</strong></td><td>Produce more with same inputs</td><td>Adam Smith</td></tr>
+          <tr><td><strong>Comparative Advantage</strong></td><td>Lower opportunity cost</td><td>David Ricardo</td></tr>
+        </table>
+      </div>
+      <div class="callout tip" style="margin-top:8px;">
+        <div class="callout-icon">✅</div>
+        <div class="callout-content">UPSC loves Comparative Advantage — it explains why even a less productive country gains from trade!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Terms of Trade (ToT) <span class="badge badge-gold">UPSC Favourite</span></div>
+    <p><strong>Terms of Trade = (Price Index of Exports / Price Index of Imports) × 100</strong></p>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <tr><th>ToT Movement</th><th>Meaning</th><th>Impact on India</th></tr>
+        <tr><td><strong>ToT Improves</strong> (rises)</td><td>Exports buy more imports</td><td>Favorable — better purchasing power</td></tr>
+        <tr><td><strong>ToT Deteriorates</strong> (falls)</td><td>Must export more to buy same imports</td><td>Unfavorable — oil price rise hurts India</td></tr>
+      </table>
+    </div>
+    <div class="callout warning" style="margin-top:10px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-content"><strong>India-specific:</strong> India is a net oil importer — when crude prices rise, India's ToT deteriorates, worsening the Current Account Deficit (CAD).</div>
+    </div>
+  </div>
+
+  <div class="pyq-box">
+    <div class="pyq-label">📋 PYQ Pattern Alert</div>
+    <p><span class="pyq-year">2019</span> Which of the following is/are the advantage(s) of pursuing the policy of globalization? — tests trade foundation understanding.</p>
+    <p style="margin-top:8px;"><span class="pyq-year">2022</span> Questions on Trade creation vs Trade diversion — requires strong foundation in why countries trade.</p>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — Section 1</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>Open Economy</strong>Has external trade & capital flows</div>
+      <div class="rev-item"><strong>Closed Economy</strong>No international transactions (autarky)</div>
+      <div class="rev-item"><strong>Comparative Advantage</strong>Ricardo's theory — basis of all trade</div>
+      <div class="rev-item"><strong>ToT Formula</strong>Export Price Index ÷ Import Price Index × 100</div>
+      <div class="rev-item"><strong>Heckscher-Ohlin</strong>Countries export labour/capital-intensive goods per factor endowment</div>
+      <div class="rev-item"><strong>India ToT Risk</strong>Oil imports — crude price shock worsens ToT</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 2: BOP ==================== -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">Balance of Payments (BoP)</div>
+    <div class="section-sub">HIGH PRIORITY</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📑 Structure of Balance of Payments <span class="badge badge-gold">Most Important</span></div>
+    <p>BoP is a <strong>systematic record of all economic transactions</strong> between residents of a country and the rest of the world during a given period (usually one year).</p>
+  </div>
+
+  <!-- BOP FLOW DIAGRAM -->
+  <div class="flow-container">
+    <svg class="mindmap-svg" viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#5c7cfa"/>
+        </marker>
+      </defs>
+      <!-- Background -->
+      <rect width="860" height="420" fill="transparent"/>
+      
+      <!-- Central BoP Box -->
+      <rect x="330" y="10" width="200" height="50" rx="10" fill="#1d2438" stroke="#5c7cfa" stroke-width="1.5"/>
+      <text x="430" y="30" text-anchor="middle" fill="#748ffc" font-size="11" font-weight="700" font-family="Outfit,sans-serif">BALANCE OF PAYMENTS</text>
+      <text x="430" y="48" text-anchor="middle" fill="#9ba3c2" font-size="9.5" font-family="Outfit,sans-serif">Complete External Account</text>
+
+      <!-- CURRENT ACCOUNT -->
+      <rect x="40" y="110" width="200" height="50" rx="8" fill="#1a2535" stroke="#51cf66" stroke-width="1.5"/>
+      <text x="140" y="130" text-anchor="middle" fill="#51cf66" font-size="11" font-weight="700" font-family="Outfit,sans-serif">CURRENT ACCOUNT</text>
+      <text x="140" y="148" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Goods • Services • Income • Transfers</text>
+
+      <!-- CAPITAL ACCOUNT -->
+      <rect x="330" y="110" width="200" height="50" rx="8" fill="#1a2535" stroke="#ffd43b" stroke-width="1.5"/>
+      <text x="430" y="130" text-anchor="middle" fill="#ffd43b" font-size="11" font-weight="700" font-family="Outfit,sans-serif">CAPITAL ACCOUNT</text>
+      <text x="430" y="148" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Capital Transfers • Non-Financial Assets</text>
+
+      <!-- FINANCIAL ACCOUNT -->
+      <rect x="620" y="110" width="200" height="50" rx="8" fill="#1a2535" stroke="#cc5de8" stroke-width="1.5"/>
+      <text x="720" y="130" text-anchor="middle" fill="#cc5de8" font-size="11" font-weight="700" font-family="Outfit,sans-serif">FINANCIAL ACCOUNT</text>
+      <text x="720" y="148" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">FDI • FPI • ECB • Reserves</text>
+
+      <!-- Arrows from BoP -->
+      <line x1="380" y1="60" x2="200" y2="110" stroke="#5c7cfa" stroke-width="1" marker-end="url(#arr)"/>
+      <line x1="430" y1="60" x2="430" y2="110" stroke="#5c7cfa" stroke-width="1" marker-end="url(#arr)"/>
+      <line x1="480" y1="60" x2="660" y2="110" stroke="#5c7cfa" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- CA Sub Items -->
+      <rect x="10" y="210" width="105" height="36" rx="6" fill="#111827" stroke="#51cf66" stroke-width="1"/>
+      <text x="62" y="225" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Merchandise</text>
+      <text x="62" y="238" text-anchor="middle" fill="#51cf66" font-size="8.5" font-weight="600" font-family="Outfit,sans-serif">Trade Balance</text>
+
+      <rect x="125" y="210" width="105" height="36" rx="6" fill="#111827" stroke="#51cf66" stroke-width="1"/>
+      <text x="177" y="225" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Services + Income</text>
+      <text x="177" y="238" text-anchor="middle" fill="#51cf66" font-size="8.5" font-weight="600" font-family="Outfit,sans-serif">Invisible Trade</text>
+
+      <!-- FA Sub Items -->
+      <rect x="600" y="210" width="80" height="36" rx="6" fill="#111827" stroke="#cc5de8" stroke-width="1"/>
+      <text x="640" y="228" text-anchor="middle" fill="#cc5de8" font-size="9" font-family="Outfit,sans-serif">FDI / FPI</text>
+
+      <rect x="690" y="210" width="80" height="36" rx="6" fill="#111827" stroke="#cc5de8" stroke-width="1"/>
+      <text x="730" y="228" text-anchor="middle" fill="#cc5de8" font-size="9" font-family="Outfit,sans-serif">ECB / NRI</text>
+
+      <rect x="780" y="210" width="70" height="36" rx="6" fill="#111827" stroke="#cc5de8" stroke-width="1"/>
+      <text x="815" y="228" text-anchor="middle" fill="#cc5de8" font-size="9" font-family="Outfit,sans-serif">Reserves</text>
+
+      <!-- BoP = 0 -->
+      <rect x="310" y="290" width="240" height="55" rx="10" fill="#0f1830" stroke="#ffd43b" stroke-width="2"/>
+      <text x="430" y="313" text-anchor="middle" fill="#ffd43b" font-size="12" font-weight="700" font-family="Outfit,sans-serif">BoP ALWAYS = ZERO</text>
+      <text x="430" y="333" text-anchor="middle" fill="#9ba3c2" font-size="10" font-family="Outfit,sans-serif">(by accounting identity)</text>
+
+      <!-- CAD Section -->
+      <rect x="60" y="300" width="210" height="50" rx="8" fill="#1a0f0f" stroke="#ff6b6b" stroke-width="1.5"/>
+      <text x="165" y="320" text-anchor="middle" fill="#ff6b6b" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">Current Account Deficit (CAD)</text>
+      <text x="165" y="338" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Imports > Exports → Funded by FA surplus</text>
+
+      <!-- Note at bottom -->
+      <text x="430" y="400" text-anchor="middle" fill="#6b7399" font-size="9.5" font-family="Outfit,sans-serif">Errors &amp; Omissions account for statistical discrepancies</text>
+    </svg>
+  </div>
+
+  <div class="grid-2" style="margin-top:16px;">
+    <div class="card">
+      <div class="card-title">📦 Current Account Components</div>
+      <ul>
+        <li><strong>Merchandise Trade:</strong> Physical goods (exports − imports)</li>
+        <li><strong>Services Trade:</strong> IT, tourism, transport, financial services</li>
+        <li><strong>Primary Income:</strong> Returns on investments (dividends, interest)</li>
+        <li><strong>Secondary Income:</strong> <span class="hl-gold">Remittances</span>, grants, transfers</li>
+      </ul>
+      <div class="callout info" style="margin-top:10px;">
+        <div class="callout-icon">🇮🇳</div>
+        <div class="callout-content">India is the world's top remittance receiver (~$125 billion in 2023-24). Remittances help <strong>reduce</strong> CAD significantly.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">💰 Financial Account Components</div>
+      <ul>
+        <li><strong>FDI:</strong> Foreign Direct Investment (long-term, stable)</li>
+        <li><strong>FPI/FII:</strong> Portfolio investment (equity + bonds, volatile)</li>
+        <li><strong>ECB:</strong> External Commercial Borrowings</li>
+        <li><strong>NRI Deposits:</strong> FCNR(B), NRE, NRO accounts</li>
+        <li><strong>Reserve Assets:</strong> Changes in RBI's forex reserves</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔴 Current Account Deficit (CAD) — Deep Dive <span class="badge badge-red">Critical</span></div>
+    <p><strong>CAD = Imports of Goods + Services + Primary Income outflows − Exports of Goods + Services + Primary Income inflows − Net Secondary Income</strong></p>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <tr><th>Factor</th><th>Effect on CAD</th><th>Why?</th></tr>
+        <tr><td>🛢️ Crude oil price rise</td><td><span class="hl-red">Widens CAD</span></td><td>India imports ~85% crude needs</td></tr>
+        <tr><td>📉 Export slowdown</td><td><span class="hl-red">Widens CAD</span></td><td>Less forex inflow</td></tr>
+        <tr><td>💱 Rupee depreciation</td><td>Mixed — widens initially, narrows long-term</td><td>J-Curve effect</td></tr>
+        <tr><td>💸 High remittances</td><td><span class="hl-green">Narrows CAD</span></td><td>Inflows on current account</td></tr>
+        <tr><td>🖥️ Software exports rise</td><td><span class="hl-green">Narrows CAD</span></td><td>Services credit rises</td></tr>
+        <tr><td>💎 Gold import surge</td><td><span class="hl-red">Widens CAD</span></td><td>India is world's 2nd largest gold importer</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🚨 UPSC Trap — BoP vs Trade Balance</div>
+    <ul>
+      <li><strong>Trade Balance / Merchandise Trade Balance</strong> = Only physical goods (visible trade)</li>
+      <li><strong>Current Account Balance</strong> = Goods + Services + Income + Transfers (includes invisible trade)</li>
+      <li><strong>BoP</strong> = Current Account + Capital Account + Financial Account (always = 0)</li>
+      <li>A country can have a <em>trade deficit</em> but <em>current account surplus</em> if services surplus is large enough (e.g., India's IT exports help)</li>
+    </ul>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="accordion-title">📈 J-Curve Effect — Understanding Rupee Depreciation & CAD</div>
+      <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p>When rupee depreciates, one would expect CAD to narrow (exports become cheaper for foreigners, imports costlier for Indians). But in reality, <strong>CAD initially worsens before improving</strong> — this is the <strong>J-Curve effect</strong>.</p>
+      <div class="callout tip" style="margin-top:10px;">
+        <div class="callout-icon">📉</div>
+        <div class="callout-content"><strong>Why?</strong> Contracts are fixed in the short run. Import quantities don't fall immediately even though prices rise. Export quantities don't rise immediately. Over time, as volume adjusts, CAD improves — making the shape of a "J" on a graph.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — BoP</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>BoP = 0</strong>Always, by accounting identity</div>
+      <div class="rev-item"><strong>CAD = X−M (goods+services+income)</strong>If negative, CAD exists</div>
+      <div class="rev-item"><strong>Invisible Trade</strong>Services + Remittances + Transfers</div>
+      <div class="rev-item"><strong>India's CAD concern</strong>Oil + Gold imports are biggest drivers</div>
+      <div class="rev-item"><strong>Capital A/c (IMF)</strong>Capital transfers only (narrow definition)</div>
+      <div class="rev-item"><strong>Financial A/c</strong>FDI, FPI, ECB, NRI deposits, reserves</div>
+      <div class="rev-item"><strong>Errors & Omissions</strong>Statistical plug to balance BoP</div>
+      <div class="rev-item"><strong>BoP Crisis</strong>Can't finance CAD → forex reserves fall → crisis</div>
+    </div>
+  </div>
+
+  <div class="pyq-box">
+    <div class="pyq-label">📋 Actual PYQ Analysis</div>
+    <p><span class="pyq-year">2016</span> "The balance of payments of a country is a systematic record of..." — Statement-based question testing exact definition</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2020</span> Question on what happens to CAD when oil prices rise — tests cause-effect</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2021</span> Remittances to India — which countries send most? (UAE, US, Saudi Arabia, UK)</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2023</span> Statement-based: "Increase in exports always reduces trade deficit" — TRAP: not true if imports rise proportionally more</p>
+  </div>
+</div>
+
+<!-- ==================== SECTION 3: FOREX ==================== -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">Foreign Exchange & Exchange Rates</div>
+    <div class="section-sub">HIGH FREQUENCY</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💱 Exchange Rate Systems <span class="badge badge-gold">UPSC Favourite</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>System</th><th>How it Works</th><th>Examples</th><th>India's Stance</th></tr>
+        <tr><td><strong>Fixed/Pegged</strong></td><td>Govt fixes rate to another currency/gold</td><td>Saudi Riyal to USD, Hong Kong</td><td>Pre-1991</td></tr>
+        <tr><td><strong>Freely Floating</strong></td><td>Demand & supply determine rate</td><td>USD, Euro, GBP</td><td>Never fully</td></tr>
+        <tr><td><strong>Managed Float</strong></td><td>Floats but RBI intervenes occasionally</td><td>India (Rupee)</td><td><span class="hl-green">Current system</span></td></tr>
+        <tr><td><strong>Currency Board</strong></td><td>Fixed rate backed 100% by reserves</td><td>Bulgaria, Hong Kong</td><td>—</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">📉 Depreciation vs Devaluation</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Term</th><th>Cause</th><th>How?</th></tr>
+          <tr><td><strong>Depreciation</strong></td><td>Market forces</td><td>Demand-supply in forex market</td></tr>
+          <tr><td><strong>Devaluation</strong></td><td>Government policy</td><td>Official decision to lower rate</td></tr>
+          <tr><td><strong>Appreciation</strong></td><td>Market forces</td><td>Currency rises in open market</td></tr>
+          <tr><td><strong>Revaluation</strong></td><td>Government policy</td><td>Official decision to raise rate</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 Why Rupee Depreciates</div>
+      <ul>
+        <li>High <strong>CAD</strong> — dollar demand exceeds supply</li>
+        <li>High <strong>crude oil prices</strong> — India buys more dollars</li>
+        <li><strong>FPI outflows</strong> — hot money exits India</li>
+        <li>Strong <strong>US dollar</strong> globally</li>
+        <li>High <strong>inflation</strong> in India vs US</li>
+        <li>Geopolitical uncertainty</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏦 RBI Intervention in Forex Market</div>
+    <p>India follows a <strong>managed float</strong> — RBI intervenes to prevent excessive volatility but doesn't target a specific level.</p>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="callout tip">
+        <div class="callout-icon">📈</div>
+        <div class="callout-content"><strong>To STRENGTHEN Rupee:</strong> RBI sells dollars (draws from forex reserves) → reduces dollar supply → rupee appreciates</div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-icon">📉</div>
+        <div class="callout-content"><strong>To WEAKEN Rupee:</strong> RBI buys dollars → adds to reserves → rupee depreciates (to help exports)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Imported Inflation <span class="badge badge-orange">Current Affairs Link</span></div>
+    <p>When rupee depreciates, the cost of imports in rupee terms rises. Since India imports significant amounts of <strong>crude oil, edible oils, fertilizers, and electronics</strong>, rupee depreciation fuels domestic inflation — called <strong>imported inflation</strong>.</p>
+    <div class="callout danger" style="margin-top:10px;">
+      <div class="callout-icon">🔗</div>
+      <div class="callout-content">Chain: Rupee depreciates → Crude oil costlier in INR → Transport costs rise → Food inflation rises → WPI/CPI inflation rises → RBI tightens monetary policy</div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🚨 Key UPSC Traps — Exchange Rates</div>
+    <ul>
+      <li><strong>Trap 1:</strong> "Rupee depreciation is always bad" — FALSE. It <em>benefits exporters</em> and can reduce CAD over time</li>
+      <li><strong>Trap 2:</strong> Confusing depreciation (market) with devaluation (policy) — always check the mechanism</li>
+      <li><strong>Trap 3:</strong> "Fixed exchange rate is stable" — Stable but creates other problems (balance of payments crisis if rate is wrong)</li>
+      <li><strong>Trap 4:</strong> India has a "floating" exchange rate — WRONG. It's "managed float" / "dirty float"</li>
+    </ul>
+  </div>
+
+  <div class="mnemonic">
+    <strong>🧠 Mnemonic: DEPRECIATION = MARKET, DEVALUATION = DECISION</strong>
+    <em>When the market decides, it's depreciation. When the government decides, it's devaluation. Same direction, different driver.</em>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — Exchange Rates</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>India's System</strong>Managed Float (not free float)</div>
+      <div class="rev-item"><strong>Depreciation</strong>Market-driven fall in currency value</div>
+      <div class="rev-item"><strong>Devaluation</strong>Policy-driven fall (govt decision)</div>
+      <div class="rev-item"><strong>Rupee falls → Exports</strong>Become cheaper for foreigners → competitive</div>
+      <div class="rev-item"><strong>Rupee falls → Imports</strong>Costlier in INR → imported inflation</div>
+      <div class="rev-item"><strong>PPP Theory</strong>Exchange rate should reflect price level difference</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 4: FOREX RESERVES ==================== -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">Forex Reserves</div>
+    <div class="section-sub">CRITICAL TOPIC</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏦 Components of India's Forex Reserves <span class="badge badge-gold">Must Know</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Component</th><th>Description</th><th>Approx Share</th></tr>
+        <tr><td><strong>Foreign Currency Assets (FCA)</strong></td><td>Held in US$, €, £, ¥ (mostly US Treasuries)</td><td><span class="hl-green">~94%</span> (dominant)</td></tr>
+        <tr><td><strong>Gold</strong></td><td>Physical gold held by RBI</td><td>~4–5%</td></tr>
+        <tr><td><strong>SDRs</strong></td><td>Special Drawing Rights (IMF's reserve currency)</td><td>~1–2%</td></tr>
+        <tr><td><strong>Reserve Tranche Position</strong></td><td>India's quota accessible at IMF without conditions</td><td><1%</td></tr>
+      </table>
+    </div>
+    <div class="callout info" style="margin-top:10px;">
+      <div class="callout-icon">📊</div>
+      <div class="callout-content"><strong>India's Forex Reserves (2024-25):</strong> ~$620-650 billion — one of the world's top 5 largest. Provides about 11-12 months of import cover.</div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="accordion-title">🌐 What is SDR (Special Drawing Rights)? — Often Confused in UPSC</div>
+      <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p>SDR is <strong>NOT a currency</strong>. It is an <strong>international reserve asset</strong> created by the IMF. Its value is based on a basket of 5 currencies:</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0;">
+        <span class="tag tag-accent">US Dollar (43.38%)</span>
+        <span class="tag tag-accent">Euro (29.31%)</span>
+        <span class="tag tag-accent">Chinese Yuan (12.28%)</span>
+        <span class="tag tag-accent">Japanese Yen (7.59%)</span>
+        <span class="tag tag-accent">British Pound (7.44%)</span>
+      </div>
+      <div class="callout gold" style="margin-top:8px;">
+        <div class="callout-icon">⭐</div>
+        <div class="callout-content"><strong>Key Point:</strong> Chinese Yuan was added to SDR basket in October 2016 — this is a recurring PYQ topic!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛡️ Why India Maintains Large Forex Reserves</div>
+    <div class="grid-2">
+      <ul>
+        <li><strong>Buffer against BoP crisis</strong> — 1991 was a lesson</li>
+        <li><strong>Import cover</strong> — ideally 3 months minimum</li>
+        <li><strong>Currency stabilization</strong> — RBI intervention capacity</li>
+        <li><strong>Confidence signal</strong> — for foreign investors</li>
+      </ul>
+      <ul>
+        <li><strong>External debt servicing</strong> — repay dollar debts</li>
+        <li><strong>National security</strong> — geopolitical leverage</li>
+        <li><strong>Counters speculative attacks</strong> on rupee</li>
+        <li><strong>Post-COVID</strong> — India built reserves as buffer</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <div class="callout-icon">🆘</div>
+    <div class="callout-content"><strong>Lesson from Crises:</strong> Sri Lanka 2022 — Forex reserves fell to $0. Could not pay for oil/food imports → economic collapse. Pakistan 2023 — IMF bailout after reserves crashed. India 1991 — Pledged gold to Bank of England. These examples show WHY reserves matter.</div>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — Forex Reserves</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>Largest Component</strong>Foreign Currency Assets (~94%)</div>
+      <div class="rev-item"><strong>SDR</strong>IMF's synthetic reserve asset, NOT a currency</div>
+      <div class="rev-item"><strong>SDR Basket</strong>USD, EUR, CNY, JPY, GBP (5 currencies)</div>
+      <div class="rev-item"><strong>Reserve Tranche</strong>India's quota at IMF — unconditional access</div>
+      <div class="rev-item"><strong>Adequate cover</strong>3+ months of imports (India has 11+ months)</div>
+      <div class="rev-item"><strong>1991 crisis</strong>India pledged gold to RBI/BoE to avoid default</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 5: CONVERTIBILITY ==================== -->
+<div class="section" id="s5">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">Convertibility of Rupee</div>
+    <div class="section-sub">IMPORTANT</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔄 Current vs Capital Account Convertibility <span class="badge badge-gold">High Priority</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Meaning</th><th>India's Status</th></tr>
+        <tr><td><strong>Current Account Convertibility (CAC)</strong></td><td>Rupee freely convertible for trade in goods & services, remittances, travel</td><td><span class="hl-green">FULL — since August 1994</span></td></tr>
+        <tr><td><strong>Capital Account Convertibility (KAC)</strong></td><td>Rupee freely convertible for capital flows (FDI, FPI, loans)</td><td><span class="hl-orange">PARTIAL — not yet full</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Tarapore Committee — Landmark for UPSC <span class="badge badge-gold">PYQ Favourite</span></div>
+    <p>The <strong>Tarapore Committee on Capital Account Convertibility</strong> (1997) examined the conditions for full KAC. It set <strong>preconditions</strong>:</p>
+    <ul style="margin-top:10px;">
+      <li>Fiscal deficit reduced to 3.5% of GDP</li>
+      <li>Inflation rate at 3–5%</li>
+      <li>Gross NPA of banking system below 5%</li>
+      <li>Adequate forex reserves</li>
+    </ul>
+    <div class="callout warning" style="margin-top:12px;">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-content"><strong>Second Tarapore Committee (2006)</strong> revisited the issue but India still hasn't moved to full KAC. Asian Financial Crisis 1997 showed dangers of premature capital account openness.</div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🚨 UPSC Trap — Convertibility</div>
+    <ul>
+      <li><strong>India has full CURRENT account convertibility</strong> — confirmed since 1994</li>
+      <li><strong>India does NOT have full Capital account convertibility</strong></li>
+      <li>Full KAC means <strong>unlimited</strong> capital can flow in/out — this is risky (hot money, currency crisis)</li>
+      <li>Countries that rushed to KAC (Thailand, Indonesia) suffered in 1997 Asian Financial Crisis</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SECTION 6: INTERNATIONAL ORGANIZATIONS ==================== -->
+<div class="section" id="s6">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">International Economic Organizations</div>
+    <div class="section-sub">HIGH FREQUENCY</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌐 Key International Organizations — Quick Compare <span class="badge badge-gold">Mandatory</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Organization</th><th>Founded</th><th>HQ</th><th>Core Function</th><th>India's Role</th></tr>
+        <tr><td><strong>IMF</strong></td><td>1944 (Bretton Woods)</td><td>Washington DC</td><td>Monetary cooperation, BoP assistance, global financial stability</td><td>Member; 13th largest voting share</td></tr>
+        <tr><td><strong>World Bank (IBRD)</strong></td><td>1944</td><td>Washington DC</td><td>Development lending for infrastructure, poverty reduction</td><td>One of largest borrowers historically</td></tr>
+        <tr><td><strong>WTO</strong></td><td>1995 (replaced GATT)</td><td>Geneva</td><td>Global trade rules, dispute settlement</td><td>Active member; defends agricultural subsidies</td></tr>
+        <tr><td><strong>ADB</strong></td><td>1966</td><td>Manila</td><td>Development bank for Asia-Pacific</td><td>3rd largest shareholder</td></tr>
+        <tr><td><strong>AIIB</strong></td><td>2016</td><td>Beijing</td><td>Infrastructure investment in Asia</td><td>2nd largest shareholder (after China)</td></tr>
+        <tr><td><strong>NDB</strong></td><td>2015</td><td>Shanghai</td><td>BRICS development bank</td><td>Founding member; equal shareholding</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">🏛️ IMF — Deep Dive</div>
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>Voting power</strong> based on quota (economic size)</li>
+          <li>US has <strong>veto power</strong> (>15% votes needed for major decisions)</li>
+          <li>Provides <strong>Stand-By Arrangements (SBA)</strong>, Extended Fund Facility (EFF)</li>
+          <li>IMF loans have <strong>conditionalities</strong> (structural adjustment)</li>
+          <li>India used IMF in <strong>1991 crisis</strong> — pledged gold</li>
+          <li>Publishes <strong>World Economic Outlook (WEO)</strong></li>
+          <li>Manages <strong>SDR</strong> allocations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <div class="accordion-title">🌱 World Bank Group — Structure</div>
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-body">
+        <ul>
+          <li><strong>IBRD</strong> — Loans to middle-income countries</li>
+          <li><strong>IDA</strong> — Concessional loans to poorest countries</li>
+          <li><strong>IFC</strong> — Private sector financing</li>
+          <li><strong>MIGA</strong> — Investment guarantees</li>
+          <li><strong>ICSID</strong> — Investment dispute settlement</li>
+          <li>India is eligible for <strong>both IBRD and IDA</strong> funds</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🚨 UPSC Traps — International Organizations</div>
+    <ul>
+      <li>IMF and World Bank were BOTH created at Bretton Woods Conference (1944) — but GATT (not WTO) was 1947</li>
+      <li>WTO replaced GATT in 1995 — <strong>not 1994</strong></li>
+      <li>AIIB is a Chinese-led bank but India is 2nd largest shareholder — important nuance</li>
+      <li>NDB (BRICS bank) headquarters is in <strong>Shanghai</strong>, not Beijing</li>
+      <li>ADB headquarters is in <strong>Manila</strong>, Philippines</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SECTION 7: TRADE AGREEMENTS ==================== -->
+<div class="section" id="s7">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">Trade Agreements — Hierarchy & Types</div>
+    <div class="section-sub">ARCHITECTURE</div>
+  </div>
+
+  <!-- TRADE AGREEMENT HIERARCHY SVG -->
+  <div class="flow-container">
+    <svg class="mindmap-svg" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+          <polygon points="0 0, 8 3, 0 6" fill="#ffd43b"/>
+        </marker>
+      </defs>
+
+      <!-- Title -->
+      <text x="400" y="22" text-anchor="middle" fill="#ffd43b" font-size="12" font-weight="700" font-family="Outfit,sans-serif">TRADE INTEGRATION LADDER — FROM SHALLOW TO DEEP</text>
+      <line x1="100" y1="28" x2="700" y2="28" stroke="#ffd43b" stroke-width="0.5" opacity="0.4"/>
+
+      <!-- Level boxes -->
+      <!-- PTA -->
+      <rect x="20" y="45" width="130" height="52" rx="8" fill="#111827" stroke="#6b7399" stroke-width="1.5"/>
+      <text x="85" y="65" text-anchor="middle" fill="#9ba3c2" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">PTA</text>
+      <text x="85" y="79" text-anchor="middle" fill="#6b7399" font-size="8.5" font-family="Outfit,sans-serif">Preferential Trade</text>
+      <text x="85" y="90" text-anchor="middle" fill="#6b7399" font-size="8.5" font-family="Outfit,sans-serif">Reduced tariffs on</text>
+
+      <!-- FTA -->
+      <rect x="165" y="45" width="130" height="52" rx="8" fill="#131f30" stroke="#5c7cfa" stroke-width="1.5"/>
+      <text x="230" y="65" text-anchor="middle" fill="#748ffc" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">FTA</text>
+      <text x="230" y="79" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">Free Trade Agreement</text>
+      <text x="230" y="90" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">Zero tariffs among members</text>
+
+      <!-- CECA/CEPA -->
+      <rect x="310" y="45" width="130" height="52" rx="8" fill="#131f30" stroke="#20c997" stroke-width="1.5"/>
+      <text x="375" y="62" text-anchor="middle" fill="#20c997" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">CECA / CEPA</text>
+      <text x="375" y="77" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">Comprehensive Econ</text>
+      <text x="375" y="88" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">Partnership/Cooperation</text>
+
+      <!-- Customs Union -->
+      <rect x="455" y="45" width="130" height="52" rx="8" fill="#131f30" stroke="#ffd43b" stroke-width="1.5"/>
+      <text x="520" y="65" text-anchor="middle" fill="#ffd43b" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">Customs Union</text>
+      <text x="520" y="79" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">FTA + Common External</text>
+      <text x="520" y="90" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">Tariff on non-members</text>
+
+      <!-- Common Market -->
+      <rect x="600" y="45" width="130" height="52" rx="8" fill="#131f30" stroke="#ff922b" stroke-width="1.5"/>
+      <text x="665" y="65" text-anchor="middle" fill="#ff922b" font-size="10.5" font-weight="700" font-family="Outfit,sans-serif">Common Market</text>
+      <text x="665" y="79" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">CU + Free movement of</text>
+      <text x="665" y="90" text-anchor="middle" fill="#9ba3c2" font-size="8.5" font-family="Outfit,sans-serif">labor and capital</text>
+
+      <!-- Economic Union -->
+      <rect x="280" y="150" width="240" height="55" rx="10" fill="#0f1830" stroke="#cc5de8" stroke-width="2"/>
+      <text x="400" y="172" text-anchor="middle" fill="#cc5de8" font-size="11.5" font-weight="700" font-family="Outfit,sans-serif">ECONOMIC UNION</text>
+      <text x="400" y="188" text-anchor="middle" fill="#9ba3c2" font-size="9" font-family="Outfit,sans-serif">Common Market + Unified economic policies (EU)</text>
+
+      <!-- Arrows: horizontal -->
+      <line x1="150" y1="71" x2="165" y2="71" stroke="#ffd43b" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="295" y1="71" x2="310" y2="71" stroke="#ffd43b" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="440" y1="71" x2="455" y2="71" stroke="#ffd43b" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="585" y1="71" x2="600" y2="71" stroke="#ffd43b" stroke-width="1" marker-end="url(#arr2)"/>
+      <line x1="400" y1="97" x2="400" y2="150" stroke="#ffd43b" stroke-width="1" marker-end="url(#arr2)"/>
+
+      <!-- Integration deepens arrow -->
+      <text x="400" y="240" text-anchor="middle" fill="#6b7399" font-size="9" font-family="Outfit,sans-serif">← Shallow Integration</text>
+      <text x="400" y="254" text-anchor="middle" fill="#ffd43b" font-size="11" font-weight="600" font-family="Outfit,sans-serif">DEPTH OF INTEGRATION INCREASES →</text>
+      <line x1="60" y1="260" x2="740" y2="260" stroke="#ffd43b" stroke-width="1" opacity="0.4"/>
+
+      <!-- India's FTAs -->
+      <text x="400" y="290" text-anchor="middle" fill="#51cf66" font-size="10.5" font-weight="600" font-family="Outfit,sans-serif">India's Key Agreements: ASEAN FTA | Sri Lanka FTA | UAE CEPA | Australia ECTA | UK FTA (under negotiation)</text>
+      <text x="400" y="308" text-anchor="middle" fill="#ff6b6b" font-size="10.5" font-weight="600" font-family="Outfit,sans-serif">RCEP: India withdrew in 2019 | Concern: Chinese goods flooding in | Trade diversion risk</text>
+    </svg>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Trade Creation vs Trade Diversion <span class="badge badge-gold">PYQ Repeated</span></div>
+    <div class="grid-2" style="margin-top:8px;">
+      <div class="callout tip">
+        <div class="callout-icon">✅</div>
+        <div class="callout-content"><strong>Trade Creation (Good):</strong> When a country shifts from domestic high-cost production to cheaper imports from a partner country. Example: India signs FTA with country that produces steel cheaper → India imports steel → welfare improves.</div>
+      </div>
+      <div class="callout warning">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-content"><strong>Trade Diversion (Bad):</strong> When a country switches from a low-cost non-member to a higher-cost partner (because of preferential tariffs). Example: Due to ASEAN FTA, India buys expensive ASEAN goods instead of cheaper Chinese goods → welfare loss.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="accordion-title">🔴 Why India Walked Out of RCEP (2019)</div>
+      <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p>RCEP (Regional Comprehensive Economic Partnership) includes ASEAN + China, Japan, South Korea, Australia, New Zealand. India's concerns:</p>
+      <ul style="margin-top:8px;">
+        <li><strong>China flood risk:</strong> Cheap Chinese goods entering India via tariff elimination</li>
+        <li><strong>Trade deficit concern:</strong> India already has large trade deficits with RCEP members</li>
+        <li><strong>Dairy & agriculture:</strong> New Zealand/Australia's cheap dairy would hurt India's farmers</li>
+        <li><strong>Ratchet clause:</strong> India couldn't increase tariffs even if hurt</li>
+        <li><strong>Rules of origin:</strong> Worry about Chinese goods re-routed through ASEAN</li>
+      </ul>
+      <div class="callout info" style="margin-top:10px;">
+        <div class="callout-icon">🇮🇳</div>
+        <div class="callout-content">RCEP was signed by 15 countries (without India) on November 15, 2020. It is the world's largest trade bloc by GDP and population.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — Trade Agreements</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>PTA</strong>Reduced tariffs (not zero)</div>
+      <div class="rev-item"><strong>FTA</strong>Zero tariffs among members</div>
+      <div class="rev-item"><strong>CEPA</strong>FTA + services + investment</div>
+      <div class="rev-item"><strong>Customs Union</strong>FTA + Common External Tariff</div>
+      <div class="rev-item"><strong>Common Market</strong>CU + free factor movement</div>
+      <div class="rev-item"><strong>Economic Union</strong>CM + common economic policies (EU)</div>
+      <div class="rev-item"><strong>Trade Creation</strong>Good — efficiency gains</div>
+      <div class="rev-item"><strong>Trade Diversion</strong>Bad — shifts to costlier partner</div>
+      <div class="rev-item"><strong>RCEP</strong>India opted out — China dumping fears</div>
+      <div class="rev-item"><strong>India UAE CEPA</strong>Signed 2022 — India's fastest FTA</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 8: EXPORTS & IMPORTS ==================== -->
+<div class="section" id="s8">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">Exports, Imports & Trade Barriers</div>
+    <div class="section-sub">POLICY FOCUS</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏭 Special Duties — Anti-dumping, Countervailing, Safeguard <span class="badge badge-gold">PYQ Frequent</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Duty</th><th>Purpose</th><th>Trigger</th><th>WTO Rule</th></tr>
+        <tr><td><strong>Anti-Dumping Duty</strong></td><td>Counter below-cost exports from foreign countries</td><td>Dumping proven</td><td>Article VI GATT</td></tr>
+        <tr><td><strong>Countervailing Duty (CVD)</strong></td><td>Offset subsidies given by foreign govt</td><td>Foreign export subsidies</td><td>SCM Agreement</td></tr>
+        <tr><td><strong>Safeguard Duty</strong></td><td>Temporary protection from import surge</td><td>Domestic industry injury</td><td>Article XIX GATT</td></tr>
+        <tr><td><strong>MFN Tariff</strong></td><td>Equal tariff to all WTO members</td><td>Default WTO rule</td><td>Article I GATT</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📌 Tariff vs Non-Tariff Barriers (NTBs)</div>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:13px; color:var(--accent2); font-weight:600; margin-bottom:8px;">Tariff Barriers</p>
+        <ul>
+          <li>Import duties / customs duties</li>
+          <li>Ad valorem (% of value)</li>
+          <li>Specific duty (per unit)</li>
+          <li>Revenue tariff vs protective tariff</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--orange); font-weight:600; margin-bottom:8px;">Non-Tariff Barriers</p>
+        <ul>
+          <li>Quotas (quantity restrictions)</li>
+          <li>Sanitary & phytosanitary (SPS) measures</li>
+          <li>Technical Standards (TBT)</li>
+          <li>Import licensing</li>
+          <li>Foreign exchange controls</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔧 Export Promotion Policies — India</div>
+    <ul>
+      <li><strong>Production Linked Incentive (PLI)</strong> — ₹1.97 lakh crore scheme across 14 sectors; incentivizes manufacturing & exports</li>
+      <li><strong>SEZ (Special Economic Zones)</strong> — Export-focused enclaves with tax & regulatory incentives</li>
+      <li><strong>MEIS/RoDTEP</strong> — Duty remission schemes for exporters</li>
+      <li><strong>Export Credit Guarantee Corp (ECGC)</strong> — Insurance for export credit risk</li>
+      <li><strong>One District One Product (ODOP)</strong> — Promotes local exports</li>
+    </ul>
+    <div class="callout gold" style="margin-top:12px;">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-content"><strong>India's Export Target:</strong> India aims for $2 trillion in exports (goods + services) by 2030. Services (especially IT/software) contribute ~$340 billion annually.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 9: WTO ==================== -->
+<div class="section" id="s9">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title">WTO & Global Trade Issues</div>
+    <div class="section-sub">VERY HIGH PRIORITY</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌐 WTO — Structure & Key Agreements <span class="badge badge-gold">Must Know</span></div>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:13px; color:var(--accent2); margin-bottom:8px; font-weight:600;">Core Agreements</p>
+        <ul>
+          <li><strong>GATT</strong> — General Agreement on Tariffs and Trade (goods)</li>
+          <li><strong>GATS</strong> — General Agreement on Trade in Services</li>
+          <li><strong>TRIPS</strong> — Trade-Related Intellectual Property Rights</li>
+          <li><strong>TRIMS</strong> — Trade-Related Investment Measures</li>
+          <li><strong>SPS Agreement</strong> — Sanitary & phytosanitary</li>
+          <li><strong>TBT Agreement</strong> — Technical Barriers to Trade</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--gold); margin-bottom:8px; font-weight:600;">Key WTO Principles</p>
+        <ul>
+          <li><strong>MFN</strong> — Most Favoured Nation (treat all equally)</li>
+          <li><strong>National Treatment</strong> — Treat imports = domestic goods</li>
+          <li><strong>Reciprocity</strong> — Mutual concessions</li>
+          <li><strong>Transparency</strong> — Notify all trade measures</li>
+          <li><strong>Dispute Settlement</strong> — Binding arbitration (DSB)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="accordion-title">🌾 India's Agriculture Subsidy Dispute at WTO — Critical for UPSC</div>
+      <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <ul>
+        <li><strong>10% cap rule:</strong> WTO allows countries to provide minimum support to agriculture up to 10% of the total value of agricultural production (Aggregate Measurement of Support — AMS)</li>
+        <li><strong>India's MSP issue:</strong> India's MSP for rice/wheat may breach this limit, technically violating WTO rules</li>
+        <li><strong>Peace Clause:</strong> At Bali (2013), WTO agreed to a "Peace Clause" — India won't be taken to dispute settlement for food security programs while permanent solution is found</li>
+        <li><strong>India's position:</strong> Food security is a sovereign right; developing countries need policy space</li>
+        <li><strong>Nairobi Package 2015:</strong> Developed countries to eliminate export subsidies for agriculture</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔬 TRIPS & Doha Declaration — India vs Pharma MNCs <span class="badge badge-teal">Important</span></div>
+    <p><strong>TRIPS</strong> gives pharmaceutical companies 20-year patent protection. Developing countries feared this would make life-saving drugs unaffordable.</p>
+    <p style="margin-top:8px;"><strong>Doha Declaration 2001</strong> on TRIPS and Public Health: Confirmed that TRIPS allows countries to issue <strong>compulsory licenses</strong> for medicines in public health emergencies. India successfully negotiated <strong>Section 3(d)</strong> of its Patents Act to prevent ever-greening of pharma patents.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌿 Carbon Border Adjustment Mechanism (CBAM) — New & Critical <span class="badge badge-orange">2024-25 CA</span></div>
+    <p>The EU's <strong>CBAM</strong> is a carbon tax on imports from countries with weaker climate policies. From 2026, EU importers must pay for carbon content of goods from sectors like steel, cement, fertilizers, aluminium.</p>
+    <div class="callout danger" style="margin-top:10px;">
+      <div class="callout-icon">🇮🇳</div>
+      <div class="callout-content"><strong>India's concern:</strong> CBAM is seen as a trade barrier. India exports significant amounts of steel and other CBAM-covered goods to EU. Could cost Indian exporters billions. India argues it's discriminatory and violates WTO's non-discrimination principles.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔄 Supply Chain Shifts — China+1, Friendshoring <span class="badge badge-orange">High Probability</span></div>
+    <div class="grid-2">
+      <div class="callout tip">
+        <div class="callout-icon">🇨🇳+1</div>
+        <div class="callout-content"><strong>China+1 Strategy:</strong> MNCs diversifying manufacturing away from China to reduce dependence. India, Vietnam, Bangladesh, Mexico are beneficiaries. India's PLI scheme targets this opportunity.</div>
+      </div>
+      <div class="callout info">
+        <div class="callout-icon">🤝</div>
+        <div class="callout-content"><strong>Friendshoring:</strong> Routing supply chains through geopolitically aligned countries. US-led trend post-COVID and Ukraine war. India benefits from being a US strategic partner.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pyq-box">
+    <div class="pyq-label">📋 WTO PYQ Analysis</div>
+    <p><span class="pyq-year">2014</span> Which of the following WTO agreements relate to agriculture? — Tests GATT/AoA knowledge</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2018</span> With reference to WTO, which one of the following is correct about TRIPS? — Critical TRIPS facts</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2021</span> "Peace clause" in context of WTO — India's food security protection mechanism</p>
+    <p style="margin-top:6px;"><span class="pyq-year">2023</span> CBAM — EU's carbon border tax — asked in context of India-EU trade</p>
+  </div>
+</div>
+
+<!-- ==================== SECTION 10: CAPITAL FLOWS ==================== -->
+<div class="section" id="s10">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-title">External Debt & Capital Flows</div>
+    <div class="section-sub">FDI vs FPI</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💰 FDI vs FPI — The Classic Comparison <span class="badge badge-gold">Repeated Every Year</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>FDI</th><th>FPI (FII)</th></tr>
+        <tr><td><strong>Full Form</strong></td><td>Foreign Direct Investment</td><td>Foreign Portfolio Investment</td></tr>
+        <tr><td><strong>Nature</strong></td><td>Long-term, direct business control</td><td>Short-term, financial assets only</td></tr>
+        <tr><td><strong>Threshold</strong></td><td>≥10% equity ownership</td><td><10% equity</td></tr>
+        <tr><td><strong>Stability</strong></td><td><span class="hl-green">Very Stable</span></td><td><span class="hl-red">Very Volatile (Hot Money)</span></td></tr>
+        <tr><td><strong>Technology</strong></td><td>Brings tech & management</td><td>No technology transfer</td></tr>
+        <tr><td><strong>Rupee Impact</strong></td><td>Gradual, stable appreciation</td><td>Sharp swings both ways</td></tr>
+        <tr><td><strong>India regulation</strong></td><td>DPIIT governs</td><td>SEBI regulates</td></tr>
+        <tr><td><strong>Example</strong></td><td>Samsung building factory in India</td><td>BlackRock buying Indian stocks/bonds</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🏗️ External Commercial Borrowings (ECB)</div>
+      <ul>
+        <li>Loans from foreign sources by Indian companies</li>
+        <li>Must be <strong>RBI approved</strong></li>
+        <li>Used for infrastructure, exports</li>
+        <li>Risk: <strong>currency risk</strong> if rupee depreciates, repayment cost rises</li>
+        <li>Limits on end-use (not for real estate speculation)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🏦 NRI Deposits</div>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Account</th><th>Currency</th><th>Repatriable?</th></tr>
+          <tr><td><strong>FCNR(B)</strong></td><td>Foreign currency</td><td>Yes, fully</td></tr>
+          <tr><td><strong>NRE</strong></td><td>INR (converted)</td><td>Yes, fully</td></tr>
+          <tr><td><strong>NRO</strong></td><td>INR</td><td>Partially</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ External Debt Sustainability</div>
+    <p>India's external debt is generally considered <strong>manageable</strong> (~20% of GDP, compared to 100%+ in developed countries). Key metrics:</p>
+    <div class="grid-3" style="margin-top:12px;">
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--green);">~$620B</div>
+        <div class="stat-label">India's Total External Debt (approx 2024)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--accent2);">~20%</div>
+        <div class="stat-label">External Debt as % of GDP</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" style="color:var(--gold);">~100%</div>
+        <div class="stat-label">Forex Reserves / External Debt Ratio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="revision-sheet">
+    <div class="rev-title">⚡ Rapid Revision — Capital Flows</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>FDI</strong>≥10% equity; long-term; DPIIT</div>
+      <div class="rev-item"><strong>FPI</strong>&lt;10%; volatile; SEBI; hot money</div>
+      <div class="rev-item"><strong>ECB</strong>Foreign loans; RBI approval needed</div>
+      <div class="rev-item"><strong>FCNR(B)</strong>NRI deposits in foreign currency; fully repatriable</div>
+      <div class="rev-item"><strong>Hot money risk</strong>FPI outflow → rupee falls → markets fall</div>
+      <div class="rev-item"><strong>Sovereign debt</strong>Govt borrowing abroad; India avoids large sovereign external debt</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SECTION 11: RBI ==================== -->
+<div class="section" id="s11">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div class="section-title">RBI & External Sector Management</div>
+    <div class="section-sub">POLICY TOOLS</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏦 RBI's External Sector Tools <span class="badge badge-blue">Policy</span></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Tool</th><th>When Used</th><th>Effect</th></tr>
+        <tr><td><strong>Forex Market Intervention</strong></td><td>Rupee too volatile</td><td>Buys/sells dollars to stabilize</td></tr>
+        <tr><td><strong>Sterilization</strong></td><td>After buying forex (to prevent money supply expansion)</td><td>Sells G-Secs to absorb excess liquidity</td></tr>
+        <tr><td><strong>Repo Rate</strong></td><td>Attract/repel capital flows</td><td>Higher rates → FPI inflows → rupee strengthens</td></tr>
+        <tr><td><strong>FCNR deposits</strong></td><td>Attract NRI funds in crisis</td><td>2013 — Raghuram Rajan used FCNR(B) to stabilize rupee</td></tr>
+        <tr><td><strong>Capital controls</strong></td><td>Prevent excessive outflows</td><td>Limits on how much FPI can invest</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      <div class="accordion-title">🔄 Sterilization — A Critical Concept Often Confused</div>
+      <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p>When RBI buys dollars (to prevent rupee from appreciating), it releases rupees into the system → <strong>increases money supply → risks inflation</strong>.</p>
+      <p style="margin-top:8px;">To prevent this, RBI <strong>sterilizes</strong> the intervention by selling government securities (G-Secs) in open market, absorbing the excess rupee liquidity.</p>
+      <div class="callout gold" style="margin-top:10px;">
+        <div class="callout-icon">⚡</div>
+        <div class="callout-content"><strong>Sterilized vs Unsterilized Intervention:</strong><br>Sterilized = Neutral on money supply | Unsterilized = Expands money supply</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🚨 Important: 2013 Rupee Crisis</div>
+    <ul>
+      <li>May 2013: Fed "Taper Tantrum" — Bernanke signaled US tapering QE</li>
+      <li>FPIs pulled money from emerging markets → Rupee crashed to ₹68/$</li>
+      <li>RBI Governor Raghuram Rajan launched <strong>FCNR(B) swap scheme</strong> → attracted $26 billion from NRIs → stabilized rupee</li>
+      <li>This episode shows: <strong>FPI outflows are India's biggest external vulnerability</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== SECTION 12: CURRENT AFFAIRS ==================== -->
+<div class="section" id="s12">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <div class="section-title">Current Affairs — External Sector 2024-25</div>
+    <div class="section-sub">PRELIMS 2025</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">📊 India Trade Data 2023-24 <span class="badge badge-teal">Key Facts</span></div>
+      <ul>
+        <li>Total <strong>Exports</strong>: ~$778 billion (goods + services)</li>
+        <li>Merchandise exports: ~$437 billion</li>
+        <li>Services exports: ~$341 billion</li>
+        <li><strong>Top export destinations:</strong> USA, UAE, Netherlands</li>
+        <li><strong>Top exports:</strong> Petroleum products, gems & jewellery, engineering goods, pharmaceuticals</li>
+        <li>India's trade deficit: ~$240 billion</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">💸 Remittances — India 2024 <span class="badge badge-gold">Top Receiver</span></div>
+      <ul>
+        <li>India received <strong>~$125 billion</strong> in remittances (2023-24)</li>
+        <li>World's <strong>largest remittance receiver</strong></li>
+        <li>Top sources: UAE, USA, Saudi Arabia, UK, Singapore</li>
+        <li>Remittances > FDI inflows to India</li>
+        <li>Help fund ~50% of India's trade deficit</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌍 Key External Sector Developments 2024-25</div>
+    <ul>
+      <li><strong>India-UAE CEPA</strong> (2022): India's fastest-ever FTA; covers goods, services, investment</li>
+      <li><strong>India-Australia ECTA</strong> (2022): Economic Cooperation & Trade Agreement</li>
+      <li><strong>India-UK FTA</strong>: Under negotiation — sticking points are whisky, cars, skilled visas</li>
+      <li><strong>India joining IPEF</strong> (Indo-Pacific Economic Framework): US-led economic bloc</li>
+      <li><strong>Rupee internationalisation</strong>: India promoting INR trade with Russia, UAE, others post-sanctions on Russia</li>
+      <li><strong>UPI global expansion</strong>: India pushing UPI for cross-border payments — Singapore, UAE, France</li>
+      <li><strong>US tariffs (Trump 2025)</strong>: 26% reciprocal tariffs on India — significant concern for IT, pharma, gems exports</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔥 US Tariffs on India (2025) — Breaking Development <span class="badge badge-red">Critical CA</span></div>
+    <p>The Trump administration announced <strong>26% "reciprocal tariffs"</strong> on Indian goods in April 2025 (later paused for 90 days). India faces potential export losses across:</p>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin:10px 0;">
+      <span class="tag tag-accent">Pharmaceuticals</span>
+      <span class="tag tag-accent">IT/Software</span>
+      <span class="tag tag-accent">Gems & Jewellery</span>
+      <span class="tag tag-accent">Textiles</span>
+      <span class="tag tag-accent">Engineering Goods</span>
+    </div>
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-content">India is in bilateral trade negotiations with the US for a <strong>Bilateral Trade Agreement (BTA)</strong> to resolve tariff disputes. This connects to WTO's dispute settlement mechanisms and Article XIX safeguard provisions.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MCQ SECTION ==================== -->
+<div class="section" id="quiz-section">
+  <div class="section-header">
+    <div class="section-num">🎯</div>
+    <div class="section-title">MCQ Practice Engine</div>
+    <div class="section-sub">60+ QUESTIONS</div>
+  </div>
+
+  <div class="quiz-header">
+    <div>
+      <p style="font-size:14px; color:var(--text2); margin-bottom:4px;">Practice with UPSC-style questions. Click options or reveal explanations.</p>
+    </div>
+    <div class="quiz-score-box">
+      <div class="qs-item">
+        <div class="qs-num" style="color:var(--green);" id="q-correct">0</div>
+        <div class="qs-label">Correct</div>
+      </div>
+      <div class="qs-item">
+        <div class="qs-num" style="color:var(--red);" id="q-wrong">0</div>
+        <div class="qs-label">Wrong</div>
+      </div>
+      <div class="qs-item">
+        <div class="qs-num" style="color:var(--gold);" id="q-total">0</div>
+        <div class="qs-label">Attempted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ 1 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.01 <span class="mcq-difficulty diff-easy">Easy</span> <span class="mcq-difficulty diff-medium" style="margin-left:4px;">Foundation</span></div>
+    <div class="mcq-q">Which of the following is the CORRECT formula for Terms of Trade?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq1')"><span class="opt-key">A</span> (Import Price Index / Export Price Index) × 100</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq1')"><span class="opt-key">B</span> (Export Price Index / Import Price Index) × 100</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq1')"><span class="opt-key">C</span> (Total Exports / Total Imports) × 100</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq1')"><span class="opt-key">D</span> (Current Account / Capital Account) × 100</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp1')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp1">
+      <strong>✅ Answer: B</strong><br><br>
+      Terms of Trade = (Export Price Index / Import Price Index) × 100. If ToT > 100, it's favorable (exports can buy more imports). India's ToT is sensitive to crude oil prices since India is a major oil importer.
+      <br><br><span class="wrong-label">❌ Option A is the inverse — would give the "Import Terms of Trade", not the standard ToT.</span>
+      <br><span class="wrong-label">❌ Option C mixes up values with price indices.</span>
+    </div>
+  </div>
+
+  <!-- MCQ 2 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.02 <span class="mcq-difficulty diff-medium">Medium</span> <span class="mcq-difficulty diff-hard" style="margin-left:4px;">BoP</span></div>
+    <div class="mcq-q">Consider the following statements regarding India's Current Account Deficit (CAD):<br><br>1. Remittances from Indians abroad are recorded on the current account and help reduce CAD.<br>2. Software export earnings are recorded under the capital account.<br>3. Crude oil imports are the largest contributor to India's merchandise trade deficit.<br><br>Which of the above statements is/are correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq2')"><span class="opt-key">A</span> 1 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq2')"><span class="opt-key">B</span> 1 and 2 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq2')"><span class="opt-key">C</span> 1 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq2')"><span class="opt-key">D</span> 1, 2 and 3</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp2')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp2">
+      <strong>✅ Answer: C (1 and 3 only)</strong><br><br>
+      <strong>Statement 1 — CORRECT:</strong> Remittances are recorded under "Secondary Income" in the current account. They are inflows and reduce CAD. India receives ~$125 billion annually.<br><br>
+      <span class="wrong-label"><strong>Statement 2 — WRONG:</strong> Software/IT exports are services exports. Services are part of the CURRENT ACCOUNT (invisible trade), NOT capital account. This is a classic UPSC trap!</span><br><br>
+      <strong>Statement 3 — CORRECT:</strong> Crude oil imports are India's single largest import, consistently the biggest contributor to merchandise trade deficit.
+    </div>
+  </div>
+
+  <!-- MCQ 3 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.03 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">PYQ Style</span></div>
+    <div class="mcq-q">With reference to India's exchange rate regime, which of the following statements is correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq3')"><span class="opt-key">A</span> India follows a fixed exchange rate system where the RBI pegs the rupee to the US dollar</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq3')"><span class="opt-key">B</span> India follows a freely floating exchange rate with no RBI intervention whatsoever</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq3')"><span class="opt-key">C</span> India follows a managed floating exchange rate where RBI intervenes to prevent excessive volatility</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq3')"><span class="opt-key">D</span> The rupee is pegged to a basket of currencies including USD, EUR, and GBP</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp3')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp3">
+      <strong>✅ Answer: C</strong><br><br>
+      India's exchange rate system is called <strong>"Managed Float"</strong> or "Dirty Float." The rupee is determined by market forces (demand & supply) but the RBI reserves the right to intervene to prevent excessive or disorderly movements. RBI does NOT target a specific rupee level.<br><br>
+      <span class="wrong-label">❌ A — Fixed system was pre-1991. India moved away from fixed rates.</span><br>
+      <span class="wrong-label">❌ B — Completely false. RBI regularly buys/sells dollars.</span><br>
+      <span class="wrong-label">❌ D — Rupee is NOT pegged to any basket. That's different from currency unions.</span>
+    </div>
+  </div>
+
+  <!-- MCQ 4 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.04 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">PYQ Style</span></div>
+    <div class="mcq-q">Which among the following are components of India's Forex Reserves?<br><br>1. Foreign Currency Assets<br>2. Gold<br>3. Special Drawing Rights (SDRs)<br>4. Reserve Tranche Position with IMF<br><br>Select the correct answer using the codes below:</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq4')"><span class="opt-key">A</span> 1 and 2 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq4')"><span class="opt-key">B</span> 1, 2 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq4')"><span class="opt-key">C</span> 1, 2, 3 and 4</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq4')"><span class="opt-key">D</span> 2, 3 and 4 only</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp4')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp4">
+      <strong>✅ Answer: C — All four are components</strong><br><br>
+      India's forex reserves have FOUR components:<br>
+      1. <strong>Foreign Currency Assets (FCA)</strong> — ~94% of reserves<br>
+      2. <strong>Gold</strong> — physical gold at RBI<br>
+      3. <strong>SDRs</strong> — IMF's Special Drawing Rights allocation<br>
+      4. <strong>Reserve Tranche Position (RTP)</strong> — India's unconditional drawing rights at IMF<br><br>
+      All four are reported weekly by RBI. This is a direct recall question — all four components must be memorized.
+    </div>
+  </div>
+
+  <!-- MCQ 5 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.05 <span class="mcq-difficulty diff-medium">Medium</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(32,201,151,0.15); color:var(--teal);">SDR</span></div>
+    <div class="mcq-q">Special Drawing Rights (SDR) of the IMF is valued based on a basket of currencies. Which of the following is CORRECT about SDR?<br><br>1. Chinese Yuan was included in the SDR basket in 2016.<br>2. SDR is a currency that can be used directly for international transactions.<br>3. SDR allocation is proportional to a country's quota at IMF.<br><br>Select the correct answer:</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq5')"><span class="opt-key">A</span> 1 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq5')"><span class="opt-key">B</span> 1 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq5')"><span class="opt-key">C</span> 2 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq5')"><span class="opt-key">D</span> 1, 2 and 3</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp5')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp5">
+      <strong>✅ Answer: B (1 and 3 only)</strong><br><br>
+      <strong>Statement 1 — CORRECT:</strong> Chinese Yuan (Renminbi) was added to the SDR basket in October 2016, making it a 5-currency basket (USD, EUR, CNY, JPY, GBP).<br><br>
+      <span class="wrong-label"><strong>Statement 2 — WRONG:</strong> SDR is NOT a currency. It cannot be used directly in transactions. It is a reserve asset and unit of account. SDR must be exchanged for actual currencies through voluntary trades or IMF arrangements.</span><br><br>
+      <strong>Statement 3 — CORRECT:</strong> SDR allocation/quota is based on a member country's quota in IMF, which reflects its economic size and openness.
+    </div>
+  </div>
+
+  <!-- MCQ 6 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.06 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">WTO</span></div>
+    <div class="mcq-q">Consider the following statements about the WTO Peace Clause for agriculture:<br><br>1. It provides permanent protection to developing countries from WTO disputes over food security programs.<br>2. It was agreed upon at the Bali Ministerial Conference in 2013.<br>3. India's procurement of food at Minimum Support Price (MSP) triggered its invocation.<br><br>Which of the above statements is/are correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq6')"><span class="opt-key">A</span> 1 and 2 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq6')"><span class="opt-key">B</span> 2 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq6')"><span class="opt-key">C</span> 1 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq6')"><span class="opt-key">D</span> 1, 2 and 3</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp6')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp6">
+      <strong>✅ Answer: B (2 and 3 only)</strong><br><br>
+      <span class="wrong-label"><strong>Statement 1 — WRONG:</strong> The Peace Clause is a TEMPORARY protection, NOT permanent. It's in place until a permanent solution is found. India wants the temporary clause converted to a permanent provision.</span><br><br>
+      <strong>Statement 2 — CORRECT:</strong> Agreed at Bali (December 2013) at the WTO Ministerial Conference — India's major diplomatic win.<br><br>
+      <strong>Statement 3 — CORRECT:</strong> India's rice and wheat procurement at MSP (above market price) can cross WTO's 10% AMS cap. Peace Clause prevents India from being challenged at WTO DSB for this.
+    </div>
+  </div>
+
+  <!-- MCQ 7 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.07 <span class="mcq-difficulty diff-medium">Medium</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(32,201,151,0.15); color:var(--teal);">Capital Flows</span></div>
+    <div class="mcq-q">Which of the following best describes the difference between Currency Depreciation and Currency Devaluation?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq7')"><span class="opt-key">A</span> Depreciation occurs in a fixed exchange rate system; Devaluation occurs in a floating system</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq7')"><span class="opt-key">B</span> Both terms mean exactly the same thing — fall in the value of a currency</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq7')"><span class="opt-key">C</span> Depreciation is market-driven fall in currency value; Devaluation is a deliberate government/central bank action</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq7')"><span class="opt-key">D</span> Devaluation means the domestic currency becomes stronger; Depreciation makes it weaker</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp7')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp7">
+      <strong>✅ Answer: C</strong><br><br>
+      This is one of the most tested distinctions in UPSC economy:<br>
+      <strong>Depreciation</strong> = Market forces (demand-supply of forex) determine currency falls. No government action.<br>
+      <strong>Devaluation</strong> = Government/central bank DELIBERATELY lowers the currency's exchange rate. Used under fixed/pegged systems.<br><br>
+      India's current system (managed float) sees <strong>depreciation</strong> if rupee falls due to market forces. But in 1966 and 1991, India had <strong>devaluation</strong> — official policy decision.
+    </div>
+  </div>
+
+  <!-- MCQ 8 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.08 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">PYQ Style</span></div>
+    <div class="mcq-q">With reference to Capital Account Convertibility (CAC) of the Indian Rupee, which of the following is correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq8')"><span class="opt-key">A</span> India has had full CAC since 1994 following IMF recommendation</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq8')"><span class="opt-key">B</span> India has had full Current Account Convertibility but only partial Capital Account Convertibility</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq8')"><span class="opt-key">C</span> The Tarapore Committee recommended full CAC without any preconditions</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq8')"><span class="opt-key">D</span> The Tarapore Committee set preconditions like fiscal consolidation and NPA reduction before full CAC</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp8')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp8">
+      <strong>✅ Answer: D</strong><br><br>
+      <span class="wrong-label">❌ Option A — India achieved full CURRENT Account Convertibility in 1994, NOT Capital Account.</span><br>
+      <span class="wrong-label">❌ Option B — Only the first part is correct (full CAC), but India has PARTIAL KAC, making the combined statement partially wrong.</span><br>
+      <span class="wrong-label">❌ Option C — Completely wrong. Tarapore explicitly set preconditions.</span><br>
+      ✅ <strong>Option D — CORRECT:</strong> The 1997 Tarapore Committee set clear preconditions: (1) fiscal deficit ≤ 3.5% GDP, (2) inflation 3-5%, (3) bank NPA < 5%, (4) adequate forex reserves. These were to ensure macro stability before opening capital flows.
+    </div>
+  </div>
+
+  <!-- MCQ 9 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.09 <span class="mcq-difficulty diff-medium">Medium</span> <span class="mcq-difficulty" style="margin-left:4px;">Trade Agreements</span></div>
+    <div class="mcq-q">Trade creation and trade diversion are outcomes associated with regional trade agreements. Which of the following is CORRECT?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq9')"><span class="opt-key">A</span> Both trade creation and trade diversion increase economic welfare</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq9')"><span class="opt-key">B</span> Trade diversion occurs when a country shifts from an expensive domestic producer to a cheaper partner country</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq9')"><span class="opt-key">C</span> Trade creation increases welfare; trade diversion reduces welfare by replacing cheaper non-member imports with costlier partner imports</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq9')"><span class="opt-key">D</span> India's ASEAN FTA led only to trade creation with no trade diversion</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp9')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp9">
+      <strong>✅ Answer: C</strong><br><br>
+      <strong>Trade Creation:</strong> Country shifts from high-cost domestic production to low-cost partner imports → efficiency gain → welfare ↑<br><br>
+      <strong>Trade Diversion:</strong> Country switches from low-cost non-member to high-cost partner (because of preferential tariffs on partner) → efficiency loss → welfare ↓<br><br>
+      India's experience with ASEAN FTA involved some trade diversion — cheap ASEAN goods displaced non-ASEAN goods that were actually cheaper without tariff preferences. India's trade deficit with ASEAN widened after the FTA.
+    </div>
+  </div>
+
+  <!-- MCQ 10 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.10 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">Current Affairs</span></div>
+    <div class="mcq-q">With reference to the Carbon Border Adjustment Mechanism (CBAM) of the European Union, consider the following statements:<br><br>1. CBAM imposes a carbon price on certain imports to prevent 'carbon leakage'.<br>2. India's steel and aluminium exports to EU are among sectors covered by CBAM.<br>3. India has supported CBAM as it aligns with India's climate commitments.<br><br>Which of the above is/are correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq10')"><span class="opt-key">A</span> 1 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq10')"><span class="opt-key">B</span> 1 and 2 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq10')"><span class="opt-key">C</span> 2 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq10')"><span class="opt-key">D</span> 1, 2 and 3</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp10')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp10">
+      <strong>✅ Answer: B (1 and 2 only)</strong><br><br>
+      <strong>Statement 1 — CORRECT:</strong> CBAM is designed to prevent "carbon leakage" — where EU industries move to countries with weaker climate rules, or cheap carbon-intensive imports undercut EU producers.<br><br>
+      <strong>Statement 2 — CORRECT:</strong> CBAM covers steel, aluminium, cement, fertilizers, electricity, hydrogen. India exports significant quantities of steel and aluminium to EU.<br><br>
+      <span class="wrong-label"><strong>Statement 3 — WRONG:</strong> India has OPPOSED CBAM, calling it a discriminatory trade barrier and violation of WTO's non-discrimination and "common but differentiated responsibilities" principle. India argues it punishes developing countries unfairly.</span>
+    </div>
+  </div>
+
+  <!-- MCQ 11 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.11 <span class="mcq-difficulty diff-medium">Medium</span></div>
+    <div class="mcq-q">Which of the following international organizations has its headquarters in Manila, Philippines?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq11')"><span class="opt-key">A</span> Asian Infrastructure Investment Bank (AIIB)</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq11')"><span class="opt-key">B</span> Asian Development Bank (ADB)</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq11')"><span class="opt-key">C</span> New Development Bank (NDB)</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq11')"><span class="opt-key">D</span> World Trade Organization (WTO)</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp11')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp11">
+      <strong>✅ Answer: B — ADB is in Manila</strong><br><br>
+      Quick HQ reference:<br>
+      • AIIB → <strong>Beijing</strong><br>
+      • ADB → <strong>Manila, Philippines</strong><br>
+      • NDB (BRICS Bank) → <strong>Shanghai</strong><br>
+      • WTO → <strong>Geneva, Switzerland</strong><br>
+      • IMF & World Bank → <strong>Washington DC</strong>
+    </div>
+  </div>
+
+  <!-- MCQ 12 -->
+  <div class="mcq-card">
+    <div class="mcq-number">Q.12 <span class="mcq-difficulty diff-hard">Hard</span> <span class="mcq-difficulty" style="margin-left:4px; background:rgba(255,212,59,0.15); color:var(--gold);">UPSC Trap</span></div>
+    <div class="mcq-q">Consider the following about FDI and FPI:<br><br>1. FDI involves ownership of 10% or more of voting stock in a foreign company.<br>2. FPI is more stable than FDI because portfolio investors have longer time horizons.<br>3. FPI flows are regulated by SEBI in India, while FDI is regulated by DPIIT.<br><br>Which of the above is/are correct?</div>
+    <div class="mcq-options">
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq12')"><span class="opt-key">A</span> 2 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq12')"><span class="opt-key">B</span> 1 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, true, 'mcq12')"><span class="opt-key">C</span> 1 and 3 only</div>
+      <div class="mcq-opt" onclick="selectOption(this, false, 'mcq12')"><span class="opt-key">D</span> 1, 2 and 3</div>
+    </div>
+    <button class="mcq-reveal-btn" onclick="revealExplanation('exp12')">Reveal Explanation</button>
+    <div class="mcq-explanation" id="exp12">
+      <strong>✅ Answer: C (1 and 3 only)</strong><br><br>
+      <strong>Statement 1 — CORRECT:</strong> IMF/OECD definition: FDI = acquiring 10% or more ownership (voting stock) in a foreign enterprise, implying lasting interest and control.<br><br>
+      <span class="wrong-label"><strong>Statement 2 — WRONG:</strong> This is the OPPOSITE. FPI is LESS stable — it is "hot money" that can exit quickly. FDI is more stable. This is a classic reversal trap UPSC uses.</span><br><br>
+      <strong>Statement 3 — CORRECT:</strong> FPI (including FIIs and QFIs) is regulated by SEBI. FDI policy is under DPIIT (Department for Promotion of Industry and Internal Trade).
+    </div>
+  </div>
+
+  <div class="callout info" style="margin-top:24px;">
+    <div class="callout-icon">📊</div>
+    <div class="callout-content"><strong>Your Score: </strong><span id="inline-score">Keep answering questions above to see your score!</span></div>
+  </div>
+</div>
+
+<!-- ==================== PREDICTION ENGINE ==================== -->
+<div class="section" id="prediction">
+  <div class="section-header">
+    <div class="section-num">🔮</div>
+    <div class="section-title">UPSC Prediction Engine — Top 50 Expected Areas</div>
+    <div class="section-sub">2025–26</div>
+  </div>
+
+  <div class="topper-box">
+    <div class="topper-label">🏆 Topper Strategy for External Sector</div>
+    <p>External Sector contributes <strong>4–6 questions</strong> in UPSC Prelims every year. Toppers approach it by understanding 3 layers: (1) Conceptual clarity (BoP, exchange rates), (2) Institutional knowledge (WTO, IMF), (3) Current Affairs integration (CBAM, RCEP, US tariffs).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔥 Highest Probability Topics for Prelims 2025-26</div>
+    <div class="rev-grid">
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        BoP structure & CAD causes
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        SDR components & nature
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        Depreciation vs Devaluation
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        FDI vs FPI comparison
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        WTO Peace Clause & MSP
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,107,107,0.4);">
+        <strong style="color:var(--red);">🔴 Very High</strong>
+        Trade creation vs diversion
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        Tarapore Committee & KAC
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        CBAM (EU Carbon Tax)
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        Forex Reserves components
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        India current account convertibility
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        RCEP — India's withdrawal
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,146,43,0.4);">
+        <strong style="color:var(--orange);">🟠 High</strong>
+        Anti-dumping vs Safeguard duties
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        India remittances (world rank)
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        NDB vs AIIB differences
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        TRIPS & compulsory licensing
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        J-Curve effect
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        India-UAE CEPA features
+      </div>
+      <div class="rev-item" style="border-color: rgba(255,212,59,0.3);">
+        <strong style="color:var(--gold);">🟡 Medium-High</strong>
+        Sterilization by RBI
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ Top 10 UPSC Traps in External Sector</div>
+    <ol style="padding-left:20px;">
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Confusing <strong>Current Account Convertibility</strong> (full, since 1994) with <strong>Capital Account Convertibility</strong> (partial)</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Treating <strong>SDR as a currency</strong> — it is a reserve asset/unit of account</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Saying India has a <strong>freely floating</strong> exchange rate — it's managed float</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Placing <strong>IT/software exports</strong> in Capital Account — it belongs to Current Account (Services)</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Saying <strong>FPI is more stable</strong> than FDI — it's the opposite</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Confusing <strong>Trade Balance</strong> with <strong>Current Account Balance</strong></li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);"><strong>WTO was created in 1994</strong> — wrong. It was 1995; GATT was 1947</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">The <strong>Peace Clause is permanent</strong> — wrong, it's temporary</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Saying <strong>depreciation always widens CAD</strong> — J-curve shows it narrows eventually</li>
+      <li style="margin-bottom:10px; font-size:13.5px; color:var(--text2);">Thinking <strong>BoP can be in deficit or surplus</strong> — BoP always equals zero by accounting identity</li>
+    </ol>
+  </div>
+
+  <div class="mnemonic">
+    <strong>🧠 Master Mnemonic — External Sector Organization HQs</strong>
+    <em>"<span class="hl-blue">W</span>ashington <span class="hl-blue">D</span>ouble-Ws (<span class="hl-blue">IMF</span> + <span class="hl-blue">World Bank</span>) | <span class="hl-green">G</span>eneva <span class="hl-green">G</span>ets <span class="hl-green">WTO</span> | <span class="hl-gold">M</span>anila <span class="hl-gold">M</span>eets <span class="hl-gold">ADB</span> | <span class="hl-red">B</span>eijing <span class="hl-red">B</span>uilds <span class="hl-red">AIIB</span> | <span class="hl-teal">S</span>hanghai <span class="hl-teal">S</span>upports <span class="hl-teal">NDB</span>"</em>
+  </div>
+
+  <!-- FINAL REVISION SHEET -->
+  <div class="revision-sheet" style="margin-top:28px;">
+    <div class="rev-title">📋 Master Revision — All External Sector Concepts</div>
+    <div class="rev-grid">
+      <div class="rev-item"><strong>BoP = 0</strong>Always balances (accounting identity)</div>
+      <div class="rev-item"><strong>CAD Wideners</strong>Oil price ↑, Gold imports ↑, FPI outflow, Rupee depreciation (short-term)</div>
+      <div class="rev-item"><strong>CAD Narrowers</strong>IT exports ↑, Remittances ↑, Tourism ↑</div>
+      <div class="rev-item"><strong>Managed Float</strong>India's system — market + RBI intervention</div>
+      <div class="rev-item"><strong>Depreciation</strong>Market-driven fall | Devaluation = Policy decision</div>
+      <div class="rev-item"><strong>Forex Reserves</strong>FCA + Gold + SDR + Reserve Tranche</div>
+      <div class="rev-item"><strong>SDR basket</strong>USD+EUR+CNY+JPY+GBP (5 currencies since 2016)</div>
+      <div class="rev-item"><strong>KAC</strong>India has partial KAC; full CAC since 1994</div>
+      <div class="rev-item"><strong>Tarapore 1997</strong>Conditions: fiscal 3.5%, inflation 3-5%, NPA &lt;5%</div>
+      <div class="rev-item"><strong>Trade Hierarchy</strong>PTA → FTA → CEPA → Customs Union → Common Market → Economic Union</div>
+      <div class="rev-item"><strong>Trade Creation</strong>Shift to cheaper partner (good)</div>
+      <div class="rev-item"><strong>Trade Diversion</strong>Shift to costlier partner due to tariff preference (bad)</div>
+      <div class="rev-item"><strong>RCEP</strong>India opted out 2019; signed by 15 others</div>
+      <div class="rev-item"><strong>WTO</strong>1995; replaces GATT (1947); HQ Geneva</div>
+      <div class="rev-item"><strong>Peace Clause</strong>Bali 2013; temporary; India MSP protection</div>
+      <div class="rev-item"><strong>CBAM</strong>EU carbon tax on imports; India opposes; covers steel, aluminium, cement</div>
+      <div class="rev-item"><strong>FDI</strong>≥10% equity; stable; DPIIT</div>
+      <div class="rev-item"><strong>FPI</strong>&lt;10% equity; volatile; SEBI; hot money</div>
+      <div class="rev-item"><strong>Remittances</strong>India = world's largest receiver (~$125B)</div>
+      <div class="rev-item"><strong>Sterilization</strong>RBI sells G-Secs to absorb rupees after buying forex</div>
+      <div class="rev-item"><strong>J-Curve</strong>CAD initially worsens, then improves after depreciation</div>
+      <div class="rev-item"><strong>Imported Inflation</strong>Rupee fall → costlier oil/imports → CPI rise</div>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:36px; padding:24px; background:var(--card); border-radius:14px; border:1px solid var(--border2);">
+    <div style="font-size:28px; margin-bottom:8px;">🏆</div>
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px;">You've completed the External Sector Master Portal</p>
+    <p style="font-size:13px; color:var(--text2);">Revise sections 2, 3, 7, and 9 most frequently. Practice statement-based MCQs daily. Connect each topic to current affairs.</p>
+    <div style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <span class="tag tag-accent">Sanjiv Verma ✓</span>
+      <span class="tag tag-accent">Economic Survey ✓</span>
+      <span class="tag tag-accent">RBI Reports ✓</span>
+      <span class="tag tag-accent">WTO Developments ✓</span>
+      <span class="tag tag-accent">PYQ 2013-25 ✓</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #content -->
+</div><!-- end #main -->
+
+<!-- STICKY NOTES -->
+<div id="sticky-panel">
+  <div id="sticky-notes">
+    <h4>📝 Quick Revision Notes</h4>
+    <textarea id="sticky-textarea" placeholder="Add your notes here..."></textarea>
+    <div style="margin-top:8px; display:flex; gap:8px;">
+      <button class="btn-sm" onclick="saveNote()">Save</button>
+      <button class="btn-sm" onclick="clearNote()">Clear</button>
+    </div>
+  </div>
+  <button id="sticky-btn" onclick="toggleSticky()">📝</button>
+</div>
+
+<script>
+  // Theme
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  }
+
+  // Sidebar
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('main');
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      sidebar.classList.toggle('mobile-open');
+    } else {
+      sidebar.classList.toggle('collapsed');
+      main.classList.toggle('full');
+    }
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    updateProgress();
+  }
+
+  // Accordion
+  function toggleAccordion(header) {
+    header.classList.toggle('open');
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+  }
+
+  // Search
+  function searchTopics(val) {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.style.display = item.textContent.toLowerCase().includes(val.toLowerCase()) ? 'flex' : 'none';
+    });
+  }
+
+  // MCQ
+  let correctCount = 0, wrongCount = 0, totalAnswered = 0;
+  const attempted = new Set();
+
+  function selectOption(el, isCorrect, qId) {
+    if (attempted.has(qId)) return;
+    attempted.add(qId);
+    totalAnswered++;
+
+    const allOpts = el.parentElement.querySelectorAll('.mcq-opt');
+    el.classList.add(isCorrect ? 'correct' : 'wrong');
+    if (!isCorrect) {
+      allOpts.forEach(opt => {
+        if (opt.getAttribute('onclick')?.includes('true')) opt.classList.add('correct');
+      });
+      wrongCount++;
+    } else {
+      correctCount++;
+    }
+
+    document.getElementById('q-correct').textContent = correctCount;
+    document.getElementById('q-wrong').textContent = wrongCount;
+    document.getElementById('q-total').textContent = totalAnswered;
+    document.getElementById('sidebar-score').textContent = correctCount;
+    document.getElementById('sidebar-total').textContent = totalAnswered;
+
+    const pct = totalAnswered > 0 ? Math.round(correctCount/totalAnswered*100) : 0;
+    document.getElementById('inline-score').textContent = `${correctCount}/${totalAnswered} correct (${pct}%)`;
+    updateProgress();
+  }
+
+  function revealExplanation(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('visible');
+  }
+
+  // Sticky notes
+  function toggleSticky() {
+    document.getElementById('sticky-notes').classList.toggle('visible');
+  }
+  function saveNote() {
+    localStorage.setItem('upsc_ext_notes', document.getElementById('sticky-textarea').value);
+    alert('Note saved!');
+  }
+  function clearNote() {
+    document.getElementById('sticky-textarea').value = '';
+  }
+  window.onload = () => {
+    const saved = localStorage.getItem('upsc_ext_notes');
+    if (saved) document.getElementById('sticky-textarea').value = saved;
+  }
+
+  function scrollToQuiz() {
+    document.getElementById('quiz-section').scrollIntoView({behavior:'smooth'});
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.nav-item').length;
+    const active = document.querySelectorAll('.nav-item.active').length;
+    const answered = attempted.size;
+    const pct = Math.round((answered / 12) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = pct + '%';
+    document.getElementById('completed-count').textContent = answered;
+  }
+</script>
+</body>
+</html>
