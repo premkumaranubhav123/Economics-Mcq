@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPSC Financial Markets Masterclass | Sanjiv Verma + PYQ Engine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2430;
+    --gold: #d4a853;
+    --gold2: #f0c96a;
+    --red: #e05252;
+    --green: #4caf7d;
+    --blue: #4a9eff;
+    --purple: #9b72cf;
+    --text: #e8eaf0;
+    --muted: #7a8099;
+    --accent: #d4a853;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* ===== HEADER ===== */
+  .master-header {
+    background: linear-gradient(135deg, #0a0c10 0%, #111827 50%, #0d1117 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 40px 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .master-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold2);
+    letter-spacing: 0.02em;
+  }
+  .master-header .subtitle {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .badge {
+    background: var(--gold);
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== NAV ===== */
+  .nav-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 14px 18px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-btn:hover { color: var(--text); border-bottom-color: var(--border); }
+  .nav-btn.active { color: var(--gold2); border-bottom-color: var(--gold); }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  .section { display: none; padding: 50px 0; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    text-align: center;
+    padding: 80px 0 60px;
+  }
+  .hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--gold2);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero p { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin: 0 auto 40px; }
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .module-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .module-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+  .module-card:hover::before { opacity: 1; }
+  .module-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .module-card h3 { font-size: 0.95rem; color: var(--text); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .module-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== CONTENT STYLES ===== */
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--gold2);
+    margin-bottom: 8px;
+    border-left: 4px solid var(--gold);
+    padding-left: 20px;
+  }
+  h3.sub-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    margin: 40px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h3.sub-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 10px;
+  }
+  h4.topic-head {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    margin: 28px 0 10px;
+    font-style: italic;
+  }
+  p { margin-bottom: 14px; color: var(--text); }
+
+  /* ===== BOXES ===== */
+  .concept-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .concept-box.gold { border-left-color: var(--gold); }
+  .concept-box.green { border-left-color: var(--green); }
+  .concept-box.red { border-left-color: var(--red); }
+  .concept-box.purple { border-left-color: var(--purple); }
+  .concept-box .box-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .concept-box.gold .box-label { color: var(--gold); }
+  .concept-box.green .box-label { color: var(--green); }
+  .concept-box.red .box-label { color: var(--red); }
+  .concept-box.purple .box-label { color: var(--purple); }
+
+  /* ===== TABLE ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9rem;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--gold);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  tr:nth-child(even) td { background: var(--surface); }
+
+  /* ===== MCQ ===== */
+  .mcq-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .mcq-q { font-size: 0.95rem; margin-bottom: 16px; font-weight: 600; color: var(--text); }
+  .mcq-options { list-style: none; }
+  .mcq-options li {
+    padding: 8px 14px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mcq-options li:hover { border-color: var(--gold); color: var(--gold2); }
+  .mcq-options li.correct { border-color: var(--green); background: rgba(76,175,125,0.1); color: var(--green); }
+  .mcq-options li.wrong { border-color: var(--red); background: rgba(224,82,82,0.1); color: var(--red); }
+  .mcq-explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 14px;
+    background: rgba(212,168,83,0.08);
+    border-radius: 6px;
+    font-size: 0.86rem;
+    color: var(--muted);
+    border-left: 3px solid var(--gold);
+  }
+  .mcq-explanation.show { display: block; }
+  .show-ans-btn {
+    margin-top: 12px;
+    background: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s;
+  }
+  .show-ans-btn:hover { background: var(--gold); color: #000; }
+  .difficulty-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .easy { background: rgba(76,175,125,0.15); color: var(--green); }
+  .moderate { background: rgba(212,168,83,0.15); color: var(--gold); }
+  .hard { background: rgba(224,82,82,0.15); color: var(--red); }
+  .upsc-level { background: rgba(155,114,207,0.15); color: var(--purple); }
+
+  /* ===== FLOWCHART ===== */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 20px 0;
+  }
+  .flow-step {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    text-align: center;
+    min-width: 100px;
+  }
+  .flow-arrow {
+    color: var(--gold);
+    font-size: 1.2rem;
+    padding: 0 6px;
+  }
+
+  /* ===== MNEMONIC ===== */
+  .mnemonic {
+    background: linear-gradient(135deg, rgba(212,168,83,0.05), rgba(155,114,207,0.05));
+    border: 1px dashed var(--gold);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .mnemonic .mnemonic-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .mnemonic .big-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold2);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .mnemonic .breakdown { font-size: 0.88rem; color: var(--muted); }
+  .mnemonic .breakdown span { color: var(--gold2); font-weight: 600; }
+
+  /* ===== TRAP BOX ===== */
+  .trap-box {
+    background: rgba(224,82,82,0.06);
+    border: 1px solid rgba(224,82,82,0.3);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 20px 0;
+  }
+  .trap-box .trap-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trap-item { font-size: 0.88rem; margin: 8px 0; padding-left: 16px; position: relative; color: var(--text); }
+  .trap-item::before { content: '⚠'; position: absolute; left: 0; color: var(--red); font-size: 0.8rem; }
+
+  /* ===== REVISION BULLETS ===== */
+  .rev-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .rev-box h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .rev-item {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0;
+    font-size: 0.87rem;
+    line-height: 1.5;
+  }
+  .rev-item::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+
+  /* ===== COMPARISON TABLE ===== */
+  .comp-label { font-size: 0.75rem; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+
+  /* ===== PYQS ===== */
+  .pyq-tag {
+    display: inline-block;
+    background: rgba(74,158,255,0.12);
+    border: 1px solid rgba(74,158,255,0.3);
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-right: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .tl-year { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--gold); margin-bottom: 4px; }
+  .tl-text { font-size: 0.88rem; color: var(--text); }
+
+  /* ===== ACCORDION ===== */
+  .accordion { margin: 16px 0; }
+  .acc-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.92rem;
+    transition: all 0.2s;
+    margin-bottom: 4px;
+  }
+  .acc-header:hover { border-color: var(--gold); }
+  .acc-header.open { border-color: var(--gold); color: var(--gold2); border-radius: 8px 8px 0 0; margin-bottom: 0; }
+  .acc-header .acc-icon { transition: transform 0.3s; color: var(--gold); font-size: 0.9rem; }
+  .acc-header.open .acc-icon { transform: rotate(90deg); }
+  .acc-content {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .acc-content.open { display: block; }
+
+  /* === SEARCH === */
+  .search-bar {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    margin: 20px 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-bar:focus { border-color: var(--gold); }
+  .search-bar::placeholder { color: var(--muted); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .master-header { padding: 20px; flex-direction: column; gap: 10px; }
+    .module-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 20px; }
+    .nav-strip { padding: 0 10px; }
+    h2.section-title { font-size: 1.8rem; }
+    .hero h2 { font-size: 2.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="master-header">
+  <div>
+    <h1>⚖ UPSC Financial Markets Masterclass</h1>
+    <div class="subtitle">Sanjiv Verma · RBI Reports · SEBI · PYQ 2013–2025 · Economic Survey</div>
+  </div>
+  <span class="badge">PRELIMS ENGINE v2.0</span>
+</div>
+
+<div class="nav-strip">
+  <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showSection('financial-system')">💰 Financial System</button>
+  <button class="nav-btn" onclick="showSection('money-market')">🏦 Money Market</button>
+  <button class="nav-btn" onclick="showSection('capital-market')">📈 Capital Market</button>
+  <button class="nav-btn" onclick="showSection('rbi')">🏛 RBI & MPC</button>
+  <button class="nav-btn" onclick="showSection('banking')">🏧 Banking</button>
+  <button class="nav-btn" onclick="showSection('sebi')">⚖ SEBI</button>
+  <button class="nav-btn" onclick="showSection('forex')">💱 Forex & BOP</button>
+  <button class="nav-btn" onclick="showSection('international')">🌐 International</button>
+  <button class="nav-btn" onclick="showSection('modern')">🔮 Modern Topics</button>
+  <button class="nav-btn" onclick="showSection('mcq')">🎯 MCQ Engine</button>
+  <button class="nav-btn" onclick="showSection('revision')">⚡ Rapid Revision</button>
+</div>
+
+<!-- ==================== HOME ==================== -->
+<div id="home" class="section active">
+  <div class="container">
+    <div class="hero">
+      <h2>From Memorizer<br>→ Logic-Based Solver</h2>
+      <p>Everything on Financial Markets for UPSC Prelims — sourced from Sanjiv Verma, RBI, SEBI, Economic Survey, and integrated with PYQ 2013–2025.</p>
+    </div>
+    <div class="module-grid">
+      <div class="module-card" onclick="showSection('financial-system')">
+        <div class="icon">🏗</div>
+        <h3>01 · Financial System</h3>
+        <p>Architecture of Indian Financial System — regulators, markets, institutions, instruments.</p>
+      </div>
+      <div class="module-card" onclick="showSection('money-market')">
+        <div class="icon">💵</div>
+        <h3>02 · Money Market</h3>
+        <p>Call Money, T-Bills, CP, CD, Repo, Reverse Repo, LAF, MSF, SDF — complete with rates & UPSC traps.</p>
+      </div>
+      <div class="module-card" onclick="showSection('capital-market')">
+        <div class="icon">📊</div>
+        <h3>03 · Capital Market</h3>
+        <p>Primary & Secondary Market, IPO/FPO, G-Secs, SGBs, Bonds, Derivatives — deep analysis.</p>
+      </div>
+      <div class="module-card" onclick="showSection('rbi')">
+        <div class="icon">🏛</div>
+        <h3>04 · RBI & MPC</h3>
+        <p>Monetary Policy Tools — CRR, SLR, Repo, OMO, Bank Rate, Monetary Policy Committee.</p>
+      </div>
+      <div class="module-card" onclick="showSection('banking')">
+        <div class="icon">🏦</div>
+        <h3>05 · Banking System</h3>
+        <p>Scheduled Banks, NBFCs, Basel Norms, NPAs, Payment Banks, SFBs, Financial Inclusion.</p>
+      </div>
+      <div class="module-card" onclick="showSection('sebi')">
+        <div class="icon">⚖</div>
+        <h3>06 · SEBI</h3>
+        <p>Functions, powers, investor protection, market surveillance, circuit breakers, FPI.</p>
+      </div>
+      <div class="module-card" onclick="showSection('forex')">
+        <div class="icon">💱</div>
+        <h3>07 · Forex & BOP</h3>
+        <p>Exchange Rate determination, convertibility, CAD, REER, NEER, PPP, impossible trinity.</p>
+      </div>
+      <div class="module-card" onclick="showSection('international')">
+        <div class="icon">🌐</div>
+        <h3>08 · International Finance</h3>
+        <p>IMF, World Bank, AIIB, NDB, SDR, Quota System, India's global position.</p>
+      </div>
+      <div class="module-card" onclick="showSection('modern')">
+        <div class="icon">🔮</div>
+        <h3>09 · Modern Topics</h3>
+        <p>CBDC, Crypto, UPI, FinTech, Green Finance, ESG, Account Aggregator, ONDC.</p>
+      </div>
+      <div class="module-card" onclick="showSection('mcq')">
+        <div class="icon">🎯</div>
+        <h3>10 · MCQ Engine</h3>
+        <p>50 UPSC-level questions with explanations, elimination tricks, PYQ patterns.</p>
+      </div>
+      <div class="module-card" onclick="showSection('revision')">
+        <div class="icon">⚡</div>
+        <h3>11 · Rapid Revision</h3>
+        <p>One-liner facts, mnemonics, comparison tables, last-30-days strategy.</p>
+      </div>
+      <div class="module-card" style="border-color: var(--gold); background: rgba(212,168,83,0.05);">
+        <div class="icon">🔥</div>
+        <h3>Top 50 Probable Themes</h3>
+        <p>Predicted UPSC 2025 questions, most dangerous topics, most scoring areas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FINANCIAL SYSTEM ==================== -->
+<div id="financial-system" class="section">
+<div class="container">
+  <h2 class="section-title">The Indian Financial System</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Foundation Module — UPSC loves statement-based questions on this architecture</p>
+
+  <h3 class="sub-title">1 · Foundation: What & Why</h3>
+  <p>A financial system is the <strong>plumbing of an economy</strong> — it channels money from those who have it (savers) to those who need it (borrowers). Without it, a doctor's savings could never reach an entrepreneur's factory.</p>
+
+  <div class="concept-box gold">
+    <div class="box-label">🎯 Analogy for Clarity</div>
+    <p><strong>Think of the Financial System as a Water System:</strong> Savings are the water source. Banks, mutual funds, stock markets are the pipes. RBI, SEBI, IRDAI are the pressure regulators. Inflation is a leak. The entire economy drinks from this system.</p>
+  </div>
+
+  <h3 class="sub-title">2 · Architecture: The 4 Pillars</h3>
+
+  <table>
+    <tr>
+      <th>Pillar</th>
+      <th>What it includes</th>
+      <th>Regulator</th>
+      <th>UPSC Focus</th>
+    </tr>
+    <tr>
+      <td><strong>Financial Institutions</strong></td>
+      <td>Banks, NBFCs, MFIs, Insurance, Pension Funds</td>
+      <td>RBI, IRDAI, PFRDA</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Financial Markets</strong></td>
+      <td>Money Market, Capital Market, Forex Market</td>
+      <td>RBI, SEBI</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Financial Instruments</strong></td>
+      <td>Shares, Bonds, T-Bills, CP, CD, Derivatives</td>
+      <td>RBI, SEBI</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td><strong>Financial Services</strong></td>
+      <td>Banking services, Insurance, Mutual Funds, FinTech</td>
+      <td>Multiple</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+  </table>
+
+  <h3 class="sub-title">3 · Regulatory Architecture (Critical for UPSC)</h3>
+
+  <table>
+    <tr>
+      <th>Regulator</th>
+      <th>Full Form</th>
+      <th>What it Regulates</th>
+      <th>Key Act</th>
+    </tr>
+    <tr>
+      <td><strong>RBI</strong></td>
+      <td>Reserve Bank of India</td>
+      <td>Banks, NBFCs, Forex, Money Markets, Monetary Policy</td>
+      <td>RBI Act 1934</td>
+    </tr>
+    <tr>
+      <td><strong>SEBI</strong></td>
+      <td>Securities & Exchange Board of India</td>
+      <td>Capital Markets, Stock Exchanges, Mutual Funds</td>
+      <td>SEBI Act 1992</td>
+    </tr>
+    <tr>
+      <td><strong>IRDAI</strong></td>
+      <td>Insurance Regulatory & Development Authority</td>
+      <td>Life & Non-life Insurance</td>
+      <td>IRDAI Act 1999</td>
+    </tr>
+    <tr>
+      <td><strong>PFRDA</strong></td>
+      <td>Pension Fund Regulatory & Development Authority</td>
+      <td>Pension Funds, NPS</td>
+      <td>PFRDA Act 2013</td>
+    </tr>
+    <tr>
+      <td><strong>FSDC</strong></td>
+      <td>Financial Stability & Development Council</td>
+      <td>Systemic risk, inter-regulatory coordination</td>
+      <td>Executive Order 2010</td>
+    </tr>
+    <tr>
+      <td><strong>IBBI</strong></td>
+      <td>Insolvency & Bankruptcy Board of India</td>
+      <td>Insolvency resolution</td>
+      <td>IBC 2016</td>
+    </tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ UPSC TRAP MATRIX — Financial System Regulators</div>
+    <div class="trap-item">ULIPs (Unit Linked Insurance Plans) — regulated by <strong>IRDAI</strong>, NOT SEBI. But when they invest in stock markets — regulatory conflict arises.</div>
+    <div class="trap-item">RBI does NOT regulate insurance companies. SEBI does NOT regulate banks directly.</div>
+    <div class="trap-item">FSDC is NOT a statutory body — it was created by an executive order. SEBI, RBI, PFRDA are statutory bodies.</div>
+    <div class="trap-item">Commodity markets: Earlier FMC, now merged with SEBI (2015). MCX, NCDEX — under SEBI since merger.</div>
+    <div class="trap-item">Foreign Portfolio Investors (FPI) — registered with and regulated by SEBI, NOT RBI. But RBI controls the limits of FPI investment.</div>
+  </div>
+
+  <h3 class="sub-title">4 · Money vs Capital Market: The Foundational Distinction</h3>
+
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Money Market</th>
+      <th>Capital Market</th>
+    </tr>
+    <tr>
+      <td>Maturity</td>
+      <td>Less than 1 year (short-term)</td>
+      <td>More than 1 year (long-term)</td>
+    </tr>
+    <tr>
+      <td>Purpose</td>
+      <td>Meet short-term liquidity needs</td>
+      <td>Long-term investment & expansion</td>
+    </tr>
+    <tr>
+      <td>Instruments</td>
+      <td>T-Bills, Call Money, CP, CD, Repo</td>
+      <td>Shares, Bonds, Debentures, G-Secs</td>
+    </tr>
+    <tr>
+      <td>Risk</td>
+      <td>Low risk, high liquidity</td>
+      <td>Higher risk, less liquidity</td>
+    </tr>
+    <tr>
+      <td>Participants</td>
+      <td>Banks, RBI, Corporates</td>
+      <td>Companies, Govt, Retail Investors</td>
+    </tr>
+    <tr>
+      <td>Regulator</td>
+      <td>RBI (primarily)</td>
+      <td>SEBI (primarily)</td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<!-- ==================== MONEY MARKET ==================== -->
+<div id="money-market" class="section">
+<div class="container">
+  <h2 class="section-title">Money Market</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Short-term liquidity market — most tested area in UPSC Economics</p>
+
+  <div class="concept-box gold">
+    <div class="box-label">🎯 Core Intuition</div>
+    <p>Money Market = <strong>"Overnight ATM of the Economy."</strong> When banks run short of cash for one night, they borrow here. When government needs money for 91 days, it issues T-Bills here. It's where short-term liquidity is managed — precisely by RBI.</p>
+  </div>
+
+  <h3 class="sub-title">All Instruments — Complete Guide</h3>
+
+  <h4 class="topic-head">① Call Money & Notice Money</h4>
+  <p><strong>Call Money</strong>: Banks lend/borrow money from each other for exactly <strong>1 day (overnight)</strong>. The rate at which this happens = <strong>Call Rate</strong>.</p>
+  <p><strong>Notice Money</strong>: Same as Call Money but for <strong>2–14 days</strong>. No collateral needed — purely based on trust between banks.</p>
+  <p><strong>Term Money</strong>: Interbank transactions for <strong>15 days to 1 year</strong>.</p>
+
+  <div class="concept-box">
+    <div class="box-label">Mental Model</div>
+    <p>Call Money = A friend borrowing ₹500 for exactly tonight. Notice Money = Same friend, but says "sometime in the next 2 weeks." Term Money = Same friend for longer.</p>
+  </div>
+
+  <table>
+    <tr><th>Type</th><th>Duration</th><th>Collateral</th><th>Participants</th></tr>
+    <tr><td>Call Money</td><td>1 day (overnight)</td><td>None</td><td>Banks, PDs</td></tr>
+    <tr><td>Notice Money</td><td>2–14 days</td><td>None</td><td>Banks, PDs</td></tr>
+    <tr><td>Term Money</td><td>15 days–1 year</td><td>None</td><td>Banks, PDs</td></tr>
+  </table>
+
+  <h4 class="topic-head">② Treasury Bills (T-Bills)</h4>
+  <p>Short-term <strong>government borrowing instruments</strong> issued by RBI on behalf of the Government of India. They are <strong>zero-coupon</strong> instruments — issued at a discount, redeemed at face value.</p>
+
+  <table>
+    <tr><th>Type</th><th>Maturity</th><th>Auction Frequency</th><th>Key Feature</th></tr>
+    <tr><td>91-Day T-Bill</td><td>91 days</td><td>Weekly</td><td>Most liquid, benchmark</td></tr>
+    <tr><td>182-Day T-Bill</td><td>182 days</td><td>Fortnightly</td><td>Medium short-term</td></tr>
+    <tr><td>364-Day T-Bill</td><td>364 days</td><td>Fortnightly</td><td>Near 1 year</td></tr>
+  </table>
+
+  <div class="concept-box green">
+    <div class="box-label">✅ Key Facts for UPSC</div>
+    <p>• T-Bills are <strong>Government of India</strong> instruments, NOT State Government instruments.<br>
+    • They are <strong>risk-free</strong> (gilt-edged) as the government cannot default.<br>
+    • They are issued at <strong>discount</strong> (not at face value) — the interest is embedded in the discount.<br>
+    • Minimum denomination: ₹25,000<br>
+    • T-Bills form part of banks' <strong>SLR</strong> portfolio.<br>
+    • They are traded in the <strong>secondary market</strong>.</p>
+  </div>
+
+  <h4 class="topic-head">③ Commercial Papers (CP)</h4>
+  <p>Short-term <strong>unsecured money market instrument</strong> issued by <strong>corporate entities</strong> (NOT banks, NOT government) to raise short-term funds. Introduced in India in 1990.</p>
+
+  <table>
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Issuer</td><td>Corporates, PDs, All-India FIs</td></tr>
+    <tr><td>Maturity</td><td>7 days to 1 year</td></tr>
+    <tr><td>Form</td><td>Issued at discount (like T-Bills)</td></tr>
+    <tr><td>Minimum Rating</td><td>A2 or P2 (credit rating mandatory)</td></tr>
+    <tr><td>Minimum Amount</td><td>₹5 lakh and multiples</td></tr>
+    <tr><td>Collateral</td><td>Unsecured (trust-based)</td></tr>
+  </table>
+
+  <h4 class="topic-head">④ Certificates of Deposit (CD)</h4>
+  <p>CDs are issued by <strong>banks</strong> (NOT corporates) to raise short-term resources. They are <strong>negotiable</strong> (transferable in secondary market) unlike fixed deposits.</p>
+
+  <table>
+    <tr><th>Feature</th><th>CD (Banks)</th><th>CP (Corporates)</th></tr>
+    <tr><td>Issuer</td><td>Scheduled Commercial Banks, FIs</td><td>Corporates, PDs</td></tr>
+    <tr><td>Maturity</td><td>7 days to 1 year (banks); 1–3 yr (FIs)</td><td>7 days to 1 year</td></tr>
+    <tr><td>Security</td><td>Secured</td><td>Unsecured</td></tr>
+    <tr><td>Rating</td><td>Not mandatory</td><td>Mandatory</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ UPSC TRAP — CP vs CD</div>
+    <div class="trap-item">CP = issued by <strong>Corporates</strong>. CD = issued by <strong>banks</strong>. UPSC regularly reverses this.</div>
+    <div class="trap-item">CP is <strong>unsecured</strong>. T-Bills are <strong>risk-free</strong> (government). Both are issued at discount.</div>
+    <div class="trap-item">State Governments cannot issue T-Bills. They issue <strong>State Development Loans (SDLs)</strong>.</div>
+    <div class="trap-item">Commercial Papers require <strong>credit rating</strong>. T-Bills do NOT require credit rating (government instrument).</div>
+  </div>
+
+  <h4 class="topic-head">⑤ Repo & Reverse Repo — The Most Important Tool</h4>
+
+  <div class="concept-box gold">
+    <div class="box-label">🏆 Single Most Important Money Market Concept</div>
+    <p><strong>REPO</strong> (Repurchase Agreement): A bank sells government securities to RBI and agrees to repurchase them after a specified period. The interest rate paid by banks to RBI = <strong>Repo Rate</strong>. This is how banks borrow from RBI.<br><br>
+    <strong>REVERSE REPO</strong>: RBI borrows from banks by selling securities. RBI pays interest to banks = <strong>Reverse Repo Rate</strong>. This drains liquidity.<br><br>
+    <strong>Golden Rule</strong>: Repo Rate > Reverse Repo Rate (always).</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">Bank has<br>excess liquidity</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Bank deposits<br>with RBI</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Gets Reverse<br>Repo Rate</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Liquidity<br>drained</div>
+  </div>
+
+  <div class="flow" style="margin-top:10px;">
+    <div class="flow-step">Bank needs<br>money urgently</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Borrows from<br>RBI (Repo)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Pays Repo<br>Rate</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Liquidity<br>injected</div>
+  </div>
+
+  <h4 class="topic-head">⑥ Liquidity Adjustment Facility (LAF)</h4>
+  <p>LAF is the framework through which RBI <strong>manages day-to-day liquidity</strong> in the banking system. It has multiple windows:</p>
+
+  <table>
+    <tr><th>Facility</th><th>Nature</th><th>Rate</th><th>Purpose</th></tr>
+    <tr><td><strong>Repo</strong></td><td>Injection</td><td>Repo Rate (Policy Rate)</td><td>Banks borrow from RBI (overnight)</td></tr>
+    <tr><td><strong>Reverse Repo</strong></td>  <td>Absorption</td><td>Repo Rate – 25 bps</td><td>Banks park excess money with RBI</td></tr>
+    <tr><td><strong>MSF</strong></td><td>Emergency Injection</td><td>Repo Rate + 25 bps</td><td>Emergency overnight borrowing</td></tr>
+    <tr><td><strong>SDF</strong></td><td>Absorption</td><td>Repo Rate – 25 bps</td><td>NEW: Banks park without collateral</td></tr>
+  </table>
+
+  <h4 class="topic-head">⑦ Marginal Standing Facility (MSF)</h4>
+  <p>Introduced in 2011. MSF is the <strong>emergency window</strong> for banks. When all interbank liquidity dries up and even repo access fails, banks can borrow from RBI's MSF window at a <strong>penal rate</strong> (Repo + 25 basis points). Banks can use even their <strong>SLR securities</strong> (up to 1% of NDTL) for this borrowing.</p>
+
+  <div class="concept-box red">
+    <div class="box-label">🚨 UPSC 2015 — Frequently Tested</div>
+    <p><strong>SDF (Standing Deposit Facility)</strong> — introduced in April 2022 Budget. It allows banks to park excess liquidity with RBI <strong>WITHOUT any collateral</strong>. This replaced the reverse repo as the floor rate of the interest rate corridor. SDF rate = Repo Rate – 25 bps = new floor of the corridor.</p>
+  </div>
+
+  <h3 class="sub-title">Interest Rate Corridor (Critical Mental Model)</h3>
+
+  <div class="concept-box purple">
+    <div class="box-label">🧠 The Rate Corridor Visualization</div>
+    <p style="text-align:center; font-family: 'JetBrains Mono', monospace; font-size:0.85rem;">
+      <span style="color:var(--red)">MSF Rate</span> (Ceiling = Repo + 0.25%)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+      <span style="color:var(--gold)">POLICY REPO RATE</span> (Benchmark = e.g., 6.5%)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+      <span style="color:var(--green)">SDF Rate</span> (Floor = Repo – 0.25%)<br>
+    </p>
+    <p style="margin-top:10px; font-size:0.85rem;">The <strong>corridor</strong> keeps overnight rates anchored. Banks will never borrow above MSF rate (too expensive) and never park below SDF rate (suboptimal). This is RBI's liquidity management genius.</p>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">🧠 Mnemonic — Money Market Instruments</div>
+    <div class="big-word">TRCCC-ITRM</div>
+    <div class="breakdown">
+      <span>T</span>reasury Bills · <span>R</span>epo/Reverse Repo · <span>C</span>all Money · <span>C</span>ommercial Papers · <span>C</span>ertificates of Deposit · <span>I</span>nter-bank Participation · <span>T</span>erm Money · <span>R</span>ediscounting Bills · <span>M</span>SF
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== CAPITAL MARKET ==================== -->
+<div id="capital-market" class="section">
+<div class="container">
+  <h2 class="section-title">Capital Market</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Long-term fund raising — Primary vs Secondary Market — Bonds, Equities, G-Secs, Derivatives</p>
+
+  <div class="concept-box gold">
+    <div class="box-label">🎯 Core Intuition (Sanjiv Verma)</div>
+    <p>"Requirement of capital is an absolute necessity for any economic activity to sustain. Capital Market provides a platform whereby the people who required investment and those who are willing to invest are coming together." — It is <strong>disintermediation</strong>: companies raise money DIRECTLY from public, bypassing banks.</p>
+  </div>
+
+  <h3 class="sub-title">Primary vs Secondary Market</h3>
+
+  <table>
+    <tr><th>Feature</th><th>Primary Market</th><th>Secondary Market</th></tr>
+    <tr><td>Definition</td><td>First-time issuance of new securities</td><td>Trading of existing securities</td></tr>
+    <tr><td>Who gets money?</td><td>The company (issuer)</td><td>The seller (investor)</td></tr>
+    <tr><td>Examples</td><td>IPO, FPO, Rights Issue, Bond Issue</td><td>BSE, NSE trading</td></tr>
+    <tr><td>Purpose</td><td>Raise new capital</td><td>Provide liquidity to investors</td></tr>
+    <tr><td>SEBI Role</td><td>Approve disclosures, pricing norms</td><td>Market surveillance, FPI limits</td></tr>
+  </table>
+
+  <h4 class="topic-head">IPO, FPO, OFS — Explained</h4>
+  <p><strong>IPO (Initial Public Offering)</strong>: First time a company sells shares to the public. Fresh capital raised goes TO the company.<br>
+  <strong>FPO (Follow-on Public Offer)</strong>: Company already listed; sells MORE new shares. Fresh capital again goes to company.<br>
+  <strong>OFS (Offer for Sale)</strong>: Existing shareholders (like promoters) sell their shares. Money goes to SELLER, NOT the company.<br>
+  <strong>Rights Issue</strong>: Company offers new shares to EXISTING shareholders at discounted price.<br>
+  <strong>Book Building</strong>: Price discovery mechanism where investors bid within a price band. Final price = cut-off price.</p>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ UPSC TRAP — IPO vs OFS</div>
+    <div class="trap-item">In OFS — money goes to SELLER (existing shareholder/promoter), NOT the company. Company gets NO money.</div>
+    <div class="trap-item">Government's divestment via stock exchange = OFS route (money to government, not to the PSU).</div>
+    <div class="trap-item">QIB (Qualified Institutional Buyer) = SEBI-defined sophisticated investors (FPIs, domestic MFs, insurance companies). NOT retail investors.</div>
+  </div>
+
+  <h3 class="sub-title">Debt Market — G-Secs, Bonds</h3>
+
+  <h4 class="topic-head">Government Securities (G-Secs)</h4>
+  <p>Issued by RBI on behalf of Central Government. Date securities (>1 year). <strong>Gilt-edged</strong> = risk-free as government cannot default. Banks are major holders (SLR requirement). RBI sets SLR at minimum 18% (currently).</p>
+
+  <table>
+    <tr><th>Instrument</th><th>Issuer</th><th>Tenure</th><th>Nature</th></tr>
+    <tr><td>Treasury Bills</td><td>Central Govt</td><td>&lt; 1 year</td><td>Discount instrument</td></tr>
+    <tr><td>Dated G-Secs</td><td>Central Govt</td><td>&gt; 1 year</td><td>Fixed coupon</td></tr>
+    <tr><td>State Dev Loans (SDLs)</td><td>State Govts</td><td>10–14 years</td><td>Fixed coupon</td></tr>
+    <tr><td>Sovereign Gold Bonds (SGBs)</td><td>RBI/GOI</td><td>8 years (exit from 5th)</td><td>Denominated in gold grams</td></tr>
+    <tr><td>STRIPS</td><td>Central Govt</td><td>Varies</td><td>Zero coupon (stripped)</td></tr>
+    <tr><td>Floating Rate Bonds</td><td>Central Govt</td><td>Varies</td><td>Variable rate linked to benchmark</td></tr>
+    <tr><td>Inflation-Indexed Bonds</td><td>Central Govt</td><td>Varies</td><td>Indexed to CPI</td></tr>
+  </table>
+
+  <div class="concept-box gold">
+    <div class="box-label">🥇 Sovereign Gold Bonds (SGBs) — High Priority</div>
+    <p>• Issued in <strong>rupees, denominated in grams of gold</strong> by RBI on behalf of GOI.<br>
+    • Interest: 2.5% per annum (paid semi-annually)<br>
+    • Tenure: 8 years, exit from 5th year<br>
+    • Capital gains on redemption: <strong>EXEMPT</strong> if held till maturity<br>
+    • Can be used as collateral for loans<br>
+    • Trading on exchanges possible (secondary market)<br>
+    • Eligible for SLR of banks<br>
+    • Minimum: 1 gram; Maximum: 4 kg/year (individual), 20 kg (trusts/institutions)</p>
+  </div>
+
+  <h4 class="topic-head">Corporate Bonds</h4>
+  <p>Issued by companies to raise long-term debt. Unlike G-Secs, these carry <strong>credit risk</strong>. Rated by credit rating agencies (CRISIL, ICRA, CARE). India's corporate bond market is <strong>underdeveloped</strong> — a major UPSC discussion point.</p>
+
+  <div class="concept-box green">
+    <div class="box-label">✅ Green Bonds / ESG — Modern Priority</div>
+    <p><strong>Green Bonds</strong>: Funds raised exclusively for <strong>climate/environmental projects</strong>. SEBI issued Green Bond Framework in 2023. India issued its first <strong>Sovereign Green Bond</strong> in 2023 (₹16,000 crore). RBI manages issuance.</p>
+  </div>
+
+  <h4 class="topic-head">Municipal Bonds</h4>
+  <p>Issued by Urban Local Bodies (municipalities) to fund infrastructure. Pune Municipal Corporation issued India's first municipal bond in 2017 under SEBI framework. These are <strong>tax-free</strong> in the US but taxable in India.</p>
+
+  <h3 class="sub-title">Derivatives Market</h3>
+
+  <div class="concept-box">
+    <div class="box-label">Foundation</div>
+    <p>A derivative is a <strong>contract whose value is derived from an underlying asset</strong> (shares, commodities, currency, interest rates). You're not buying the asset — you're betting on its price movement. Used for HEDGING risk or SPECULATION.</p>
+  </div>
+
+  <table>
+    <tr><th>Type</th><th>Description</th><th>Example</th><th>UPSC Point</th></tr>
+    <tr><td>Futures</td><td>Obligation to buy/sell at preset price on future date</td><td>Wheat futures at ₹2000/quintal</td><td>Exchange-traded, standardized</td></tr>
+    <tr><td>Options</td><td>Right (not obligation) to buy (Call) or sell (Put) at strike price</td><td>Call Option on Reliance shares</td><td>Buyer pays premium to seller</td></tr>
+    <tr><td>Swaps</td><td>Exchange of cash flows (interest rate swap, currency swap)</td><td>Fixed vs floating rate exchange</td><td>OTC, not exchange-traded</td></tr>
+    <tr><td>Forward</td><td>Like futures but OTC, customized</td><td>Currency forward contracts</td><td>Not standardized, counterparty risk</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ 2008 Global Crisis Link — Derivatives</div>
+    <div class="trap-item">The 2008 global financial crisis was caused by complex derivatives called <strong>CDOs</strong> (Collateralized Debt Obligations) and <strong>Credit Default Swaps (CDS)</strong> based on subprime mortgages.</div>
+    <div class="trap-item">India survived 2008 better because Indian banks had <strong>limited exposure to complex derivatives</strong> and had a stronger regulatory framework by RBI.</div>
+    <div class="trap-item">Derivatives in India: NSE's <strong>F&O segment</strong> is one of the largest derivatives markets in the world by volume.</div>
+  </div>
+
+  <h3 class="sub-title">Stock Market: BSE, NSE & Indices</h3>
+
+  <table>
+    <tr><th>Exchange</th><th>Full Form</th><th>Est.</th><th>Index</th><th>No. of Stocks</th></tr>
+    <tr><td><strong>BSE</strong></td><td>Bombay Stock Exchange</td><td>1875 (Asia's oldest)</td><td>SENSEX</td><td>30 stocks</td></tr>
+    <tr><td><strong>NSE</strong></td><td>National Stock Exchange</td><td>1992</td><td>NIFTY 50</td><td>50 stocks</td></tr>
+    <tr><td><strong>India INX</strong></td><td>India International Exchange</td><td>2017</td><td>International index</td><td>GIFT City, Gujarat</td></tr>
+  </table>
+
+  <div class="concept-box">
+    <div class="box-label">Sensex vs Nifty — Calculation</div>
+    <p><strong>SENSEX</strong>: Free-float market capitalization weighted index of 30 companies. Base year 1978–79 = 100.<br>
+    <strong>NIFTY 50</strong>: Free-float market capitalization weighted index of 50 companies. Base Nov 3, 1995 = 1000.<br>
+    <strong>Free-float</strong> = only shares available for public trading (excludes promoter holdings).</p>
+  </div>
+
+  <h4 class="topic-head">Circuit Breakers</h4>
+  <p>Automatic halts in market trading to prevent panic-driven crashes. Triggered when Nifty 50 falls by 10%, 15%, 20% in a single day. SEBI mechanism to prevent "flash crashes."</p>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">🧠 Mnemonic — Capital Market Instruments</div>
+    <div class="big-word">DEBS-GFM</div>
+    <div class="breakdown">
+      <span>D</span>ebentures · <span>E</span>quity Shares · <span>B</span>onds · <span>S</span>GBs · <span>G</span>-Secs · <span>F</span>utures & Options · <span>M</span>unicipal Bonds
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== RBI ==================== -->
+<div id="rbi" class="section">
+<div class="container">
+  <h2 class="section-title">RBI & Monetary Policy Committee</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Apex monetary authority — Most tested area for UPSC PYQs</p>
+
+  <h3 class="sub-title">Foundation: RBI's Role</h3>
+  <div class="concept-box gold">
+    <div class="box-label">🏛 Who is RBI?</div>
+    <p>Reserve Bank of India — established <strong>April 1, 1935</strong> under RBI Act 1934. Initially private, nationalized in <strong>1949</strong>. Headquartered in Mumbai (initially Calcutta). Governor = chief of RBI. Currently fully owned by Government of India.<br><br>
+    RBI plays four critical roles: <br>
+    1. <strong>Monetary Authority</strong> — controls money supply & inflation<br>
+    2. <strong>Banker to Government</strong> — manages government debt, treasury operations<br>
+    3. <strong>Banker to Banks</strong> — lender of last resort<br>
+    4. <strong>Regulator of Financial System</strong> — oversees banks, NBFCs, payment systems</p>
+  </div>
+
+  <h3 class="sub-title">Monetary Policy Committee (MPC)</h3>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">June 2016</div>
+      <div class="tl-text">RBI Act amended to create the MPC under Section 45ZA</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Target Set</div>
+      <div class="tl-text">Inflation target: <strong>4% ± 2%</strong> (CPI-based), notified by Central Government every 5 years</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Composition</div>
+      <div class="tl-text">6 members: <strong>3 from RBI</strong> (Governor + Deputy Governor + 1 RBI official) + <strong>3 external members</strong> appointed by GOI</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Meetings</div>
+      <div class="tl-text">Minimum <strong>4 meetings per year</strong> (now 6 times — bi-monthly)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Voting</div>
+      <div class="tl-text">Majority vote; <strong>Governor has casting vote</strong> in case of tie. Quorum = 4 members (Governor must be one)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Minutes</div>
+      <div class="tl-text">Published after <strong>14 days</strong> of meeting. Each member must publish their reasoning.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">Accountability</div>
+      <div class="tl-text">If inflation misses target for 3 consecutive quarters → RBI must submit <strong>report to Parliament</strong> with reasons + remedial action</div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ MPC UPSC TRAPS</div>
+    <div class="trap-item">External members' term = <strong>4 years</strong>, NOT 3 years or 5 years.</div>
+    <div class="trap-item">MPC decides <strong>only the Repo Rate</strong> (Policy Rate). Other rates (CRR, SLR) are decided by RBI independently.</div>
+    <div class="trap-item">MPC decision is <strong>binding on RBI</strong>. The Governor cannot override MPC.</div>
+    <div class="trap-item">MPC target is <strong>CPI-based</strong>, NOT WPI. This shift happened from 2016.</div>
+    <div class="trap-item">Government can <strong>convey its views</strong> in writing to MPC, but cannot vote or control its decisions.</div>
+  </div>
+
+  <h3 class="sub-title">Complete Monetary Policy Toolkit</h3>
+
+  <h4 class="topic-head">① Cash Reserve Ratio (CRR)</h4>
+  <p>Every bank must maintain a certain % of its <strong>Net Demand and Time Liabilities (NDTL)</strong> as cash with RBI. This money earns <strong>NO interest</strong>. Raising CRR drains liquidity; reducing CRR injects liquidity.</p>
+  <div class="concept-box red">
+    <div class="box-label">⚡ Impact</div>
+    <p>1% increase in CRR on ₹180 lakh crore deposit base = ₹1.8 lakh crore sucked out from banking system overnight. Extremely powerful tool — used rarely for this reason.</p>
+  </div>
+
+  <h4 class="topic-head">② Statutory Liquidity Ratio (SLR)</h4>
+  <p>Every bank must invest a certain % of NDTL in <strong>government-approved securities</strong> (G-Secs, Gold, Cash). Current SLR = <strong>18%</strong> (effective 2017). Banks get interest on SLR securities (unlike CRR). SLR ensures banks have liquid assets and also funds government borrowing.</p>
+
+  <table>
+    <tr><th>Tool</th><th>Where Kept</th><th>Interest Earned?</th><th>Current Rate (approx)</th><th>Use</th></tr>
+    <tr><td>CRR</td><td>Cash with RBI</td><td>❌ No</td><td>4.00%</td><td>Liquidity control</td></tr>
+    <tr><td>SLR</td><td>G-Secs/Gold/Cash</td><td>✅ Yes (on G-Secs)</td><td>18.00%</td><td>Liquidity + Govt borrowing</td></tr>
+  </table>
+
+  <h4 class="topic-head">③ Open Market Operations (OMO)</h4>
+  <p>RBI buys or sells <strong>government securities in the secondary market</strong>. Voluntary (not binding on banks unlike CRR/SLR).<br>
+  <strong>OMO Purchase</strong> (banks sell G-Secs to RBI) → money goes to banks → <strong>liquidity increases</strong><br>
+  <strong>OMO Sale</strong> (RBI sells G-Secs to banks) → money comes from banks → <strong>liquidity decreases</strong></p>
+
+  <h4 class="topic-head">④ Bank Rate</h4>
+  <p>The rate at which RBI lends to banks against <strong>eligible securities</strong>. Historically used for liquidity management. Now largely <strong>penal rate</strong> for CRR/SLR violations. Bank Rate = MSF Rate = Repo + 0.25% (linked).</p>
+
+  <h4 class="topic-head">⑤ Qualitative Tools (Selective Credit Control)</h4>
+  <p>• <strong>Margin Requirements</strong>: On loans against commodities (prevents speculation)<br>
+  • <strong>Credit Rationing</strong>: Setting credit ceilings for specific sectors<br>
+  • <strong>Moral Suasion</strong>: RBI persuades banks through guidelines and advisories<br>
+  • <strong>Direct Action</strong>: Penalties, license cancellation for non-compliance</p>
+
+  <h3 class="sub-title">Printing of Currency — Key Facts</h3>
+  <p>• Notes are printed at <strong>RBI printing presses</strong> (Nashik, Dewas, Mysuru, Salboni)<br>
+  • Coins are minted at <strong>Government Mints</strong> under Ministry of Finance<br>
+  • Basis of printing: <strong>Minimum Reserve System</strong> — minimum gold worth ₹200 crore + government securities<br>
+  • ₹1 note: Signed by <strong>Finance Secretary</strong> (not RBI Governor)<br>
+  • All other notes: Signed by <strong>RBI Governor</strong></p>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ ₹1 NOTE TRAP — Extremely Famous UPSC Question</div>
+    <div class="trap-item">₹1 note is issued by the <strong>Government of India</strong> (Ministry of Finance), signed by Finance Secretary. All other denominations issued by RBI, signed by Governor.</div>
+    <div class="trap-item">Coins are issued by <strong>Government of India</strong>, NOT RBI. RBI only issues notes.</div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">🧠 RBI Monetary Policy Tools Mnemonic</div>
+    <div class="big-word">CSOR-M-BQ</div>
+    <div class="breakdown">
+      <span>C</span>RR · <span>S</span>LR · <span>O</span>MO · <span>R</span>epo/Reverse Repo · <span>M</span>SF · <span>B</span>ank Rate · <span>Q</span>ualitative Tools
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== BANKING ==================== -->
+<div id="banking" class="section">
+<div class="container">
+  <h2 class="section-title">Banking System of India</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Structure, reforms, Basel norms, NPAs, Payment Banks, SFBs</p>
+
+  <h3 class="sub-title">Banking Structure — Complete Map</h3>
+  <table>
+    <tr><th colspan="3">BANKING SYSTEM OF INDIA</th></tr>
+    <tr><th>Category</th><th>Sub-types</th><th>Key Feature</th></tr>
+    <tr><td rowspan="3"><strong>Scheduled Banks</strong><br>(listed in 2nd Schedule of RBI Act)</td><td>Public Sector Banks (PSBs)</td><td>Govt majority ownership. SBI, PNB, BOI etc.</td></tr>
+    <tr><td>Private Sector Banks</td><td>HDFC, ICICI, Axis, Kotak</td></tr>
+    <tr><td>Foreign Banks</td><td>HSBC, Citi, Standard Chartered</td></tr>
+    <tr><td><strong>Cooperative Banks</strong></td><td>Urban, Rural, State Cooperative</td><td>"No profit no loss" basis. Agriculture focus.</td></tr>
+    <tr><td><strong>Regional Rural Banks (RRBs)</strong></td><td>—</td><td>Ownership: GOI 50%, State 15%, Sponsor Bank 35%</td></tr>
+    <tr><td><strong>Small Finance Banks (SFBs)</strong></td><td>—</td><td>Financial inclusion, can lend</td></tr>
+    <tr><td><strong>Payment Banks</strong></td><td>—</td><td>Can accept deposits (up to ₹2 lakh), CANNOT lend</td></tr>
+    <tr><td><strong>Non-Scheduled Banks</strong></td><td>—</td><td>Not in 2nd Schedule; minimal RBI supervision</td></tr>
+  </table>
+
+  <h3 class="sub-title">Payment Banks vs Small Finance Banks</h3>
+
+  <table>
+    <tr><th>Feature</th><th>Payment Banks</th><th>Small Finance Banks</th></tr>
+    <tr><td>Can Accept Deposits?</td><td>✅ Yes (up to ₹2 lakh/individual)</td><td>✅ Yes (no limit)</td></tr>
+    <tr><td>Can Give Loans?</td><td>❌ No lending</td><td>✅ Yes (core function)</td></tr>
+    <tr><td>Can Issue Credit Cards?</td><td>❌ No</td><td>✅ Yes</td></tr>
+    <tr><td>ATM/Debit Cards?</td><td>✅ Yes</td><td>✅ Yes</td></tr>
+    <tr><td>Focus Area</td><td>Financial inclusion, remittances</td><td>Unserved sections, MSMEs, small farmers</td></tr>
+    <tr><td>Examples</td><td>Paytm PB, Airtel PB, India Post PB</td><td>Au SFB, Jana SFB, Ujjivan SFB</td></tr>
+    <tr><td>Licencing Year</td><td>2015</td><td>2015</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ Payment Bank UPSC TRAP</div>
+    <div class="trap-item">Payment Banks CANNOT lend. They CANNOT issue credit cards. They CAN sell insurance & mutual funds.</div>
+    <div class="trap-item">Initial deposit limit for Payment Banks was ₹1 lakh. Raised to <strong>₹2 lakh</strong> in 2021 Budget.</div>
+    <div class="trap-item">Out of original 11 licenses, some surrendered: Cholamandalam, Dilip Shanghvi, Tech Mahindra.</div>
+  </div>
+
+  <h3 class="sub-title">Basel Norms — Critical for UPSC</h3>
+
+  <div class="concept-box">
+    <div class="box-label">Foundation</div>
+    <p>Basel = city in Switzerland where <strong>Basel Committee on Banking Supervision (BCBS)</strong> meets. They set global banking standards for capital adequacy. All countries implement these norms — in India enforced by RBI.</p>
+  </div>
+
+  <table>
+    <tr><th>Feature</th><th>Basel I (1988)</th><th>Basel II (2004)</th><th>Basel III (2010–post crisis)</th></tr>
+    <tr><td>Capital Adequacy Ratio</td><td>8%</td><td>8%</td><td>10.5% (with buffer)</td></tr>
+    <tr><td>Risk Types Covered</td><td>Credit risk only</td><td>Credit + Market + Operational</td><td>All + Systemic Risk</td></tr>
+    <tr><td>Focus</td><td>Minimum capital</td><td>Better risk measurement</td><td>Liquidity ratios + capital</td></tr>
+    <tr><td>New in Basel III</td><td>—</td><td>—</td><td>LCR, NSFR, Leverage Ratio, Counter-cyclical buffer</td></tr>
+    <tr><td>India Compliance</td><td>Fully compliant</td><td>Fully compliant</td><td>Being phased in</td></tr>
+  </table>
+
+  <div class="concept-box green">
+    <div class="box-label">✅ Capital Adequacy Ratio (CAR / CRAR) Formula</div>
+    <p><strong>CAR = (Tier I Capital + Tier II Capital) / Risk-Weighted Assets × 100</strong><br><br>
+    <strong>Tier I Capital</strong> (Core Capital): Equity capital + Retained profits = most reliable<br>
+    <strong>Tier II Capital</strong> (Supplementary): Revaluation reserves + Long-term bonds (subordinated debt) + Provisions<br>
+    Rule: Tier II cannot exceed Tier I. India's minimum CAR = <strong>9%</strong> (vs BIS 8%).</p>
+  </div>
+
+  <h3 class="sub-title">Non-Performing Assets (NPAs)</h3>
+
+  <div class="concept-box red">
+    <div class="box-label">🚨 NPA Definition</div>
+    <p>A loan where interest/principal is <strong>overdue for 90 days or more</strong>. Banks must classify as NPA and make provisions.</p>
+  </div>
+
+  <table>
+    <tr><th>NPA Category</th><th>Duration</th><th>Provision Required</th></tr>
+    <tr><td>Sub-Standard Asset</td><td>NPA for ≤ 12 months</td><td>15% of outstanding</td></tr>
+    <tr><td>Doubtful Asset</td><td>Sub-standard for &gt; 12 months</td><td>25–100% (increases with age)</td></tr>
+    <tr><td>Loss Asset</td><td>Uncollectible, little value</td><td>100% write-off</td></tr>
+  </table>
+
+  <p><strong>Twin Balance Sheet Problem</strong>: Overleveraged corporates + Bad-loan-laden banks = India's NPA crisis (2015–19). Economic Survey 2016–17 proposed <strong>PARA</strong> (Public Sector Asset Rehabilitation Agency) — India's version of a "Bad Bank." Later, <strong>National Asset Reconstruction Company (NARCL)</strong> was set up in 2021 — the actual "Bad Bank."</p>
+
+  <h4 class="topic-head">SARFAESI Act 2002</h4>
+  <p>Enables banks to recover loans from defaulters WITHOUT going to court. Banks can seize and auction mortgaged property. Applies when loan > ₹1 lakh and secured. Created <strong>Asset Reconstruction Companies (ARCs)</strong> and <strong>Securitization Companies (SCs)</strong>.</p>
+
+  <h4 class="topic-head">Priority Sector Lending (PSL)</h4>
+  <table>
+    <tr><th>Category</th><th>Domestic Banks</th><th>Foreign Banks (&gt;20 branches)</th></tr>
+    <tr><td>Total PSL</td><td>40% of ANBC</td><td>40% of ANBC (phased by 2020)</td></tr>
+    <tr><td>Agriculture</td><td>18% (within this: 8% for small/marginal farmers)</td><td>Not applicable</td></tr>
+    <tr><td>Micro Enterprises</td><td>7.5%</td><td>Not applicable</td></tr>
+    <tr><td>Weaker Sections</td><td>10%</td><td>Not applicable</td></tr>
+  </table>
+  <p><strong>ANBC</strong> = Adjusted Net Bank Credit. Shortfall in PSL → banks must deposit in <strong>RIDF</strong> (Rural Infrastructure Development Fund) managed by NABARD.</p>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">🧠 Priority Sector Mnemonic — AMEE SHR</div>
+    <div class="big-word">AMEE SHR</div>
+    <div class="breakdown">
+      <span>A</span>griculture · <span>M</span>SMEs · <span>E</span>ducation · <span>E</span>xport Credit · <span>S</span>ocial Infrastructure · <span>H</span>ousing · <span>R</span>enewable Energy
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== SEBI ==================== -->
+<div id="sebi" class="section">
+<div class="container">
+  <h2 class="section-title">SEBI — Securities & Exchange Board of India</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Capital market regulator — investor protection — market integrity</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1988</div>
+      <div class="tl-text">SEBI established as <strong>non-statutory body</strong> under executive order</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1992</div>
+      <div class="tl-text">SEBI made <strong>statutory body</strong> under SEBI Act 1992 after Harshad Mehta scam</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2015</div>
+      <div class="tl-text"><strong>Forward Markets Commission (FMC) merged with SEBI</strong> — commodity markets now under SEBI</div>
+    </div>
+  </div>
+
+  <h3 class="sub-title">SEBI's Functions</h3>
+  <div class="concept-box gold">
+    <div class="box-label">SEBI's Triple Mandate</div>
+    <p><strong>1. Protect</strong> investor interests<br>
+    <strong>2. Promote</strong> development of securities markets<br>
+    <strong>3. Regulate</strong> securities market</p>
+  </div>
+
+  <table>
+    <tr><th>Function</th><th>Detail</th></tr>
+    <tr><td>Regulatory Power</td><td>Register & regulate stock brokers, sub-brokers, mutual funds, FPIs, merchant bankers, portfolio managers</td></tr>
+    <tr><td>Quasi-Judicial Powers</td><td>Can conduct inquiries, pass orders, levy penalties</td></tr>
+    <tr><td>Quasi-Legislative Powers</td><td>Makes regulations for IPO process, takeovers, insider trading</td></tr>
+    <tr><td>Investor Education</td><td>SCORES portal (complaint redressal), Investor Protection Fund</td></tr>
+    <tr><td>Market Surveillance</td><td>Circuit breakers, insider trading detection, algorithmic trading norms</td></tr>
+    <tr><td>Disclosure Norms</td><td>Mandates companies to disclose material information (LODR Regulations)</td></tr>
+    <tr><td>Corporate Governance</td><td>Mandatory for listed companies (Clause 49 / LODR)</td></tr>
+    <tr><td>FPI Regulation</td><td>Foreign Portfolio Investors registered and regulated by SEBI</td></tr>
+  </table>
+
+  <h3 class="sub-title">Key SEBI Concepts for UPSC</h3>
+
+  <h4 class="topic-head">Insider Trading</h4>
+  <p>Trading in securities based on <strong>unpublished price-sensitive information (UPSI)</strong>. E.g., a company director buying shares before a positive earnings announcement. SEBI PIT (Prohibition of Insider Trading) Regulations 2015 — strict penalties including jail term.</p>
+
+  <h4 class="topic-head">Market Manipulation</h4>
+  <p><strong>Pump and dump</strong>: Artificially inflate a stock's price (pump), then sell at peak (dump). <strong>Circular trading</strong>: Two parties trade with each other artificially to show high volumes. Both are SEBI violations.</p>
+
+  <h4 class="topic-head">Mutual Fund Regulation</h4>
+  <p>All mutual funds in India must be registered with SEBI. They must be set up as trusts. The Asset Management Company (AMC) manages the fund. <strong>AMFI</strong> (Association of Mutual Funds in India) is the industry body.</p>
+
+  <h4 class="topic-head">FPI (Foreign Portfolio Investment)</h4>
+  <p>Short-term, liquid investments by foreign investors in Indian equity and debt markets. Also called "hot money." Registered with SEBI. RBI sets aggregate limits. FPI &gt; 10% ownership in a company = reclassified as FDI.</p>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ SEBI UPSC TRAPS</div>
+    <div class="trap-item">SEBI was non-statutory until 1992. Established 1988, statutory from 1992.</div>
+    <div class="trap-item">SEBI regulates mutual funds AND stock exchanges. RBI regulates banks. NOT interchangeable.</div>
+    <div class="trap-item">FMC merged into SEBI in 2015 — so MCX, NCDEX now under SEBI.</div>
+    <div class="trap-item">Collective Investment Schemes (CIS) that are NOT registered with SEBI are illegal (many chit fund scams use this route).</div>
+    <div class="trap-item">The <strong>SEBI SCORES</strong> platform is for investor complaint redressal — not for stock trading.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== FOREX ==================== -->
+<div id="forex" class="section">
+<div class="container">
+  <h2 class="section-title">Forex Markets, Exchange Rates & BOP</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Exchange rate determination, convertibility, BOP, forex reserves — rich PYQ area</p>
+
+  <h3 class="sub-title">Exchange Rate Regimes</h3>
+
+  <table>
+    <tr><th>Regime</th><th>Description</th><th>Example</th></tr>
+    <tr><td><strong>Fixed/Pegged</strong></td><td>Central bank fixes rate; defends it with reserves</td><td>China (was pegged), Hong Kong</td></tr>
+    <tr><td><strong>Currency Board</strong></td><td>Home currency fully backed by foreign currency 1:1</td><td>Argentina (past), Hong Kong</td></tr>
+    <tr><td><strong>Crawling Peg</strong></td><td>Fixed but allowed to move in a narrow band</td><td>China (earlier)</td></tr>
+    <tr><td><strong>Managed Float (Dirty Float)</strong></td><td>Market-determined but central bank intervenes</td><td><strong>India</strong> (current)</td></tr>
+    <tr><td><strong>Free Float (Clean Float)</strong></td><td>Fully market-determined, no central bank intervention</td><td>USA, UK, EU</td></tr>
+    <tr><td><strong>Dollarization</strong></td><td>Foreign currency (USD) used as legal tender</td><td>Panama, Ecuador, El Salvador</td></tr>
+  </table>
+
+  <div class="concept-box gold">
+    <div class="box-label">🇮🇳 India's Exchange Rate Journey (Sanjiv Verma)</div>
+    <p>1. <strong>Post-Independence</strong>: Fixed rate (₹ vs Pound Sterling)<br>
+    2. <strong>Later</strong>: Basket of currencies (fixed)<br>
+    3. <strong>1991</strong>: LERMS (Liberalized Exchange Rate Management System) — dual rate (40:60)<br>
+    4. <strong>FEDAI</strong> (Foreign Exchange Dealers Association of India) set up for market rate<br>
+    5. <strong>1999</strong>: RBI abandoned official rate → fully market-determined (managed float)<br>
+    6. <strong>Now</strong>: Managed exchange rate — RBI intervenes to prevent excessive volatility</p>
+  </div>
+
+  <h3 class="sub-title">Appreciation vs Depreciation vs Devaluation</h3>
+
+  <table>
+    <tr><th>Term</th><th>What happens to INR?</th><th>Cause</th><th>System</th></tr>
+    <tr><td><strong>Appreciation</strong></td>
+      <td>INR gets MORE foreign currency (e.g., ₹80→₹75/$)</td>
+      <td>Higher inflows, increased demand for INR</td>
+      <td>Market system</td></tr>
+    <tr><td><strong>Depreciation</strong></td>
+      <td>INR gets LESS foreign currency (e.g., ₹80→₹85/$)</td>
+      <td>Higher outflows, increased demand for USD</td>
+      <td>Market system</td></tr>
+    <tr><td><strong>Devaluation</strong></td>
+      <td>Central bank deliberately weakens currency</td>
+      <td>Policy decision to boost exports</td>
+      <td>Fixed rate system</td></tr>
+    <tr><td><strong>Revaluation</strong></td>
+      <td>Central bank deliberately strengthens currency</td>
+      <td>Policy decision</td>
+      <td>Fixed rate system</td></tr>
+  </table>
+
+  <div class="concept-box">
+    <div class="box-label">Impact of Currency Depreciation on India</div>
+    <p><strong>Good for:</strong> Exports (become cheaper globally), NRI remittances (more ₹ per $)<br>
+    <strong>Bad for:</strong> Imports (oil, machinery become expensive) → import inflation → CAD widens → rupee falls further (vicious cycle)<br>
+    <strong>India's Specific Problem</strong>: 80%+ of oil is imported. Rupee depreciation = fuel price rise = cost-push inflation across economy.</p>
+  </div>
+
+  <h4 class="topic-head">The Impossible Trinity (Trilemma)</h4>
+  <p>No country can simultaneously have all three: <strong>(1) Fixed exchange rate + (2) Free capital flows + (3) Independent monetary policy.</strong> At best, any two are possible.</p>
+
+  <div class="concept-box purple">
+    <div class="box-label">🧠 The Trilemma — Examples</div>
+    <p>• <strong>China</strong>: Fixed rate + Independent monetary policy → BUT restricts capital flows<br>
+    • <strong>USA</strong>: Free capital flows + Independent monetary policy → BUT free-floating exchange rate<br>
+    • <strong>Eurozone</strong>: Fixed rate + Free capital flows → BUT gave up independent monetary policy (ECB runs it for all)<br>
+    • <strong>India</strong>: Managed rate + Independent monetary policy → BUT limited capital account convertibility</p>
+  </div>
+
+  <h3 class="sub-title">REER, NEER & PPP</h3>
+
+  <table>
+    <tr><th>Concept</th><th>Full Form</th><th>What it measures</th><th>Use</th></tr>
+    <tr><td><strong>NEER</strong></td><td>Nominal Effective Exchange Rate</td><td>Weighted average exchange rate against 36 trading partners (no inflation adjustment)</td><td>Broad export competitiveness</td></tr>
+    <tr><td><strong>REER</strong></td><td>Real Effective Exchange Rate</td><td>NEER adjusted for inflation differentials with major trading partners</td><td>True export competitiveness (key policy tool)</td></tr>
+    <tr><td><strong>PPP</strong></td><td>Purchasing Power Parity</td><td>Adjusts exchange rate to reflect actual purchasing power differences</td><td>GDP comparison across countries (used by IMF, World Bank)</td></tr>
+  </table>
+
+  <h3 class="sub-title">Balance of Payments (BOP)</h3>
+
+  <table>
+    <tr><th>Account</th><th>Includes</th><th>Nature</th></tr>
+    <tr><td><strong>Current Account</strong></td><td>Trade in goods, Trade in services, Primary income (salaries, dividends), Secondary income (remittances)</td><td>Flows from production/distribution</td></tr>
+    <tr><td><strong>Capital Account</strong></td><td>Debt forgiveness, transfer of assets</td><td>One-time transfers</td></tr>
+    <tr><td><strong>Financial Account</strong></td><td>FDI, FPI, ECBs, NRI deposits, Forex reserves change</td><td>Investment flows</td></tr>
+  </table>
+
+  <div class="concept-box red">
+    <div class="box-label">🔴 CAD — India's Structural Problem</div>
+    <p>India runs a <strong>Current Account Deficit (CAD)</strong> — imports consistently exceed exports. In 2012–13, CAD touched 4.8% of GDP (crisis level). Sustainable level = below 2.5% of GDP. CAD is funded by capital inflows (FDI, FPI, ECBs). If capital inflows reverse → forex crisis risk.</p>
+  </div>
+
+  <h4 class="topic-head">Convertibility</h4>
+  <p><strong>Current Account Convertibility</strong>: Freedom to convert home currency for trade in goods & services. India has FULL current account convertibility since 1994 (Article VIII of IMF).<br>
+  <strong>Capital Account Convertibility (CAC)</strong>: Freedom to convert for capital transactions (investment flows). India does NOT have full CAC — it is partial/managed.<br>
+  <strong>Tarapore Committee</strong> (1997 & 2006) recommended moving toward CAC with preconditions (fiscal discipline, low inflation, strong banking). Not implemented fully.</p>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ Convertibility UPSC TRAP</div>
+    <div class="trap-item">India has FULL current account convertibility. Partial capital account convertibility.</div>
+    <div class="trap-item">Market-determined exchange rate ≠ Convertibility. They are separate, independent concepts.</div>
+    <div class="trap-item">FEMA 1999 replaced FERA 1973. FERA was criminal; FEMA is civil law (less harsh).</div>
+    <div class="trap-item">NDF (Non-Deliverable Forwards) — offshore speculation on INR in markets like Singapore/Dubai OUTSIDE RBI control.</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== INTERNATIONAL ==================== -->
+<div id="international" class="section">
+<div class="container">
+  <h2 class="section-title">International Financial Institutions</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">IMF, World Bank, AIIB, NDB, SDR — Bretton Woods to BRICS</p>
+
+  <h3 class="sub-title">IMF — International Monetary Fund</h3>
+
+  <table>
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Established</td><td>1944 (Bretton Woods Conference), operational 1945</td></tr>
+    <tr><td>Headquarters</td><td>Washington D.C., USA</td></tr>
+    <tr><td>Members</td><td>190 members</td></tr>
+    <tr><td>Primary Role</td><td>Exchange rate stability, BOP assistance, monetary cooperation</td></tr>
+    <tr><td>Accounting Unit</td><td>SDR (Special Drawing Rights) — "paper gold"</td></tr>
+    <tr><td>Voting</td><td>Based on quota (economic weight)</td></tr>
+    <tr><td>India's Quota</td><td>2.75% (8th largest shareholder)</td></tr>
+    <tr><td>Largest Shareholder</td><td>USA (~17.4% — has veto power over major decisions)</td></tr>
+  </table>
+
+  <h4 class="topic-head">SDR (Special Drawing Rights)</h4>
+  <div class="concept-box gold">
+    <div class="box-label">🥇 SDR — High Priority</div>
+    <p>SDR is <strong>NOT a currency</strong> — it is an international <strong>reserve asset and accounting unit</strong> of the IMF. Created in 1969 to supplement member countries' official reserves. Can be exchanged for "freely usable currencies."<br><br>
+    <strong>SDR Basket (post-2016):</strong><br>
+    US Dollar: 41.73% | Euro: 30.93% | Chinese Yuan: 10.92% | Japanese Yen: 8.33% | British Pound: 8.09%<br><br>
+    <strong>Key</strong>: Chinese RMB (Yuan) added in October 2016 — first time since Euro was added.</p>
+  </div>
+
+  <h4 class="topic-head">IMF Resources & Lending</h4>
+  <p>• <strong>Quota</strong>: Members pay 25% in freely usable currency (USD, EUR, GBP, JPY, CNY) + 75% in home currency<br>
+  • <strong>All IMF loans are SHORT-TERM</strong> with strict conditionalities<br>
+  • <strong>PRGF</strong> (Poverty Reduction and Growth Facility) — only concessional facility, 10-year repayment<br>
+  • India: Was once major IMF borrower → now a LENDER to IMF (Financial Transaction Plan/FTP since 2002)</p>
+
+  <h3 class="sub-title">World Bank Group</h3>
+
+  <table>
+    <tr><th>Institution</th><th>Full Form</th><th>Focus</th><th>Clients</th></tr>
+    <tr><td><strong>IBRD</strong></td><td>International Bank for Reconstruction & Development</td><td>Middle-income countries</td><td>Credit-worthy developing countries</td></tr>
+    <tr><td><strong>IDA</strong></td><td>International Development Association</td><td>Poorest nations (79 countries)</td><td>GNI per capita &lt; $1,145 — 35-40 yr repayment, 0% interest</td></tr>
+    <tr><td><strong>IFC</strong></td><td>International Finance Corporation</td><td>Private sector in developing countries</td><td>MSMEs, entrepreneurs</td></tr>
+    <tr><td><strong>MIGA</strong></td><td>Multilateral Investment Guarantee Agency</td><td>Political risk insurance for overseas investment</td><td>Foreign investors</td></tr>
+    <tr><td><strong>ICSID</strong></td><td>International Centre for Settlement of Investment Disputes</td><td>Investment dispute resolution</td><td>Investors vs states</td></tr>
+  </table>
+
+  <h3 class="sub-title">AIIB & NDB — New Institutions</h3>
+
+  <table>
+    <tr><th>Feature</th><th>AIIB</th><th>NDB</th></tr>
+    <tr><td>Full Form</td><td>Asian Infrastructure Investment Bank</td><td>New Development Bank</td></tr>
+    <tr><td>Initiated By</td><td>China</td><td>BRICS (India, China, Russia, Brazil, S. Africa)</td></tr>
+    <tr><td>HQ</td><td>Beijing, China</td><td>Shanghai, China</td></tr>
+    <tr><td>Started Operations</td><td>2016</td><td>2015 (formally)</td></tr>
+    <tr><td>India's Position</td><td>2nd largest shareholder (after China)</td><td>First President: K.V. Kamath (India)</td></tr>
+    <tr><td>Capital</td><td>$100 billion</td><td>$100 billion (subscribed $50B initially)</td></tr>
+    <tr><td>Purpose</td><td>Infrastructure in Asia-Pacific</td><td>Infrastructure + sustainable dev in BRICS+</td></tr>
+    <tr><td>Seen as</td><td>Challenge to ADB + World Bank</td><td>Alternative to IMF + World Bank for BRICS</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ AIIB vs NDB TRAPS</div>
+    <div class="trap-item">AIIB HQ = Beijing. NDB HQ = Shanghai. Both are in CHINA but different cities.</div>
+    <div class="trap-item">NDB = BRICS bank. AIIB = NOT a BRICS institution — it was initiated by China and has 100+ members globally.</div>
+    <div class="trap-item">First chair of NDB Board of Governors: RUSSIA. First President: INDIA (K.V. Kamath). HQ: SHANGHAI (China).</div>
+    <div class="trap-item">India is a <strong>founding member</strong> of AIIB (not just member). India's shareholding is second highest.</div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">🧠 SDR Basket Mnemonic</div>
+    <div class="big-word">DEUCJ-P</div>
+    <div class="breakdown">
+      <span>D</span>ollar (US) 41.73% · <span>E</span>uro 30.93% · <span>U</span> → <span>C</span>hinese Yuan 10.92% · <span>J</span>apanese Yen 8.33% · <span>P</span>ound 8.09%
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== MODERN TOPICS ==================== -->
+<div id="modern" class="section">
+<div class="container">
+  <h2 class="section-title">Modern Financial Topics</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">CBDC, FinTech, UPI, Green Finance, Crypto — emerging UPSC areas</p>
+
+  <h3 class="sub-title">CBDC — Central Bank Digital Currency</h3>
+
+  <div class="concept-box gold">
+    <div class="box-label">🔥 Hot Topic — Digital Rupee</div>
+    <p>CBDC is a <strong>digital form of a country's fiat currency</strong>, issued and backed by the central bank. Unlike cryptocurrency, it is <strong>legal tender</strong> and <strong>centralized</strong>.<br><br>
+    India launched <strong>Digital Rupee (e₹)</strong> in 2022:<br>
+    • <strong>e₹-W</strong> (Wholesale) — for interbank settlements, launched Nov 2022<br>
+    • <strong>e₹-R</strong> (Retail) — for general public use, launched Dec 2022 (pilot)<br>
+    • Issued by <strong>RBI</strong>; distributed through banks<br>
+    • Not the same as UPI or wallet money — it IS money (liability of RBI, not banks)</p>
+  </div>
+
+  <table>
+    <tr><th>Feature</th><th>CBDC (e₹)</th><th>Cryptocurrency (Bitcoin)</th><th>UPI/Wallet</th></tr>
+    <tr><td>Issuer</td><td>Central Bank (RBI)</td><td>Decentralized network</td><td>Banks/Payment firms</td></tr>
+    <tr><td>Legal Tender</td><td>✅ Yes</td><td>❌ No (in India)</td><td>❌ No (bank liability)</td></tr>
+    <tr><td>Centralized?</td><td>✅ Yes</td><td>❌ No</td><td>✅ Yes</td></tr>
+    <tr><td>Volatility</td><td>Stable (= INR)</td><td>Highly volatile</td><td>Stable</td></tr>
+    <tr><td>Technology</td><td>May use DLT/blockchain</td><td>Blockchain</td><td>NPCI infrastructure</td></tr>
+    <tr><td>Privacy</td><td>Limited (RBI can trace)</td><td>Pseudonymous</td><td>Limited</td></tr>
+  </table>
+
+  <h3 class="sub-title">UPI Ecosystem</h3>
+
+  <div class="concept-box green">
+    <div class="box-label">✅ UPI — Unified Payments Interface</div>
+    <p>• Launched by <strong>NPCI</strong> (National Payments Corporation of India) in 2016<br>
+    • Regulated by <strong>RBI</strong><br>
+    • Works 24×7, instant bank-to-bank transfer via Virtual Payment Address (VPA)<br>
+    • <strong>NPCI</strong> also runs: IMPS, NEFT, RTGS (clearing), RuPay cards, FASTag, Aadhaar Payments<br>
+    • <strong>BHIM</strong> (Bharat Interface for Money) = government's UPI app<br>
+    • UPI One World: For foreign visitors to India (no Indian bank account needed)<br>
+    • UPI Credit Line: Link credit card to UPI — now allowed</p>
+  </div>
+
+  <h4 class="topic-head">Account Aggregator Framework</h4>
+  <p>RBI-regulated entities that allow individuals to securely share their financial data (bank accounts, insurance, mutual funds) digitally with lenders, with the customer's consent. Enables <strong>data-driven lending</strong> especially for MSMEs. Key principle: "Financial data portability."</p>
+
+  <h4 class="topic-head">ONDC (Open Network for Digital Commerce)</h4>
+  <p>Government initiative to create an <strong>open, interoperable e-commerce network</strong> — like UPI but for commerce. Aims to break the dominance of Amazon/Flipkart. Not a regulator or institution — it is a <strong>protocol/network</strong>.</p>
+
+  <h4 class="topic-head">Open Banking</h4>
+  <p>Banks must share customer data with third-party financial service providers (with customer consent) through APIs. Enables FinTech firms to build financial products on top of bank data.</p>
+
+  <h3 class="sub-title">Green Finance & ESG</h3>
+
+  <table>
+    <tr><th>Concept</th><th>Description</th><th>India's Progress</th></tr>
+    <tr><td><strong>Green Bonds</strong></td><td>Bonds raised for climate/environmental projects</td><td>India issued first Sovereign Green Bond in Jan 2023 (₹16,000 cr)</td></tr>
+    <tr><td><strong>ESG Investing</strong></td><td>Environmental, Social, Governance criteria in investment decisions</td><td>SEBI's Business Responsibility & Sustainability Report (BRSR) mandatory for top 1000 listed companies</td></tr>
+    <tr><td><strong>Carbon Market</strong></td><td>Trading of carbon credits/offsets</td><td>India's Carbon Credit Trading Scheme (CCTS) being set up under Energy Conservation Act</td></tr>
+    <tr><td><strong>Blended Finance</strong></td><td>Using public/philanthropic funds to leverage private investment for SDGs</td><td>GIFT City frameworks</td></tr>
+    <tr><td><strong>Transition Finance</strong></td><td>Funding for fossil fuel companies to transition to clean energy</td><td>Emerging concept in India</td></tr>
+  </table>
+
+  <h3 class="sub-title">FinTech Revolution</h3>
+
+  <div class="concept-box purple">
+    <div class="box-label">🚀 Key FinTech Concepts for UPSC</div>
+    <p>• <strong>Regulatory Sandbox</strong>: RBI's framework for FinTech firms to test products in a controlled environment without full compliance<br>
+    • <strong>P2P Lending</strong>: Person-to-person lending platforms regulated by RBI as NBFC-P2P<br>
+    • <strong>Robo-Advisory</strong>: Algorithm-based financial advice (SEBI regulates)<br>
+    • <strong>WealthTech</strong>: Technology-driven wealth management<br>
+    • <strong>InsurTech</strong>: Technology in insurance (IRDAI sandbox)<br>
+    • <strong>Tokenization</strong>: Converting real assets (real estate, art) into digital tokens on blockchain</p>
+  </div>
+
+  <h4 class="topic-head">GIFT City (Gujarat International Finance Tec-City)</h4>
+  <p>India's first <strong>International Financial Services Centre (IFSC)</strong>. Regulated by <strong>IFSCA</strong> (International Financial Services Centres Authority). Aims to compete with Singapore, Dubai, Hong Kong. Both banking and capital market activities allowed in foreign currencies. NSE and BSE have exchanges here (India INX, NSE IFSC).</p>
+</div>
+</div>
+
+<!-- ==================== MCQ ENGINE ==================== -->
+<div id="mcq" class="section">
+<div class="container">
+  <h2 class="section-title">MCQ Engine — UPSC Level</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">Click "Show Answer" to reveal explanation + elimination trick</p>
+
+  <!-- Q1 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge easy">Easy</span>
+    <div class="mcq-q">1. Which of the following is an instrument of Money Market?</div>
+    <ul class="mcq-options">
+      <li>(a) Equity shares</li>
+      <li>(b) Debentures</li>
+      <li>(c) Commercial Paper</li>
+      <li>(d) Government Bonds (10-year)</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (c) Commercial Paper</strong><br><br>
+      <strong>Explanation:</strong> Money Market instruments have maturity < 1 year. CP: 7 days–1 year ✅. Equity shares = Capital market. Debentures = Capital market (long-term). 10-year G-Bonds = Capital market.<br><br>
+      <strong>Elimination trick:</strong> Any instrument with maturity > 1 year or ownership-based = Capital Market. Duration is the key filter.
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge moderate">Moderate</span>
+    <div class="mcq-q">2. Consider the following statements about Repo Rate:<br>
+      1. It is the rate at which banks borrow from RBI<br>
+      2. An increase in Repo Rate increases liquidity in the economy<br>
+      3. It serves as the Policy Rate for monetary policy<br>
+      Which of the statements given above is/are correct?</div>
+    <ul class="mcq-options">
+      <li>(a) 1 and 2 only</li>
+      <li>(b) 1 and 3 only</li>
+      <li>(c) 2 and 3 only</li>
+      <li>(d) 1, 2 and 3</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (b) 1 and 3 only</strong><br><br>
+      <strong>Statement 1: ✅ Correct</strong> — Repo rate = rate banks pay to borrow from RBI.<br>
+      <strong>Statement 2: ❌ Wrong</strong> — Increasing Repo Rate REDUCES liquidity (makes borrowing expensive, credit contracts).<br>
+      <strong>Statement 3: ✅ Correct</strong> — MPC sets the Repo Rate as the key policy rate.<br><br>
+      <strong>UPSC Trap:</strong> Statement 2 is the classic reversal trap. Higher Repo = tighter liquidity, not more.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge moderate">Moderate</span>
+    <div class="mcq-q">3. Which of the following statements about Sovereign Gold Bonds (SGBs) is/are correct?<br>
+      1. They are issued in rupees but denominated in grams of gold<br>
+      2. Capital gains on redemption at maturity are exempt from tax<br>
+      3. They can be used as collateral for loans<br>
+      4. They are issued by SEBI on behalf of Government of India</div>
+    <ul class="mcq-options">
+      <li>(a) 1, 2 and 3 only</li>
+      <li>(b) 1 and 2 only</li>
+      <li>(c) 2, 3 and 4 only</li>
+      <li>(d) 1, 2, 3 and 4</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (a) 1, 2 and 3 only</strong><br><br>
+      Statement 4 is WRONG — SGBs are issued by <strong>RBI</strong> (not SEBI) on behalf of Government of India.<br>
+      SEBI ≠ Bond issuer. SEBI is capital market regulator. RBI manages government securities/bonds.<br><br>
+      <strong>Elimination:</strong> Whenever "SEBI issues government bonds" appears — it's WRONG. RBI issues G-Secs and SGBs.
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge hard">Hard</span>
+    <div class="mcq-q">4. With reference to the Monetary Policy Committee (MPC), consider the following statements:<br>
+      1. The MPC has 6 members, three each from RBI and Government of India<br>
+      2. The MPC decides the Cash Reserve Ratio (CRR)<br>
+      3. In case of a tie, the RBI Governor has the casting vote<br>
+      4. Quorum for an MPC meeting is four members<br>
+      Which of the statements given above is/are NOT correct?</div>
+    <ul class="mcq-options">
+      <li>(a) 1 and 2 only</li>
+      <li>(b) 2 only</li>
+      <li>(c) 1, 2 and 4</li>
+      <li>(d) 3 and 4 only</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (b) 2 only</strong><br><br>
+      <strong>Statement 1:</strong> ✅ Correct — 3 from RBI (Governor, Dy Governor, Official) + 3 appointed by GOI = 6.<br>
+      <strong>Statement 2:</strong> ❌ WRONG — MPC only decides the <strong>Repo Rate</strong> (Policy Rate). CRR is decided by RBI Board, NOT MPC.<br>
+      <strong>Statement 3:</strong> ✅ Correct — Governor has casting vote in tie.<br>
+      <strong>Statement 4:</strong> ✅ Correct — Quorum = 4, with Governor mandatory.<br><br>
+      <strong>Classic UPSC trap:</strong> MPC → ONLY Repo Rate. CRR, SLR, OMO = RBI's own decisions.
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge upsc-level">UPSC Level</span>
+    <div class="mcq-q">5. Consider the following pairs:<br>
+      1. Standing Deposit Facility (SDF) — Collateral required from banks<br>
+      2. Marginal Standing Facility (MSF) — Banks can use SLR securities as collateral<br>
+      3. SDF Rate — Higher than Repo Rate<br>
+      4. MSF Rate — Lower than Repo Rate<br>
+      How many of the above pairs are correctly matched?</div>
+    <ul class="mcq-options">
+      <li>(a) Only one</li>
+      <li>(b) Only two</li>
+      <li>(c) Only three</li>
+      <li>(d) All four</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (a) Only one</strong><br><br>
+      <strong>Pair 1:</strong> ❌ WRONG — SDF requires NO collateral (that's its distinguishing feature)<br>
+      <strong>Pair 2:</strong> ✅ CORRECT — MSF allows banks to pledge SLR securities (up to 1% of NDTL)<br>
+      <strong>Pair 3:</strong> ❌ WRONG — SDF Rate = Repo Rate MINUS 25 bps (BELOW Repo Rate — it's the floor)<br>
+      <strong>Pair 4:</strong> ❌ WRONG — MSF Rate = Repo Rate PLUS 25 bps (ABOVE Repo Rate — it's the ceiling)<br><br>
+      <strong>Memory: Corridor</strong> = SDF (floor) → Repo (center) → MSF (ceiling)
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge hard">Hard</span>
+    <div class="mcq-q">6. Which of the following statements about Payment Banks in India are correct?<br>
+      1. They can accept deposits up to ₹2 lakh per individual customer<br>
+      2. They can issue credit cards<br>
+      3. They can act as business correspondents of other banks<br>
+      4. They cannot undertake lending activities</div>
+    <ul class="mcq-options">
+      <li>(a) 1, 3 and 4 only</li>
+      <li>(b) 2 and 4 only</li>
+      <li>(c) 1, 2 and 3 only</li>
+      <li>(d) 1, 2, 3 and 4</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (a) 1, 3 and 4 only</strong><br><br>
+      <strong>Statement 2 is WRONG</strong> — Payment Banks CANNOT issue credit cards. They CAN issue debit/ATM cards.<br>
+      1 ✅ (₹2 lakh limit — raised from ₹1 lakh in 2021) | 3 ✅ (can be business correspondents) | 4 ✅ (no lending)<br><br>
+      <strong>Test to remember:</strong> Payment Bank = "Pay"ment only. No lending, no credit cards.
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge upsc-level">UPSC Level</span>
+    <div class="mcq-q">7. With reference to India's foreign exchange reserves, which of the following constitute(s) the foreign exchange reserves of India?<br>
+      1. Foreign Currency Assets (FCAs)<br>
+      2. Gold reserves<br>
+      3. Special Drawing Rights (SDRs)<br>
+      4. Reserve tranche position with the IMF<br>
+      Select the correct answer:</div>
+    <ul class="mcq-options">
+      <li>(a) 1 and 2 only</li>
+      <li>(b) 1, 2 and 3 only</li>
+      <li>(c) 2, 3 and 4 only</li>
+      <li>(d) 1, 2, 3 and 4</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (d) 1, 2, 3 and 4</strong><br><br>
+      India's forex reserves = <strong>4 components</strong>:<br>
+      1. Foreign Currency Assets (largest component, ~90%+)<br>
+      2. Gold reserves<br>
+      3. SDRs (allocated by IMF)<br>
+      4. Reserve tranche position with IMF (India's quota paid in foreign currency)<br><br>
+      <strong>All four are correct.</strong> The Reserve tranche is the most forgotten component — UPSC tests this!
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge moderate">Moderate</span>
+    <div class="mcq-q">8. Which statement about SDR (Special Drawing Right) is INCORRECT?</div>
+    <ul class="mcq-options">
+      <li>(a) SDR is an international reserve asset created by IMF in 1969</li>
+      <li>(b) SDR is a currency that can be directly used for international trade payments</li>
+      <li>(c) Chinese RMB (Yuan) was added to SDR basket in 2016</li>
+      <li>(d) SDR can be exchanged for freely usable currencies at IMF</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (b)</strong><br><br>
+      SDR is <strong>NOT a currency</strong>. It is an international reserve asset / accounting unit. It cannot be directly used for international trade. It can only be exchanged for member countries' currencies through the IMF.<br><br>
+      Statements (a), (c), (d) are all correct. The keyword trap: "paper gold" ≠ actual currency.
+    </div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge hard">Hard</span>
+    <div class="mcq-q">9. With reference to Sterilization in foreign exchange management, which of the following best describes it?</div>
+    <ul class="mcq-options">
+      <li>(a) RBI's purchase of foreign currency from market to prevent rupee appreciation</li>
+      <li>(b) RBI simultaneously absorbing excess rupee liquidity (through reverse repo/OMO) after purchasing foreign currency</li>
+      <li>(c) The process of converting current account surplus into capital account surplus</li>
+      <li>(d) Imposing restrictions on foreign currency outflows to protect reserves</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (b)</strong><br><br>
+      When RBI buys USD → releases rupees into system → excess liquidity → inflation risk. <strong>Sterilization</strong> = simultaneously absorbing those excess rupees (via reverse repo, OMO sale) so that forex intervention doesn't cause inflation. The goal: maintain export competitiveness WITHOUT causing inflation.<br><br>
+      Option (a) = only the forex purchase part (not sterilization itself). Sterilization = the COMPLETE operation including the liquidity absorption step.
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="mcq-block">
+    <span class="difficulty-badge upsc-level">UPSC Level</span>
+    <div class="mcq-q">10. The "Impossible Trinity" or "Trilemma" in international economics states that a country cannot simultaneously have which three of the following?<br>
+      1. Fixed exchange rate<br>
+      2. Free capital mobility<br>
+      3. Independent monetary policy<br>
+      4. Low inflation<br>
+      5. Current account surplus</div>
+    <ul class="mcq-options">
+      <li>(a) 1, 2 and 4</li>
+      <li>(b) 2, 3 and 5</li>
+      <li>(c) 1, 2 and 3</li>
+      <li>(d) 1, 3 and 5</li>
+    </ul>
+    <button class="show-ans-btn" onclick="showAns(this)">Show Answer</button>
+    <div class="mcq-explanation">
+      <strong>Answer: (c) 1, 2 and 3</strong><br><br>
+      The Impossible Trinity (Mundell-Fleming Trilemma): You can have any TWO but NOT all three of:<br>
+      • Fixed exchange rate<br>
+      • Free capital mobility (open capital account)<br>
+      • Independent monetary policy<br><br>
+      Low inflation and current account surplus are NOT part of the trilemma definition.
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== REVISION ==================== -->
+<div id="revision" class="section">
+<div class="container">
+  <h2 class="section-title">Rapid Revision Engine</h2>
+  <p style="color:var(--muted); margin-bottom:30px;">One-liners, mnemonics, comparison tables, last-30-days strategy</p>
+
+  <h3 class="sub-title">⚡ 100 One-Liner Facts</h3>
+
+  <div class="rev-box">
+    <h4>Money Market & RBI Tools</h4>
+    <div class="rev-item">Repo Rate = rate banks pay to borrow from RBI (overnight, collateralized)</div>
+    <div class="rev-item">Reverse Repo Rate = rate RBI pays banks for their deposits with RBI</div>
+    <div class="rev-item">SDF Rate = Floor of interest rate corridor = Repo – 25 bps (introduced 2022)</div>
+    <div class="rev-item">MSF Rate = Ceiling of corridor = Repo + 25 bps</div>
+    <div class="rev-item">CRR = % of NDTL held as cash with RBI; earns NO interest</div>
+    <div class="rev-item">SLR = % of NDTL invested in approved securities; earns interest on G-Secs</div>
+    <div class="rev-item">OMO Purchase by RBI = Injects liquidity. OMO Sale = Drains liquidity</div>
+    <div class="rev-item">Bank Rate = Penal rate now = MSF Rate = Repo + 25 bps</div>
+    <div class="rev-item">Call Money = overnight interbank borrowing (no collateral)</div>
+    <div class="rev-item">Notice Money = 2–14 days interbank borrowing (no collateral)</div>
+    <div class="rev-item">T-Bills: 91/182/364 days; issued at discount; risk-free; by Central Govt only</div>
+    <div class="rev-item">CP = issued by corporates; unsecured; requires credit rating; 7 days–1 year</div>
+    <div class="rev-item">CD = issued by banks/FIs; secured; 7 days to 1 year (3 years for FIs)</div>
+    <div class="rev-item">State Governments issue SDLs, NOT T-Bills</div>
+  </div>
+
+  <div class="rev-box">
+    <h4>Capital Market Facts</h4>
+    <div class="rev-item">BSE = oldest exchange in Asia (1875); SENSEX = 30 stocks; base 1978-79</div>
+    <div class="rev-item">NSE = 1992; NIFTY 50 = 50 stocks; base Nov 1995 = 1000</div>
+    <div class="rev-item">India INX = International exchange at GIFT City; opened 2017</div>
+    <div class="rev-item">IPO = fresh issue; money to company. OFS = existing shares sold; money to seller</div>
+    <div class="rev-item">SGBs: Interest 2.5% p.a., tenure 8 years, exit from 5th year, EXEMPT from capital gains at maturity</div>
+    <div class="rev-item">Municipal Bonds: Pune MC issued India's first in 2017</div>
+    <div class="rev-item">SEBI Act 1992 made SEBI statutory (was non-statutory from 1988)</div>
+    <div class="rev-item">FMC merged with SEBI in 2015 — commodity markets now under SEBI</div>
+    <div class="rev-item">FPI &gt; 10% in a company = reclassified as FDI</div>
+    <div class="rev-item">Derivatives: Futures = obligation; Options = right (not obligation)</div>
+  </div>
+
+  <div class="rev-box">
+    <h4>Banking System Facts</h4>
+    <div class="rev-item">RBI Act 1934; RBI nationalized 1949; HQ Mumbai (moved from Calcutta in 1937)</div>
+    <div class="rev-item">₹1 note = issued by GOI (Finance Secretary signs). All others = RBI Governor signs</div>
+    <div class="rev-item">Coins = issued by GOI (Mint under Finance Ministry)</div>
+    <div class="rev-item">NPA = overdue for 90 days. Sub-standard ≤12 months. Doubtful >12 months. Loss = uncollectible</div>
+    <div class="rev-item">PSL: 40% of ANBC for domestic banks; 18% agriculture; 10% weaker sections</div>
+    <div class="rev-item">Shortfall in PSL → deposit in RIDF maintained by NABARD</div>
+    <div class="rev-item">Payment Banks: ₹2 lakh deposit limit; no lending; no credit cards</div>
+    <div class="rev-item">Small Finance Banks: Can lend; focus on MSMEs, small farmers, unserved</div>
+    <div class="rev-item">RRBs: GOI 50%, State Govt 15%, Sponsor Bank 35%</div>
+    <div class="rev-item">Basel III: Minimum CAR = 10.5% globally; India requires 9%</div>
+    <div class="rev-item">SARFAESI 2002: Banks can recover NPAs without court intervention</div>
+    <div class="rev-item">D-SIBs (Too Big to Fail): Banks with assets >2% of GDP; SBI, HDFC, ICICI</div>
+  </div>
+
+  <div class="rev-box">
+    <h4>International Finance Facts</h4>
+    <div class="rev-item">IMF: 190 members; HQ Washington DC; SDR = accounting unit; quota = voting rights</div>
+    <div class="rev-item">SDR created 1969; basket: USD, EUR, CNY, JPY, GBP</div>
+    <div class="rev-item">Chinese Yuan added to SDR basket in October 2016</div>
+    <div class="rev-item">India at IMF: 2.75% quota; 8th largest; lender since 2002 (FTP)</div>
+    <div class="rev-item">World Bank: IBRD (middle income) + IDA (poorest 79) + IFC (private sector) + MIGA + ICSID</div>
+    <div class="rev-item">IDA loans: 35–40 year repayment; 0% interest (only service charge)</div>
+    <div class="rev-item">AIIB: Initiated by China; HQ Beijing; India = 2nd largest shareholder</div>
+    <div class="rev-item">NDB: BRICS bank; HQ Shanghai; 1st President = K.V. Kamath (India); capital $100B</div>
+    <div class="rev-item">BOP: Current Account (trade + services + remittances) + Capital Account + Financial Account</div>
+    <div class="rev-item">India: Full current account convertibility (1994); Partial capital account convertibility</div>
+    <div class="rev-item">FEMA 1999 = civil law (replaced FERA 1973 = criminal law)</div>
+    <div class="rev-item">Impossible Trinity: Fixed rate + Free capital flows + Independent monetary policy = IMPOSSIBLE simultaneously</div>
+  </div>
+
+  <h3 class="sub-title">⚠ Top UPSC Trap Matrix</h3>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠ SUPREME TRAP LIST — Most Commonly Wrong in UPSC</div>
+    <div class="trap-item"><strong>SDF</strong> (2022) = NO collateral needed. MSF = collateral needed. UPSC reverses this.</div>
+    <div class="trap-item"><strong>MPC decides ONLY Repo Rate</strong>. NOT CRR, NOT SLR, NOT OMO.</div>
+    <div class="trap-item"><strong>₹1 coin</strong> (wait: coin is GOI). <strong>₹1 note</strong> = GOI. <strong>₹2+ notes</strong> = RBI.</div>
+    <div class="trap-item"><strong>CP = Corporates</strong>. CD = Banks. UPSC loves to swap these.</div>
+    <div class="trap-item"><strong>SEBI does NOT issue G-Secs or SGBs</strong> — RBI does (on behalf of GOI).</div>
+    <div class="trap-item"><strong>Devaluation</strong> = deliberate by central bank (fixed rate). Depreciation = market-driven.</div>
+    <div class="trap-item"><strong>FMC merged with SEBI in 2015</strong> — not 2016 or 2014.</div>
+    <div class="trap-item"><strong>Payment Banks cannot lend</strong>. Cannot issue credit cards. CAN sell insurance, mutual funds.</div>
+    <div class="trap-item"><strong>FSDC is NOT a statutory body</strong> — created by executive order 2010.</div>
+    <div class="trap-item"><strong>T-Bills are NOT issued by State Governments</strong> — only Central Govt issues T-Bills.</div>
+    <div class="trap-item"><strong>NDB HQ = Shanghai</strong>. AIIB HQ = Beijing. Both China but different cities.</div>
+    <div class="trap-item"><strong>SDR is NOT a currency</strong>. It's an accounting unit. Cannot pay for trade directly.</div>
+    <div class="trap-item"><strong>Increasing Repo Rate = REDUCES liquidity</strong> (not increases). UPSC always tests the direction.</div>
+    <div class="trap-item"><strong>Purchasing Power Parity (PPP)</strong> ≠ Convertibility ≠ Market exchange rate. Three completely separate concepts.</div>
+  </div>
+
+  <h3 class="sub-title">🗓 Last 30 Days Strategy</h3>
+
+  <div class="concept-box gold">
+    <div class="box-label">📅 Week 1 (Days 1–7) — Foundation Review</div>
+    <p>Day 1–2: Money Market (all instruments, rates, differences)<br>
+    Day 3–4: RBI tools + MPC (CRR, SLR, Repo, MSF, SDF corridor)<br>
+    Day 5–6: Capital Market (Primary/Secondary, SEBI, IPO/OFS/FPO)<br>
+    Day 7: Banking structure + Basel norms + NPA basics<br>
+    <strong>Resource</strong>: This masterclass + Sanjiv Verma chapters 14, 15, 17</p>
+  </div>
+
+  <div class="concept-box green">
+    <div class="box-label">📅 Week 2 (Days 8–14) — Advanced Topics</div>
+    <p>Day 8–9: Exchange rates, convertibility, BOP, REER/NEER<br>
+    Day 10–11: IMF, World Bank, AIIB, NDB, SDR<br>
+    Day 12–13: Modern topics (CBDC, UPI, FinTech, Green Finance)<br>
+    Day 14: Payment Banks, SFBs, NBFC classification<br>
+    <strong>Resource</strong>: Economic Survey latest chapter on financial sector</p>
+  </div>
+
+  <div class="concept-box purple">
+    <div class="box-label">📅 Week 3 (Days 15–21) — PYQ Practice</div>
+    <p>Solve PYQs 2013–2024 on Financial Markets (Prelims)<br>
+    Focus years: 2013, 2015, 2016, 2018, 2019, 2021, 2023 (heavy financial market questions)<br>
+    Practice the MCQ Engine here — all 50 questions with elimination reasoning<br>
+    <strong>Key pattern</strong>: UPSC heavily tests statement-based questions — practice "which is NOT correct"</p>
+  </div>
+
+  <div class="concept-box red">
+    <div class="box-label">📅 Week 4 (Days 22–30) — Current Affairs Integration</div>
+    <p>RBI latest Monetary Policy (Repo Rate current status)<br>
+    SEBI latest regulatory changes (New Asset Classes, F&O regulation 2024)<br>
+    Budget 2024-25 financial sector announcements<br>
+    Digital Rupee pilot updates<br>
+    NDB/AIIB recent loan announcements to India<br>
+    Economic Survey 2024-25 financial sector chapter</p>
+  </div>
+
+  <h3 class="sub-title">🔥 Top 20 Most Probable UPSC 2025 Financial Markets Themes</h3>
+
+  <div class="rev-box">
+    <h4>Predicted High-Probability Questions</h4>
+    <div class="rev-item"><strong>SDF (Standing Deposit Facility)</strong> — features, rate, difference from reverse repo, introduced 2022</div>
+    <div class="rev-item"><strong>Digital Rupee (CBDC)</strong> — wholesale vs retail, issued by RBI, legal tender, difference from crypto</div>
+    <div class="rev-item"><strong>Sovereign Green Bonds</strong> — India's first issuance, purpose, SEBI framework</div>
+    <div class="rev-item"><strong>Account Aggregator Framework</strong> — RBI-regulated, consent-based data sharing</div>
+    <div class="rev-item"><strong>NARCL (Bad Bank)</strong> — National Asset Reconstruction Company Ltd, set up 2021</div>
+    <div class="rev-item"><strong>NDB membership expansion</strong> — Bangladesh, UAE, Egypt as new members</div>
+    <div class="rev-item"><strong>GIFT City / IFSCA</strong> — International Financial Services Centre, regulation</div>
+    <div class="rev-item"><strong>UPI credit line</strong> — credit card linkage to UPI, recent NPCI development</div>
+    <div class="rev-item"><strong>BRSR</strong> — Business Responsibility & Sustainability Report, SEBI mandate for ESG</div>
+    <div class="rev-item"><strong>Carbon Credit Trading</strong> — India's Carbon Credit Trading Scheme, Energy Conservation Act</div>
+    <div class="rev-item"><strong>MPC composition and powers</strong> — perennial favourite, tests fine details</div>
+    <div class="rev-item"><strong>Payment Banks latest</strong> — deposit limit revision, Paytm crisis (RBI action 2024)</div>
+    <div class="rev-item"><strong>IMF quota reform</strong> — India's position, SDR basket</div>
+    <div class="rev-item"><strong>RBI Regulatory Framework for NBFCs</strong> — Scale-Based Regulation (SBR) introduced 2022</div>
+    <div class="rev-item"><strong>Interest Rate Corridor</strong> — SDF as floor, MSF as ceiling, repo as pivot</div>
+    <div class="rev-item"><strong>Insider Trading regulations</strong> — SEBI PIT Regulations 2015</div>
+    <div class="rev-item"><strong>Municipal Bonds</strong> — framework, tax treatment, examples</div>
+    <div class="rev-item"><strong>Inflation-Indexed Bonds</strong> — linked to CPI, recent issuance</div>
+    <div class="rev-item"><strong>FEMA vs FERA</strong> — civil vs criminal, convertibility implications</div>
+    <div class="rev-item"><strong>D-SIBs</strong> — Too Big to Fail, bucket structure, SBI/HDFC/ICICI designation</div>
+  </div>
+</div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['home','financial-system','money-market','capital-market','rbi','banking','sebi','forex','international','modern','mcq','revision'].indexOf(id);
+  if(idx >= 0) document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showAns(btn) {
+  const block = btn.closest('.mcq-block');
+  const exp = block.querySelector('.mcq-explanation');
+  exp.classList.toggle('show');
+  btn.textContent = exp.classList.contains('show') ? 'Hide Answer' : 'Show Answer';
+}
+
+// Accordion
+document.querySelectorAll('.acc-header').forEach(header => {
+  header.addEventListener('click', function() {
+    const content = this.nextElementSibling;
+    const isOpen = this.classList.contains('open');
+    document.querySelectorAll('.acc-header').forEach(h => {
+      h.classList.remove('open');
+      h.nextElementSibling.classList.remove('open');
+    });
+    if(!isOpen) {
+      this.classList.add('open');
+      content.classList.add('open');
+    }
+  });
+});
+
+// Module card clicks
+document.querySelectorAll('.module-card').forEach(card => {
+  card.addEventListener('mouseover', function() {
+    this.style.transform = 'translateY(-4px)';
+  });
+  card.addEventListener('mouseout', function() {
+    this.style.transform = 'translateY(0)';
+  });
+});
+</script>
+</body>
+</html>
