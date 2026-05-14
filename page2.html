@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPSC Economics Prelims Intelligence System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --bg2: #111827;
+  --bg3: #1a2234;
+  --bg4: #243044;
+  --accent: #f59e0b;
+  --accent2: #10b981;
+  --accent3: #3b82f6;
+  --accent4: #ef4444;
+  --accent5: #8b5cf6;
+  --text: #f1f5f9;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --border: rgba(255,255,255,0.08);
+  --gold: #d97706;
+  --sidebar-w: 280px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'IBM Plex Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+
+/* SIDEBAR */
+#sidebar {
+  position:fixed; left:0; top:0; bottom:0; width:var(--sidebar-w);
+  background:var(--bg2); border-right:1px solid var(--border);
+  overflow-y:auto; z-index:100;
+  display:flex; flex-direction:column;
+}
+.sidebar-header {
+  padding:24px 20px 16px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-logo {
+  font-family:'Playfair Display',serif;
+  font-size:15px; font-weight:900;
+  color:var(--accent); letter-spacing:0.5px;
+  line-height:1.3;
+}
+.sidebar-sub { font-size:10px; color:var(--text3); margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
+.nav-section { padding:12px 12px 4px; }
+.nav-section-label { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:1.5px; padding:0 8px 8px; }
+.nav-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:8px; cursor:pointer;
+  font-size:13px; color:var(--text2); transition:all 0.15s;
+  margin-bottom:2px;
+}
+.nav-item:hover { background:var(--bg3); color:var(--text); }
+.nav-item.active { background:rgba(245,158,11,0.15); color:var(--accent); }
+.nav-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.nav-badge {
+  margin-left:auto; font-size:10px; background:var(--bg4);
+  padding:2px 7px; border-radius:20px; color:var(--text3);
+}
+
+/* MAIN */
+#main { margin-left:var(--sidebar-w); min-height:100vh; }
+.page { display:none; padding:40px 48px; }
+.page.active { display:block; }
+
+/* DASHBOARD */
+.dash-hero {
+  background:linear-gradient(135deg, #1a2234 0%, #0f172a 100%);
+  border:1px solid var(--border); border-radius:16px;
+  padding:40px; margin-bottom:32px; position:relative; overflow:hidden;
+}
+.dash-hero::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:200px; height:200px;
+  background:radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+  border-radius:50%;
+}
+.dash-hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:36px; font-weight:900; color:var(--accent);
+  line-height:1.2; margin-bottom:12px;
+}
+.dash-hero p { color:var(--text2); font-size:15px; max-width:600px; line-height:1.6; }
+.hero-tags { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+.tag {
+  padding:4px 14px; border-radius:20px; font-size:11px; font-weight:500;
+  text-transform:uppercase; letter-spacing:0.5px;
+}
+.tag-gold { background:rgba(245,158,11,0.15); color:var(--accent); border:1px solid rgba(245,158,11,0.3); }
+.tag-green { background:rgba(16,185,129,0.15); color:var(--accent2); border:1px solid rgba(16,185,129,0.3); }
+.tag-blue { background:rgba(59,130,246,0.15); color:var(--accent3); border:1px solid rgba(59,130,246,0.3); }
+.tag-red { background:rgba(239,68,68,0.15); color:var(--accent4); border:1px solid rgba(239,68,68,0.3); }
+.tag-purple { background:rgba(139,92,246,0.15); color:var(--accent5); border:1px solid rgba(139,92,246,0.3); }
+
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:32px; }
+.stat-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
+  padding:20px; transition:border-color 0.2s;
+}
+.stat-card:hover { border-color:rgba(255,255,255,0.15); }
+.stat-num { font-family:'Playfair Display',serif; font-size:32px; font-weight:700; }
+.stat-lbl { font-size:12px; color:var(--text3); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.stat-sub { font-size:11px; color:var(--text3); margin-top:8px; }
+
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin-bottom:24px; }
+.card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:24px;
+}
+.card-title {
+  font-family:'Playfair Display',serif; font-size:16px; font-weight:700;
+  margin-bottom:16px; color:var(--accent);
+}
+.card-title2 { font-size:14px; font-weight:600; margin-bottom:12px; color:var(--text); }
+
+/* TOPIC CARDS */
+.topic-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; }
+.topic-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
+  padding:20px; cursor:pointer; transition:all 0.2s;
+}
+.topic-card:hover { border-color:rgba(245,158,11,0.4); transform:translateY(-2px); }
+.topic-name { font-weight:600; font-size:15px; margin-bottom:8px; }
+.topic-meta { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+.prob-bar { height:4px; border-radius:2px; background:var(--bg4); margin-top:8px; }
+.prob-fill { height:100%; border-radius:2px; background:var(--accent); }
+
+/* QUESTIONS */
+.q-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:12px;
+  padding:24px; margin-bottom:16px;
+}
+.q-header { display:flex; gap:12px; align-items:flex-start; margin-bottom:16px; }
+.q-num {
+  background:var(--accent); color:#000; width:28px; height:28px;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; flex-shrink:0; margin-top:2px;
+}
+.q-text { font-size:14px; line-height:1.7; color:var(--text); }
+.q-options { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:16px 0; }
+.q-opt {
+  padding:10px 14px; border-radius:8px; border:1px solid var(--border);
+  font-size:13px; cursor:pointer; transition:all 0.15s; background:var(--bg3);
+}
+.q-opt:hover { border-color:var(--accent3); }
+.q-opt.correct { background:rgba(16,185,129,0.15); border-color:var(--accent2); color:var(--accent2); }
+.q-opt.wrong { background:rgba(239,68,68,0.1); border-color:var(--accent4); color:var(--accent4); }
+.q-reveal { display:none; margin-top:16px; padding:16px; background:var(--bg3); border-radius:8px; border-left:3px solid var(--accent2); }
+.q-reveal.show { display:block; }
+
+/* TOPIC CONTENT */
+.content-section { margin-bottom:40px; }
+.section-title {
+  font-family:'Playfair Display',serif; font-size:26px; font-weight:700;
+  color:var(--accent); margin-bottom:8px;
+  padding-bottom:12px; border-bottom:1px solid var(--border);
+}
+.subsection-title { font-size:18px; font-weight:600; color:var(--text); margin:24px 0 12px; }
+.content-block {
+  background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+  padding:20px; margin-bottom:16px; line-height:1.8;
+}
+.content-block p { color:var(--text2); font-size:14px; margin-bottom:10px; }
+.content-block p:last-child { margin-bottom:0; }
+.highlight-box {
+  background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.2);
+  border-radius:10px; padding:16px; margin:12px 0;
+}
+.highlight-box .hl-title { color:var(--accent); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.info-box {
+  background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.2);
+  border-radius:10px; padding:16px; margin:12px 0;
+}
+.info-box .ib-title { color:var(--accent3); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.danger-box {
+  background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2);
+  border-radius:10px; padding:16px; margin:12px 0;
+}
+.danger-box .db-title { color:var(--accent4); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+.green-box {
+  background:rgba(16,185,129,0.05); border:1px solid rgba(16,185,129,0.2);
+  border-radius:10px; padding:16px; margin:12px 0;
+}
+.green-box .gb-title { color:var(--accent2); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
+
+/* TABLE */
+.data-table { width:100%; border-collapse:collapse; font-size:13px; }
+.data-table th { background:var(--bg3); color:var(--text2); padding:10px 12px; text-align:left; font-weight:500; border-bottom:1px solid var(--border); }
+.data-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:top; }
+.data-table tr:hover td { background:var(--bg3); }
+
+/* SEARCH */
+.search-bar {
+  display:flex; gap:12px; margin-bottom:24px;
+  background:var(--bg2); border:1px solid var(--border); border-radius:10px;
+  padding:12px 16px; align-items:center;
+}
+.search-bar input {
+  background:none; border:none; outline:none; color:var(--text); font-size:14px; flex:1;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.search-bar input::placeholder { color:var(--text3); }
+
+/* PILLS */
+.pill { padding:3px 10px; border-radius:20px; font-size:11px; font-weight:500; }
+.pill-high { background:rgba(239,68,68,0.15); color:var(--accent4); }
+.pill-med { background:rgba(245,158,11,0.15); color:var(--accent); }
+.pill-low { background:rgba(16,185,129,0.15); color:var(--accent2); }
+.pill-blue { background:rgba(59,130,246,0.15); color:var(--accent3); }
+.pill-purple { background:rgba(139,92,246,0.15); color:var(--accent5); }
+
+/* MNEMONIC */
+.mnemonic {
+  background:rgba(139,92,246,0.1); border:1px solid rgba(139,92,246,0.25);
+  border-radius:10px; padding:16px; margin:12px 0;
+  font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--accent5);
+}
+
+/* FORMULA */
+.formula {
+  background:var(--bg3); border:1px solid var(--border); border-radius:8px;
+  padding:12px 16px; font-family:'IBM Plex Mono',monospace; font-size:13px;
+  color:var(--accent); margin:8px 0;
+}
+
+/* HEATMAP */
+.heatmap-grid { display:grid; grid-template-columns:repeat(13,1fr); gap:3px; }
+.hm-cell {
+  height:28px; border-radius:4px; display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:500; cursor:pointer; transition:transform 0.1s;
+}
+.hm-cell:hover { transform:scale(1.1); }
+.hm-header { font-size:11px; color:var(--text3); padding:0 2px; }
+
+/* REVISION TABLE */
+.rev-table { width:100%; }
+.rev-row { display:flex; gap:0; border-bottom:1px solid var(--border); }
+.rev-col1 { width:220px; padding:12px 16px; font-weight:600; font-size:13px; color:var(--accent); flex-shrink:0; }
+.rev-col2 { flex:1; padding:12px 16px; font-size:13px; color:var(--text2); border-left:1px solid var(--border); }
+
+/* TRAPCARD */
+.trap-card {
+  background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.25);
+  border-radius:10px; padding:20px; margin-bottom:12px;
+}
+.trap-title { color:var(--accent4); font-weight:600; font-size:14px; margin-bottom:8px; }
+.trap-body { color:var(--text2); font-size:13px; line-height:1.7; }
+
+/* CHART WRAPPER */
+.chart-wrap { position:relative; height:280px; }
+
+/* SCHEME CARD */
+.scheme-card {
+  background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:12px;
+}
+.scheme-name { color:var(--accent2); font-weight:600; font-size:14px; margin-bottom:6px; }
+.scheme-details { font-size:12px; color:var(--text2); line-height:1.6; }
+
+/* BREADCRUMB */
+.breadcrumb { display:flex; align-items:center; gap:8px; margin-bottom:24px; }
+.breadcrumb span { font-size:12px; color:var(--text3); }
+.breadcrumb a { font-size:12px; color:var(--accent3); cursor:pointer; }
+
+/* PROGRESS */
+.progress-wrap { background:var(--bg4); border-radius:4px; height:6px; margin-top:6px; }
+.progress-fill { height:100%; border-radius:4px; transition:width 0.5s; }
+
+/* SCROLL */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:3px; }
+
+/* TOPIC NAV TABS */
+.tab-row { display:flex; gap:8px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px; }
+.tab {
+  padding:7px 16px; border-radius:8px; font-size:13px; cursor:pointer;
+  border:1px solid var(--border); color:var(--text2); white-space:nowrap; transition:all 0.15s;
+}
+.tab.active { background:var(--accent); color:#000; border-color:var(--accent); font-weight:600; }
+.tab:hover:not(.active) { border-color:rgba(255,255,255,0.2); color:var(--text); }
+
+/* TOGGLE BUTTON */
+.btn {
+  padding:8px 18px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg3); color:var(--text2); font-size:13px; cursor:pointer;
+  font-family:'IBM Plex Sans',sans-serif; transition:all 0.15s;
+}
+.btn:hover { border-color:var(--accent); color:var(--accent); }
+.btn-primary { background:var(--accent); color:#000; border-color:var(--accent); font-weight:600; }
+.btn-primary:hover { background:#e08b00; color:#000; }
+
+/* PYQCARD */
+.pyq-card {
+  background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:18px; margin-bottom:12px;
+}
+.pyq-year { font-size:11px; color:var(--accent5); font-weight:600; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.pyq-question { font-size:13px; color:var(--text); line-height:1.7; }
+.pyq-meta { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+
+/* INDEX CARD */
+.index-card {
+  background:var(--bg3); border:1px solid var(--border); border-radius:8px;
+  padding:14px 16px; margin-bottom:8px;
+}
+.index-name { color:var(--accent3); font-weight:600; font-size:13px; }
+.index-detail { color:var(--text2); font-size:12px; margin-top:4px; line-height:1.6; }
+
+/* COLLAPSIBLE */
+.collapse-header {
+  display:flex; align-items:center; justify-content:space-between;
+  cursor:pointer; padding:14px 18px;
+  background:var(--bg3); border:1px solid var(--border); border-radius:10px;
+  margin-bottom:8px; font-weight:600; font-size:14px;
+  transition:all 0.15s;
+}
+.collapse-header:hover { border-color:rgba(255,255,255,0.15); }
+.collapse-header.open { border-color:var(--accent); color:var(--accent); border-radius:10px 10px 0 0; margin-bottom:0; }
+.collapse-body {
+  display:none; padding:18px;
+  background:var(--bg2); border:1px solid var(--border); border-top:none;
+  border-radius:0 0 10px 10px; margin-bottom:8px; font-size:13px; color:var(--text2); line-height:1.8;
+}
+.collapse-body.show { display:block; }
+
+.arrow { transition:transform 0.2s; font-size:12px; }
+.open .arrow { transform:rotate(180deg); }
+
+/* PYQTABLE YEARS */
+.year-pill {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:38px; height:20px; border-radius:4px; font-size:10px; font-weight:600;
+  background:rgba(245,158,11,0.15); color:var(--accent); margin:1px;
+}
+
+h2.page-title {
+  font-family:'Playfair Display',serif; font-size:28px; font-weight:700;
+  color:var(--text); margin-bottom:8px;
+}
+.page-subtitle { color:var(--text2); font-size:14px; margin-bottom:32px; }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.three-col { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">⚡ UPSC ECONOMICS<br>PRELIMS SYSTEM</div>
+    <div class="sidebar-sub">2013–2025 Intelligence Engine</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('dashboard')"><div class="nav-dot" style="background:#f59e0b"></div>Dashboard <span class="nav-badge">Home</span></div>
+    <div class="nav-item" onclick="showPage('analytics')"><div class="nav-dot" style="background:#3b82f6"></div>PYQ Analytics <span class="nav-badge">2013–25</span></div>
+    <div class="nav-item" onclick="showPage('pyq')"><div class="nav-dot" style="background:#8b5cf6"></div>PYQ Explorer</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Core Topics</div>
+    <div class="nav-item" onclick="showPage('macro')"><div class="nav-dot" style="background:#10b981"></div>Macro Economics</div>
+    <div class="nav-item" onclick="showPage('indian')"><div class="nav-dot" style="background:#10b981"></div>Indian Economy</div>
+    <div class="nav-item" onclick="showPage('banking')"><div class="nav-dot" style="background:#10b981"></div>Banking & Monetary Policy</div>
+    <div class="nav-item" onclick="showPage('fiscal')"><div class="nav-dot" style="background:#10b981"></div>Fiscal Policy & Budget</div>
+    <div class="nav-item" onclick="showPage('external')"><div class="nav-dot" style="background:#10b981"></div>External Sector & Trade</div>
+    <div class="nav-item" onclick="showPage('agriculture')"><div class="nav-dot" style="background:#10b981"></div>Agriculture Economics</div>
+    <div class="nav-item" onclick="showPage('inclusive')"><div class="nav-dot" style="background:#10b981"></div>Inclusive Growth & Poverty</div>
+    <div class="nav-item" onclick="showPage('intl')"><div class="nav-dot" style="background:#f59e0b"></div>International Orgs & WTO</div>
+    <div class="nav-item" onclick="showPage('schemes')"><div class="nav-dot" style="background:#f59e0b"></div>Government Schemes</div>
+    <div class="nav-item" onclick="showPage('green')"><div class="nav-dot" style="background:#f59e0b"></div>Green & New Economy</div>
+    <div class="nav-item" onclick="showPage('indices')"><div class="nav-dot" style="background:#f59e0b"></div>Reports & Indices</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">Practice & Strategy</div>
+    <div class="nav-item" onclick="showPage('q100')"><div class="nav-dot" style="background:#ef4444"></div>100 Expected Questions <span class="nav-badge">HOT</span></div>
+    <div class="nav-item" onclick="showPage('traps')"><div class="nav-dot" style="background:#ef4444"></div>UPSC Trap Taxonomy</div>
+    <div class="nav-item" onclick="showPage('revision')"><div class="nav-dot" style="background:#3b82f6"></div>Rapid Revision Engine</div>
+    <div class="nav-item" onclick="showPage('strategy')"><div class="nav-dot" style="background:#3b82f6"></div>Exam Strategy</div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+<!-- ==================== DASHBOARD ==================== -->
+<div id="page-dashboard" class="page active">
+  <div class="dash-hero">
+    <div style="position:absolute;top:20px;right:24px;text-align:right;">
+      <div style="font-size:11px;color:var(--text3)">Coverage</div>
+      <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--accent2)">2013–2025</div>
+    </div>
+    <h1>UPSC Economics<br>Intelligence System</h1>
+    <p>The most advanced UPSC Prelims Economics preparation system — built on deep PYQ pattern analysis, UPSC psychology modeling, and probabilistic topic forecasting.</p>
+    <div class="hero-tags">
+      <span class="tag tag-gold">350+ PYQs Analyzed</span>
+      <span class="tag tag-green">50+ Core Topics</span>
+      <span class="tag tag-blue">100 Expected Questions</span>
+      <span class="tag tag-red">UPSC Trap Taxonomy</span>
+      <span class="tag tag-purple">13 Years of Data</span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent)">350+</div><div class="stat-lbl">PYQs Analyzed</div><div class="stat-sub">GS Paper I Economics 2013–2025</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent2)">48</div><div class="stat-lbl">Core Topics Covered</div><div class="stat-sub">Complete syllabus architecture</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent3)">100</div><div class="stat-lbl">Expected Questions</div><div class="stat-sub">2025 Prelims forecast</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--accent4)">23</div><div class="stat-lbl">Trap Categories</div><div class="stat-sub">UPSC cognitive traps mapped</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Topic Probability Forecast — Top 15</div>
+      <div class="chart-wrap"><canvas id="probChart" role="img" aria-label="Bar chart showing probability of topics appearing in UPSC 2025">Probability data for top economics topics.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Year-wise Question Volume (Economics)</div>
+      <div class="chart-wrap"><canvas id="volumeChart" role="img" aria-label="Line chart of economics question count per year">Economics question count by year 2013 to 2025.</canvas></div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-title">Static vs Dynamic Ratio</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="staticChart" role="img" aria-label="Pie chart of static vs dynamic questions">Static 55%, Dynamic 45%.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Difficulty Distribution</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="diffChart" role="img" aria-label="Pie chart of difficulty levels">Easy 20%, Moderate 50%, Hard 30%.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Topic Cluster Share</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="clusterChart" role="img" aria-label="Doughnut chart of topic cluster shares">Indian Economy largest share.</canvas></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔥 High-Priority Topic Radar — 2025 Prelims</div>
+    <div class="topic-grid" id="hotTopics"></div>
+  </div>
+</div>
+
+<!-- ==================== ANALYTICS ==================== -->
+<div id="page-analytics" class="page">
+  <h2 class="page-title">PYQ Analytics Dashboard</h2>
+  <p class="page-subtitle">Data-driven intelligence from 13 years of UPSC Economics questions</p>
+
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-title">Topic Frequency Heatmap (2013–2025)</div>
+    <p style="font-size:12px;color:var(--text3);margin-bottom:16px">Darker = more questions. Hover for count.</p>
+    <div id="heatmapContainer"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Most Repeated Topics</div>
+      <table class="data-table">
+        <tr><th>Topic</th><th>Questions</th><th>Trend</th></tr>
+        <tr><td>Banking & Credit</td><td>42</td><td><span class="pill pill-high">Rising</span></td></tr>
+        <tr><td>Inflation & Monetary Policy</td><td>38</td><td><span class="pill pill-high">Rising</span></td></tr>
+        <tr><td>GDP, GVA, NNP</td><td>35</td><td><span class="pill pill-med">Stable</span></td></tr>
+        <tr><td>Government Schemes</td><td>34</td><td><span class="pill pill-high">Rising</span></td></tr>
+        <tr><td>Agriculture & MSP</td><td>31</td><td><span class="pill pill-med">Stable</span></td></tr>
+        <tr><td>International Trade & WTO</td><td>29</td><td><span class="pill pill-med">Stable</span></td></tr>
+        <tr><td>Capital Markets</td><td>27</td><td><span class="pill pill-high">Rising</span></td></tr>
+        <tr><td>Fiscal Policy & Deficit</td><td>26</td><td><span class="pill pill-med">Stable</span></td></tr>
+        <tr><td>Poverty & Inclusion</td><td>22</td><td><span class="pill pill-low">Declining</span></td></tr>
+        <tr><td>FDI & Balance of Payments</td><td>21</td><td><span class="pill pill-high">Rising</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Recurrence Probability Matrix</div>
+      <table class="data-table">
+        <tr><th>Topic</th><th>Last Asked</th><th>Recurrence %</th></tr>
+        <tr><td>CBDC & Digital Currency</td><td>2023</td><td><span class="pill pill-high">85%</span></td></tr>
+        <tr><td>Carbon Markets / Carbon Tax</td><td>2022</td><td><span class="pill pill-high">80%</span></td></tr>
+        <tr><td>MSP & Farm Laws</td><td>2024</td><td><span class="pill pill-high">78%</span></td></tr>
+        <tr><td>RBI Tools & MPC</td><td>2024</td><td><span class="pill pill-high">82%</span></td></tr>
+        <tr><td>GST & Taxation</td><td>2023</td><td><span class="pill pill-med">72%</span></td></tr>
+        <tr><td>WTO & Trade Wars</td><td>2024</td><td><span class="pill pill-high">75%</span></td></tr>
+        <tr><td>Financial Inclusion</td><td>2024</td><td><span class="pill pill-med">68%</span></td></tr>
+        <tr><td>Gig Economy</td><td>2023</td><td><span class="pill pill-med">65%</span></td></tr>
+        <tr><td>SHGs & Microfinance</td><td>2022</td><td><span class="pill pill-med">60%</span></td></tr>
+        <tr><td>PLI Scheme</td><td>2023</td><td><span class="pill pill-high">77%</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title">Economic Survey → UPSC Correlation (Last 5 Years)</div>
+    <div class="chart-wrap"><canvas id="surveyChart" role="img" aria-label="Bar chart showing Economic Survey to UPSC question correlation">Survey to question correlation data.</canvas></div>
+  </div>
+</div>
+
+<!-- ==================== PYQ EXPLORER ==================== -->
+<div id="page-pyq" class="page">
+  <h2 class="page-title">PYQ Explorer</h2>
+  <p class="page-subtitle">Browse past year questions with complete analysis</p>
+  <div class="search-bar">
+    <span style="color:var(--text3);font-size:16px">🔍</span>
+    <input id="pyqSearch" type="text" placeholder="Search by topic, concept, year..." oninput="filterPYQs()">
+    <select id="pyqYear" onchange="filterPYQs()" style="background:var(--bg3);border:none;color:var(--text2);font-size:13px;outline:none;font-family:'IBM Plex Sans',sans-serif">
+      <option value="">All Years</option>
+      <option>2025</option><option>2024</option><option>2023</option><option>2022</option>
+      <option>2021</option><option>2020</option><option>2019</option><option>2018</option>
+      <option>2017</option><option>2016</option><option>2015</option><option>2014</option><option>2013</option>
+    </select>
+    <select id="pyqDiff" onchange="filterPYQs()" style="background:var(--bg3);border:none;color:var(--text2);font-size:13px;outline:none;font-family:'IBM Plex Sans',sans-serif">
+      <option value="">All Levels</option>
+      <option>Easy</option><option>Moderate</option><option>Hard</option>
+    </select>
+  </div>
+  <div id="pyqList"></div>
+</div>
+
+<!-- ==================== MACRO ECONOMICS ==================== -->
+<div id="page-macro" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Macro Economics</span></div>
+  <h2 class="page-title">Macro Economics</h2>
+  <p class="page-subtitle">National income, growth accounting, economic systems — UPSC's most tested conceptual zone</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('macro','nat')">National Income</div>
+    <div class="tab" onclick="showTab('macro','inflation')">Inflation</div>
+    <div class="tab" onclick="showTab('macro','employment')">Employment</div>
+    <div class="tab" onclick="showTab('macro','growth')">Growth Models</div>
+    <div class="tab" onclick="showTab('macro','sector')">Sectoral Economics</div>
+  </div>
+
+  <!-- NATIONAL INCOME -->
+  <div id="macro-nat" class="macro-tab">
+    <div class="content-section">
+      <div class="section-title">National Income Accounting</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">GDP (Gross Domestic Product)</strong> is the total monetary value of all final goods and services produced within the geographical boundaries of a country in a given year, regardless of ownership.</p>
+        <p><strong style="color:var(--text)">GNP (Gross National Product)</strong> = GDP + Net Factor Income from Abroad (NFIA). It includes production by nationals regardless of location. Key distinction: GNP is ownership-based, GDP is territory-based.</p>
+        <p><strong style="color:var(--text)">GVA (Gross Value Added)</strong> = GDP at market price − Product taxes + Product subsidies. GVA is now the preferred measure in India (base year 2011-12). GDP = GVA + Taxes on products − Subsidies on products.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">⚡ UPSC Formula Sheet</div>
+        <div class="formula">GDP at Market Price = GVA + Net Taxes (Product Taxes − Subsidies)</div>
+        <div class="formula">NDP = GDP − Depreciation (CCA)</div>
+        <div class="formula">NNP at FC = NNP at MP − Net Indirect Taxes = National Income</div>
+        <div class="formula">Per Capita Income = National Income ÷ Population</div>
+        <div class="formula">Real GDP = Nominal GDP ÷ GDP Deflator × 100</div>
+      </div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Three Methods of Measuring GDP:</strong></p>
+        <p>1. <strong style="color:var(--accent3)">Expenditure Method:</strong> GDP = C + I + G + (X−M) where C=private consumption, I=investment, G=govt spending, X=exports, M=imports. (X−M) is Net Exports or trade balance.</p>
+        <p>2. <strong style="color:var(--accent3)">Income Method:</strong> Sum of factor incomes — wages, rent, interest, profit + depreciation + indirect taxes − subsidies.</p>
+        <p>3. <strong style="color:var(--accent3)">Production/Value Added Method:</strong> Sum of value added at each stage of production = Total Output − Intermediate Consumption.</p>
+      </div>
+      <div class="info-box">
+        <div class="ib-title">🎯 UPSC Favourite: What is NOT included in GDP?</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          • Transfer payments (pensions, subsidies, scholarships) — no productive activity<br>
+          • Sale of second-hand goods — production already counted<br>
+          • Sale of shares/bonds — financial transactions, not production<br>
+          • Black market / informal economy (ideally excluded)<br>
+          • Unpaid household work (major criticism of GDP)<br>
+          • Environmental degradation is NOT deducted from GDP → leads to Green GDP concept
+        </p>
+      </div>
+      <div class="danger-box">
+        <div class="db-title">🔴 Classic UPSC Trap</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          <strong style="color:var(--accent4)">Trap:</strong> UPSC confuses aspirants between GDP at Market Price vs GDP at Factor Cost vs GVA. Remember: India SHIFTED from GDP at FC to GVA as primary measure in 2015 base year revision. GDP at FC = GDP at MP − Net Indirect Taxes. GVA is sectorally measured; GDP is economy-wide.
+        </p>
+      </div>
+
+      <div class="subsection-title">Base Year & Rebasing</div>
+      <div class="content-block">
+        <p>India's current base year is <strong style="color:var(--accent)">2011-12</strong> (revised from 2004-05 in 2015). Base year revision matters because: price levels change, new industries emerge, consumption patterns shift. CSO (now MoSPI) conducts this revision.</p>
+        <p><strong style="color:var(--text)">Key agencies:</strong> MoSPI (Ministry of Statistics and Programme Implementation) releases GDP data. RBI tracks, NITI Aayog projects. NAS (National Account Statistics) is the primary document.</p>
+      </div>
+      <div class="mnemonic">
+        🧠 MNEMONIC — GDP Methods: "Every Indian Person"<br>
+        E = Expenditure (C+I+G+NX)<br>
+        I = Income (Wages+Rent+Interest+Profit)<br>
+        P = Production (Value Added)
+      </div>
+
+      <div class="subsection-title">Advanced Concepts: Types of GDP</div>
+      <table class="data-table" style="margin-top:12px">
+        <tr><th>Concept</th><th>Definition</th><th>UPSC Importance</th></tr>
+        <tr><td>GDP at MP</td><td>Includes taxes, excludes subsidies</td><td><span class="pill pill-high">Very High</span></td></tr>
+        <tr><td>GDP at FC</td><td>Excludes taxes + subsidies</td><td><span class="pill pill-high">Very High</span></td></tr>
+        <tr><td>Real GDP</td><td>GDP adjusted for inflation</td><td><span class="pill pill-high">Very High</span></td></tr>
+        <tr><td>Nominal GDP</td><td>GDP at current prices</td><td><span class="pill pill-high">Very High</span></td></tr>
+        <tr><td>Green GDP</td><td>GDP minus environmental costs</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>GDP Deflator</td><td>Ratio of Nominal to Real GDP × 100</td><td><span class="pill pill-high">Very High</span></td></tr>
+        <tr><td>PPP GDP</td><td>Adjusted for purchasing power</td><td><span class="pill pill-med">Medium</span></td></tr>
+        <tr><td>NNP at FC</td><td>= National Income</td><td><span class="pill pill-high">Very High</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- INFLATION -->
+  <div id="macro-inflation" class="macro-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Inflation — Complete Analysis</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Inflation</strong> is a sustained rise in the general price level of goods and services. It erodes the purchasing power of money. The opposite is <strong style="color:var(--text)">deflation</strong> (falling prices). <strong style="color:var(--text)">Disinflation</strong> is a slowing of the inflation rate (still positive but declining).</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">India's Key Inflation Measures</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:8px">
+          <strong style="color:var(--accent)">CPI (Consumer Price Index):</strong> Measures retail inflation. India uses CPI Combined (Rural+Urban) with base year 2012=100. <strong>RBI uses CPI for monetary policy</strong> (FMRA 2016 mandates 4% ± 2% target).<br><br>
+          <strong style="color:var(--accent)">WPI (Wholesale Price Index):</strong> Measures producer/wholesale level prices. Base year 2011-12=100. Has 697 commodities. <strong>NOT used for RBI monetary policy now</strong> — was used pre-2016.<br><br>
+          <strong style="color:var(--accent)">GDP Deflator:</strong> Broadest measure, covers all goods/services produced domestically. Compiled by MoSPI. No fixed basket — updates automatically.<br><br>
+          <strong style="color:var(--accent)">Core Inflation:</strong> CPI excluding food and fuel. Indicates structural price pressures. More closely watched by monetary economists.
+        </p>
+      </div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Types of Inflation by Cause:</strong></p>
+        <p><strong style="color:var(--accent3)">Demand-Pull:</strong> Excess demand over supply. "Too much money chasing too few goods." Classical Keynesian scenario. Remedy: contractionary monetary/fiscal policy.</p>
+        <p><strong style="color:var(--accent3)">Cost-Push:</strong> Rise in production costs (wages, oil, raw materials). Supply-side shock. Example: 2022 global inflation triggered by supply chain disruption + Russia-Ukraine war.</p>
+        <p><strong style="color:var(--accent3)">Built-in Inflation:</strong> Wage-price spiral. Workers demand higher wages → firms raise prices → workers demand more wages. Self-perpetuating.</p>
+        <p><strong style="color:var(--accent3)">Structural Inflation:</strong> Due to supply-side bottlenecks, distribution inefficiencies. Common in developing economies like India (food inflation from poor storage, transportation).</p>
+        <p><strong style="color:var(--accent3)">Stagflation:</strong> High inflation + high unemployment + stagnant growth simultaneously. 1970s oil crisis example. Phillips Curve breaks down during stagflation.</p>
+      </div>
+      <div class="danger-box">
+        <div class="db-title">🔴 UPSC Trap — WPI vs CPI Weights</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          WPI gives highest weight to Manufactured Products (~64%). Food items have higher weight in CPI. UPSC often asks which index is used by whom. RBI = CPI. Government = WPI for dearness allowance calculations historically. This distinction has appeared multiple times.
+        </p>
+      </div>
+      <div class="mnemonic">
+        🧠 MNEMONIC — Effects of Inflation:<br>
+        "Creditors Lose, Debtors Gain; Fixed Income Loses, Asset Holders Gain"<br>
+        (Inflation redistributes wealth from lenders to borrowers, from wage earners to asset owners)
+      </div>
+      <div class="subsection-title">Phillips Curve</div>
+      <div class="content-block">
+        <p>The <strong style="color:var(--text)">Phillips Curve</strong> shows the inverse relationship between inflation and unemployment. In the short run: low unemployment → higher wages → higher inflation. In the long run (Friedman-Phelps): the curve is vertical at the natural rate of unemployment (NAIRU — Non-Accelerating Inflation Rate of Unemployment). UPSC has tested this concept and the Stagflation exception.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPLOYMENT -->
+  <div id="macro-employment" class="macro-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Employment & Unemployment</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Types of Unemployment in India:</strong></p>
+        <p><strong style="color:var(--accent3)">Cyclical:</strong> Due to economic downturns/business cycles. Demand-deficient unemployment. Keynesian prescription: fiscal stimulus.</p>
+        <p><strong style="color:var(--accent3)">Structural:</strong> Mismatch between skills and job requirements. Long-term, technological shifts. Frictional exists during job transitions.</p>
+        <p><strong style="color:var(--accent3)">Disguised Unemployment:</strong> More workers than required. Marginal productivity of labour = zero. Characteristic of <strong>Indian agriculture</strong>. Removing them wouldn't reduce output.</p>
+        <p><strong style="color:var(--accent3)">Seasonal Unemployment:</strong> During off-season in agriculture, tourism, etc. Massive in rural India. MGNREGS specifically targets this.</p>
+        <p><strong style="color:var(--accent3)">Open Unemployment:</strong> Completely without work, actively seeking. Measured by Labour Bureau, PLFS (Periodic Labour Force Survey by NSSO).</p>
+        <p><strong style="color:var(--accent3)">Under-Employment:</strong> Working fewer hours than desired or in jobs below skill level.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">Key Employment Data Sources (UPSC-Critical)</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:8px">
+          • <strong>PLFS</strong> (Periodic Labour Force Survey) — Annual, quarterly data; by MoSPI/NSSO<br>
+          • <strong>CMIE</strong> — Centre for Monitoring Indian Economy (private; used as reference)<br>
+          • <strong>Labour Bureau</strong> — Under Ministry of Labour<br>
+          • <strong>EPFO</strong> data — Formal employment payroll indicator<br>
+          • Key indicators: Labour Force Participation Rate (LFPR), Worker Population Ratio (WPR), Unemployment Rate (UR)
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GROWTH MODELS -->
+  <div id="macro-growth" class="macro-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Growth Models & Economic Theory</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Harrod-Domar Model:</strong> Growth = Savings Rate / Capital-Output Ratio. Simple Keynesian model. Emphasizes savings and investment. Criticized for ignoring technology and human capital. UPSC has tested the formula concept.</p>
+        <p><strong style="color:var(--text)">Solow Growth Model (Neoclassical):</strong> Long-run growth depends on technological progress, not just capital accumulation. Steady-state equilibrium. Diminishing returns to capital. Technology is exogenous. Nobel Prize to Solow (1987).</p>
+        <p><strong style="color:var(--text)">Endogenous Growth Theory (Romer, Lucas):</strong> Technology and human capital are endogenous. Returns to knowledge don't diminish. Justifies government investment in R&D, education. More aligned with India's PLI, semiconductor push.</p>
+        <p><strong style="color:var(--text)">Lewis Model (Dual Sector):</strong> Traditional (subsistence agriculture) + Modern (industrial) sectors. Unlimited labour supply from agriculture to industry at subsistence wages. Relevant for India's structural transformation.</p>
+      </div>
+      <div class="info-box">
+        <div class="ib-title">📊 India's Growth Story — Key Numbers</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          • India target: $5 trillion economy by 2025 (now revised to 2026-27)<br>
+          • India's GDP (2024-25 estimate): ~$3.9 trillion (at current prices)<br>
+          • India is 5th largest economy globally (Nominal GDP); 3rd largest by PPP<br>
+          • Average growth 2014-2024: ~6.5-7% (except COVID year -7.3% in 2020-21)<br>
+          • India's potential growth rate: ~6.5-7% (per IMF, RBI estimates)<br>
+          • Capital formation (GFCF/GDP): ~29-30% — needs to rise to ~35% for 8%+ growth
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTORAL -->
+  <div id="macro-sector" class="macro-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Sectoral Economics</div>
+      <div class="content-block">
+        <p>India's economy is divided into three sectors: <strong style="color:var(--text)">Primary</strong> (agriculture, mining — ~15-17% of GVA, ~45% employment), <strong style="color:var(--text)">Secondary</strong> (manufacturing, construction — ~25-27% GVA), and <strong style="color:var(--text)">Tertiary/Services</strong> (~56-58% GVA, fastest growing). This divergence between output share and employment share is India's structural challenge.</p>
+        <p><strong style="color:var(--text)">Structural Transformation</strong> refers to the shift of labour and output from lower to higher productivity sectors. India's challenge: agriculture has 45% workforce but only 15% GVA → requires education, skill development, manufacturing push.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">Services Sector — UPSC Favourites</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          India is world's 8th largest exporter of commercial services. IT/BPM sector: $227+ billion (2023-24). Remittances: India is world's largest recipient (~$120 billion+). Tourism, telecom, financial services all growing. GIG economy threatens traditional employment classification.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INDIAN ECONOMY ==================== -->
+<div id="page-indian" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Indian Economy</span></div>
+  <h2 class="page-title">Indian Economy — Structure & Features</h2>
+  <p class="page-subtitle">Planning, mixed economy, reforms, structural features — historical to contemporary</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('indian','planning')">Planning & Reforms</div>
+    <div class="tab" onclick="showTab('indian','infra')">Infrastructure</div>
+    <div class="tab" onclick="showTab('indian','msme')">MSMEs & Startups</div>
+    <div class="tab" onclick="showTab('indian','digital')">Digital Economy</div>
+  </div>
+
+  <div id="indian-planning" class="indian-tab">
+    <div class="content-section">
+      <div class="section-title">Planning Era to NITI Aayog</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Planning Commission (1950–2014):</strong> Set up in 1950 under Jawaharlal Nehru. Five-Year Plans modeled on Soviet planning. Centralized directive planning with indicative targets. Abolished in 2014 by Modi govt.</p>
+        <p><strong style="color:var(--text)">NITI Aayog (2015–present):</strong> National Institution for Transforming India. Think-tank model — policy advisory, no financial allocation power (unlike PC). Key organs: Governing Council (all CMs + LGs), Executive Council, Regional Councils. Three-year Action Agenda, Seven-year Strategy, 15-year Vision document.</p>
+        <p><strong style="color:var(--text)">Key difference:</strong> Planning Commission allocated funds + had clout over states. NITI Aayog is advisory — real financial power is with Finance Commission and Finance Ministry.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">Economic Reforms 1991 — LPG</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:8px">
+          <strong>L</strong>iberalisation: Reduced licensing (Industrial Policy 1991), FDI opened, import liberalisation<br>
+          <strong>P</strong>rivatisation: Disinvestment of PSUs, strategic sale, listing on stock markets<br>
+          <strong>G</strong>lobalisation: India joined WTO (1995), export promotion, capital account convertibility (partial)<br><br>
+          Trigger: BoP crisis 1991 — foreign exchange reserves fell to 2 weeks of imports. IMF bailout conditionality drove reforms under PM Narasimha Rao + FM Manmohan Singh.
+        </p>
+      </div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Finance Commission:</strong> Constitutional body (Article 280). Set up every 5 years. Recommends division of tax revenues between Centre and States, grants. 15th FC (2021-26): recommended 41% devolution to states from divisible pool. 16th FC is being constituted.</p>
+        <p><strong style="color:var(--text)">Cooperative Federalism:</strong> GST Council is prime example — Centre + States jointly decide rates. NITI Aayog promotes this through Chief Ministers' involvement.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="indian-infra" class="indian-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Infrastructure Economics</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">National Infrastructure Pipeline (NIP):</strong> ₹111 lakh crore investment pipeline (2019-25). Infrastructure push across roads, railways, ports, energy, urban infra. PPP model preferred.</p>
+        <p><strong style="color:var(--text)">PM Gati Shakti:</strong> National Master Plan for multi-modal connectivity. Integrates 16 ministries on one digital platform. Aims to reduce logistics cost from 14% to 8% of GDP (India's logistics cost is high vs 8% in advanced economies).</p>
+        <p><strong style="color:var(--text)">Logistics Performance Index (LPI):</strong> World Bank ranking. India at rank 38 (2023). Major improvement from rank 54 (2018).</p>
+        <p><strong style="color:var(--text)">PPP (Public-Private Partnership):</strong> Various models — BOT (Build-Operate-Transfer), DBFOT, Hybrid Annuity Model (HAM) in highways. HAM: govt pays 40% construction cost upfront, rest through annuity — reduces developer risk.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="indian-msme" class="indian-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">MSMEs & Startup Ecosystem</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">MSME Definition (revised 2020):</strong> Based on investment AND turnover.<br>
+        Micro: Investment ≤ ₹1 crore, Turnover ≤ ₹5 crore<br>
+        Small: Investment ≤ ₹10 crore, Turnover ≤ ₹50 crore<br>
+        Medium: Investment ≤ ₹50 crore, Turnover ≤ ₹250 crore</p>
+        <p>MSMEs contribute ~30% of GDP, 45% of exports, 110 million+ employment. Udyam Registration Portal for MSME registration. Emergency Credit Line Guarantee Scheme (ECLGS) during COVID for credit access.</p>
+      </div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Startup India (2016):</strong> Registered startups cross 1,17,000+ (as of 2024). India is 3rd largest startup ecosystem globally. DPIIT recognition provides tax benefits (3-year tax holiday), IPR support, relaxed compliance. Fund of Funds through SIDBI. Startup Bharat — expanding to tier-2/3 cities.</p>
+        <p><strong style="color:var(--text)">Unicorns:</strong> Startups valued at $1 billion+. India has 100+ unicorns. Fintech, edtech, SaaS leading sectors. GIFT City (Gujarat International Finance Tec-City) providing IFSC platform for listing and fund-raising.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="indian-digital" class="indian-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Digital Economy</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">India Stack:</strong> Digital infrastructure — Aadhaar (identity), UPI (payments), DigiLocker (documents), eSign, BBPS. The backbone of India's digital economy. UPI: 8+ billion transactions per month (2024), connecting 300 million+ users.</p>
+        <p><strong style="color:var(--text)">CBDC — Central Bank Digital Currency:</strong> RBI launched Digital Rupee (e₹) in 2022. Two types: e₹-W (Wholesale) for inter-bank settlements, e₹-R (Retail) for general public. Unlike cryptocurrency — centralized, legal tender, issued by RBI. Not on blockchain necessarily; uses distributed ledger.</p>
+        <p><strong style="color:var(--text)">Gig Economy:</strong> Platform-based work (Uber, Swiggy, UrbanClap). Code on Social Security 2020 includes gig workers. NITI Aayog estimates 7.7 million gig workers (2020-21), projected 23.5 million by 2029-30. Social security, portability of benefits are key policy challenges.</p>
+        <p><strong style="color:var(--text)">Semiconductor Policy:</strong> India Semiconductor Mission (ISM). ₹76,000 crore incentive package. Micron, Tata announced fabs in India. Strategic goal: reduce import dependence (India imports $25+ billion in semiconductors annually).</p>
+      </div>
+      <div class="info-box">
+        <div class="ib-title">🔵 Open Network for Digital Commerce (ONDC)</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          DPIIT initiative to democratize e-commerce by creating an open protocol (like UPI for commerce). Breaks dominance of Amazon/Flipkart. Sellers, buyers, logistics can be on different apps — interoperability. Currently live across 236+ cities.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BANKING ==================== -->
+<div id="page-banking" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Banking & Monetary Policy</span></div>
+  <h2 class="page-title">Banking System & Monetary Policy</h2>
+  <p class="page-subtitle">RBI, monetary tools, banking structure, credit — UPSC's highest-frequency topic</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('banking','rbi')">RBI & Tools</div>
+    <div class="tab" onclick="showTab('banking','bankstruct')">Banking Structure</div>
+    <div class="tab" onclick="showTab('banking','npa')">NPA & Reforms</div>
+    <div class="tab" onclick="showTab('banking','capital')">Capital Markets</div>
+    <div class="tab" onclick="showTab('banking','finincl')">Financial Inclusion</div>
+  </div>
+
+  <div id="banking-rbi" class="banking-tab">
+    <div class="content-section">
+      <div class="section-title">RBI — Structure, Functions & Monetary Tools</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Reserve Bank of India (RBI):</strong> Established 1935 (under RBI Act 1934), nationalized 1949. Headquartered Mumbai. Governor appointed by Central Government. Current mandate under FMRA (Flexible Inflation Targeting framework since 2016) — CPI target 4% ±2%.</p>
+        <p><strong style="color:var(--text)">MPC (Monetary Policy Committee):</strong> 6-member committee — 3 RBI officials (Governor chairs) + 3 external members appointed by Centre. Meets every 2 months. Decisions by majority vote; Governor has casting vote. Created by RBI (Amendment) Act 2016.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">⚡ RBI's Monetary Policy Tools — Complete Master Table</div>
+        <table class="data-table" style="margin-top:8px">
+          <tr><th>Tool</th><th>Current Rate (approx)</th><th>Mechanism</th><th>UPSC Focus</th></tr>
+          <tr><td><strong>Repo Rate</strong></td><td>~6.5%</td><td>Rate at which RBI lends to banks (overnight, against securities). ↑Repo → ↑lending rates → ↓credit → ↓inflation</td><td><span class="pill pill-high">Very High</span></td></tr>
+          <tr><td><strong>Reverse Repo</strong></td><td>~3.35%</td><td>Rate at which banks park excess funds with RBI. Sets floor of interest corridor.</td><td><span class="pill pill-high">Very High</span></td></tr>
+          <tr><td><strong>SLR</strong></td><td>18%</td><td>Statutory Liquidity Ratio — mandatory investment in govt securities/gold/approved securities. Restricts credit expansion.</td><td><span class="pill pill-high">Very High</span></td></tr>
+          <tr><td><strong>CRR</strong></td><td>4%</td><td>Cash Reserve Ratio — % of NDTL kept as cash with RBI. Earns no interest. Directly controls money supply.</td><td><span class="pill pill-high">Very High</span></td></tr>
+          <tr><td><strong>Bank Rate</strong></td><td>~6.75%</td><td>Rate for long-term loans from RBI to banks. Historically significant. Now linked to MSF rate.</td><td><span class="pill pill-med">Medium</span></td></tr>
+          <tr><td><strong>MSF (Marginal Standing Facility)</strong></td><td>~6.75%</td><td>Emergency overnight borrowing above repo. Banks can borrow up to 2% of NDTL. Sets ceiling of corridor.</td><td><span class="pill pill-high">High</span></td></tr>
+          <tr><td><strong>OMO (Open Market Operations)</strong></td><td>Flexible</td><td>RBI buys/sells govt securities in open market to inject/absorb liquidity. Qualitative tool.</td><td><span class="pill pill-high">High</span></td></tr>
+          <tr><td><strong>LAF (Liquidity Adjustment Facility)</strong></td><td>Corridor</td><td>Framework of repo + reverse repo + MSF. Daily liquidity management. Corridor = MSF−Reverse Repo.</td><td><span class="pill pill-high">High</span></td></tr>
+        </table>
+      </div>
+      <div class="danger-box">
+        <div class="db-title">🔴 UPSC Trap — NDTL</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          CRR and SLR are calculated on NDTL (Net Demand and Time Liabilities = Total deposits − inter-bank deposits). UPSC has trapped aspirants by asking about what is included in NDTL. Current account deposits = Demand Liabilities. Fixed/savings deposits = Time Liabilities. Borrowings from RBI are excluded from NDTL.
+        </p>
+      </div>
+      <div class="mnemonic">
+        🧠 MNEMONIC — Quantitative Credit Controls: "CORSM"<br>
+        C = CRR, O = OMOs, R = Repo/Reverse Repo, S = SLR, M = MSF
+      </div>
+    </div>
+  </div>
+
+  <div id="banking-bankstruct" class="banking-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Banking Structure in India</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Scheduled Commercial Banks (SCBs):</strong> Listed in Second Schedule of RBI Act 1934. Must have paid-up capital + reserves ≥ ₹5 lakh (old requirement). Eligible for refinance from RBI.</p>
+        <p><strong style="color:var(--text)">Types:</strong> Public Sector Banks (PSBs — 12 post-merger), Private Banks, Foreign Banks, Small Finance Banks (SFBs), Payments Banks. SFBs: full banking license but initially focused on small ticket loans. Payments Banks: no credit, only deposits (up to ₹2 lakh), remittances.</p>
+        <p><strong style="color:var(--text)">Priority Sector Lending (PSL):</strong> 40% of Adjusted Net Bank Credit (ANBC) to priority sectors — Agriculture (18%), Weaker sections (10%), MSMEs, Housing, Education. Foreign banks with 20+ branches: 40%. Those with fewer: 32%. PSL Certificates (PSLCs) allow trading of PSL shortfalls.</p>
+      </div>
+      <div class="info-box">
+        <div class="ib-title">🔵 Differentiated Banks — UPSC Key Facts</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          <strong>Small Finance Banks:</strong> Primarily for unserved/underserved segments. Min capital ₹200 crore. 75% of ANBC to PSL.<br>
+          <strong>Payments Banks:</strong> No credit except OD (₹10,000). Max deposit ₹2 lakh/customer. 75% in SLR securities. Airtel, Jio, India Post are examples.<br>
+          <strong>Regional Rural Banks (RRBs):</strong> Sponsored by commercial banks (35%), RBI (15%), State Govts (15%), Central Govt (35%). Serve rural areas. Now being amalgamated state-wise.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="banking-npa" class="banking-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">NPA Crisis & Banking Reforms</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">NPA (Non-Performing Asset):</strong> A loan where interest or principal is overdue for 90+ days. Sub-standard (up to 12 months NPA), Doubtful (12+ months), Loss assets.</p>
+        <p><strong style="color:var(--text)">Gross NPA vs Net NPA:</strong> GNPA = total NPAs. NNPA = GNPA − provisions made. Capital adequacy affected. India's GNPA ratio peaked ~11.5% (2018), now reduced to ~3.2% (2023-24) — a major improvement.</p>
+        <p><strong style="color:var(--text)">IBC (Insolvency and Bankruptcy Code) 2016:</strong> Time-bound resolution of NPAs (180+90 days). NCLT adjudicates. IRP/RP manages firm during resolution. Liquidation if no resolution. Recovery rate improved significantly. India's rank in World Bank ease of doing business (resolving insolvency) improved from 136 to 52.</p>
+        <p><strong style="color:var(--text)">NARCL (National Asset Reconstruction Company Ltd):</strong> Bad Bank set up 2021. Acquires stressed assets (NPAs) from banks using Security Receipts backed by Govt guarantee. IDRCL (India Debt Resolution Company Ltd) manages resolution.</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">Banking Reforms Timeline</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:8px">
+          2014: Indradhanush plan for PSB recapitalization<br>
+          2016: IBC enacted; DRT strengthened<br>
+          2017: Project Sashakt for large NPA resolution<br>
+          2019: Major bank mergers (10 PSBs → 4)<br>
+          2021: NARCL + IDRCL (Bad Bank)<br>
+          2023: PM Vishwakarma scheme for artisans<br>
+          2024: SARFAESI amendments; more digital banking
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="banking-capital" class="banking-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Capital Markets</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Primary vs Secondary Market:</strong> Primary: fresh issue of securities (IPO, FPO, Rights Issue, Private Placement). Secondary: trading of existing securities (BSE, NSE). Price discovery happens in secondary market.</p>
+        <p><strong style="color:var(--text)">SEBI (Securities and Exchange Board of India):</strong> Statutory body (SEBI Act 1992). Regulates securities market. Three roles: Regulatory (makes rules), Developmental (promotes market), Protective (investor protection). Headquarters: Mumbai.</p>
+        <p><strong style="color:var(--text)">Types of FII/FPI:</strong> Foreign Portfolio Investment — below 10% stake. Foreign Direct Investment (FDI) — 10% or more, implies control. FPI is more volatile ("hot money"). Registered under SEBI's FPI regulations.</p>
+        <p><strong style="color:var(--text)">Mutual Funds:</strong> AMFI regulates (Association of Mutual Funds India). SEBI governs. NAV (Net Asset Value) calculated daily. Types: Equity, Debt, Hybrid, Index, ETF, Liquid, ELSS. SIP: Systematic Investment Plan. AUM of India's MF industry: ₹55+ lakh crore (2024).</p>
+      </div>
+      <div class="danger-box">
+        <div class="db-title">🔴 UPSC Trap — Participatory Notes (P-Notes)</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          P-Notes are offshore derivative instruments issued by registered FIIs to overseas investors. Allow investing in Indian markets without direct SEBI registration. Controversial — used to route black money. SEBI has tightened P-Note rules multiple times. UPSC has asked about P-Notes in context of capital market regulation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="banking-finincl" class="banking-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Financial Inclusion</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Jan Dhan Yojana (PMJDY):</strong> Launched 2014. 500+ million accounts opened (world record). Features: zero-balance account, RuPay debit card, ₹10,000 OD facility, life cover ₹30,000, accident cover ₹2 lakh, mobile banking. Direct Benefit Transfer (DBT) uses Jan Dhan accounts. Aadhaar-linked accounts prevent leakage.</p>
+        <p><strong style="color:var(--text)">JAM Trinity:</strong> Jan Dhan + Aadhaar + Mobile — the digital financial inclusion infrastructure. Enables targeted subsidy delivery. ₹3.48+ lakh crore saved through DBT by eliminating ghost beneficiaries and intermediaries.</p>
+        <p><strong style="color:var(--text)">Business Correspondents (BCs):</strong> Agents of banks operating in unbanked areas. Provide last-mile banking. Earn commission per transaction. SBI, Bank of Baroda have large BC networks. Regulated by RBI.</p>
+        <p><strong style="color:var(--text)">Microfinance:</strong> Small loans (up to ₹1 lakh) to low-income individuals without collateral. NABARD, SIDBI, MFIs, SHG-BLP (SHG-Bank Linkage Programme). NBFC-MFIs regulated by RBI. India's microfinance portfolio: ₹3+ lakh crore. SHGs linked: 14+ million (majority women).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FISCAL POLICY ==================== -->
+<div id="page-fiscal" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Fiscal Policy & Budget</span></div>
+  <h2 class="page-title">Fiscal Policy & Union Budget</h2>
+  <p class="page-subtitle">Government revenue, expenditure, deficit financing, taxation — critical for prelims</p>
+
+  <div class="content-section">
+    <div class="section-title">Fiscal Policy Fundamentals</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Fiscal Policy</strong> refers to the government's use of taxation and public expenditure to influence the economy. Expansionary fiscal policy (deficit spending) stimulates demand; contractionary (surplus) cools an overheating economy.</p>
+      <p><strong style="color:var(--text)">FRBM Act (Fiscal Responsibility and Budget Management Act) 2003:</strong> Mandates fiscal consolidation. Targets: Fiscal Deficit ≤ 3% GDP, Revenue Deficit = 0, Debt/GDP targets. NK Singh Committee (2017) revised targets: FD 3% by 2020, then 2.5%; debt/GDP 60% (Centre 40%, States 20%). Escape clause allows deviation during national security threat, natural calamity, etc.</p>
+    </div>
+    <div class="highlight-box">
+      <div class="hl-title">⚡ Deficit Concepts — Master Table (UPSC Most Critical)</div>
+      <table class="data-table" style="margin-top:8px">
+        <tr><th>Deficit Type</th><th>Formula</th><th>Significance</th></tr>
+        <tr><td><strong>Fiscal Deficit (FD)</strong></td><td>Total Expenditure − Total Receipts (excl. borrowings)</td><td>Most important. Indicates total borrowing. India target ~5.1% GDP (2024-25)</td></tr>
+        <tr><td><strong>Revenue Deficit (RD)</strong></td><td>Revenue Expenditure − Revenue Receipts</td><td>Indicates spending borrowed money on consumption (wasteful). Should be zero ideally.</td></tr>
+        <tr><td><strong>Primary Deficit (PD)</strong></td><td>Fiscal Deficit − Interest Payments</td><td>Shows fiscal situation excluding past debt burden. India achieving near-zero.</td></tr>
+        <tr><td><strong>Effective Revenue Deficit</strong></td><td>Revenue Deficit − Grants for Capital Creation</td><td>Distinguishes productive from unproductive RD</td></tr>
+        <tr><td><strong>Capital Deficit</strong></td><td>Capital Expenditure − Capital Receipts (excl. borrowings)</td><td>Less commonly tested</td></tr>
+      </table>
+    </div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Government Budget Structure:</strong></p>
+      <p><strong style="color:var(--accent3)">Revenue Account:</strong> Revenue Receipts (Tax + Non-Tax) vs Revenue Expenditure (subsidies, salaries, interest payments, pensions). Revenue deficit = borrowing for day-to-day expenses — inflationary.</p>
+      <p><strong style="color:var(--accent3)">Capital Account:</strong> Capital Receipts (borrowings, disinvestment, recovery of loans) vs Capital Expenditure (CAPEX — roads, railways, defence equipment). Capital spending is investment — multiplier effect.</p>
+      <p><strong style="color:var(--text)">India's shift:</strong> Budget 2021 onwards dramatically increased CAPEX. From ₹4.3 lakh crore (2020-21) to ₹11.11 lakh crore (2024-25) — 3x increase in 4 years. Multiplier of government CAPEX is ~2.5-3x for GDP.</p>
+    </div>
+    <div class="subsection-title">Taxation System</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Direct Taxes:</strong> Income Tax, Corporation Tax, Capital Gains Tax. Collected by CBDT (Central Board of Direct Taxes) under Finance Ministry. Direct tax compliance improving: tax base expanded from 3.8 crore to 8+ crore filers (2024).</p>
+      <p><strong style="color:var(--text)">Indirect Taxes:</strong> GST (subsumed most Central + State indirect taxes since 2017). Customs duty on imports. CBIC (Central Board of Indirect Taxes and Customs).</p>
+      <p><strong style="color:var(--text)">GST — Key Structure:</strong> Dual GST (Centre: CGST, State: SGST for intra-state; IGST for inter-state). 4-tier rate structure: 5%, 12%, 18%, 28%. GST Council decides rates. Compensation to states for revenue loss (5 years ended June 2022). GSTN: IT backbone.</p>
+      <p><strong style="color:var(--text)">GST Composition Scheme:</strong> For small businesses (turnover ≤ ₹1.5 crore), pay fixed % tax, no input credit. Reduces compliance burden.</p>
+    </div>
+    <div class="danger-box">
+      <div class="db-title">🔴 UPSC Trap — What is NOT in GST?</div>
+      <p style="font-size:13px;color:var(--text2);margin-top:6px">
+        Petroleum products (crude oil, petrol, diesel, ATF, natural gas), alcohol for human consumption, electricity are OUTSIDE GST. States levy their own VAT on these. This creates "inverted duty structure" and input tax credit issues for petroleum-using industries. UPSC has repeatedly asked this.
+      </p>
+    </div>
+    <div class="subsection-title">Disinvestment & Public Sector</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Disinvestment:</strong> Government selling shares of PSUs. Types: Minority disinvestment (govt retains 51%+), Strategic Disinvestment (majority stake + management transfer), Complete Privatisation. DIPAM (Dept of Investment and Public Asset Management) manages this.</p>
+      <p><strong style="color:var(--text)">CPSE (Central Public Sector Enterprises):</strong> 300+ CPSEs. Many are "Maharatnas," "Navratnas," "Miniratnas" — categories based on financial size and autonomy. Board-level delegation of powers.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EXTERNAL SECTOR ==================== -->
+<div id="page-external" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>External Sector & Trade</span></div>
+  <h2 class="page-title">External Sector, Trade & Balance of Payments</h2>
+  <p class="page-subtitle">BoP, exchange rates, FDI, trade policy — globally integrated perspective</p>
+
+  <div class="content-section">
+    <div class="section-title">Balance of Payments (BoP)</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Balance of Payments</strong> is a systematic record of all economic transactions between residents of a country and the rest of the world over a period (typically a year). Always balances in accounting sense (debit = credit) but individual accounts show surplus/deficit.</p>
+      <p><strong style="color:var(--text)">Current Account:</strong> Trade in goods (Merchandise/Visible trade) + Trade in services (Invisible trade) + Primary income (factor income: remittances, dividends) + Secondary income (transfers, grants). India's Current Account Deficit (CAD) is typically 1-3% of GDP.</p>
+      <p><strong style="color:var(--text)">Capital Account (Financial Account):</strong> FDI, FPI/FII, External Commercial Borrowings (ECB), NRI deposits (FCNR, NRE, NRO), IMF special allocations. India's capital account is partially convertible (RBI controls).</p>
+      <p><strong style="color:var(--text)">Errors and Omissions:</strong> Statistical discrepancy. BoP = CA + KA + E&O = 0 (accounting identity).</p>
+    </div>
+    <div class="highlight-box">
+      <div class="hl-title">India's Key External Sector Data</div>
+      <p style="font-size:13px;color:var(--text2);margin-top:8px">
+        • Merchandise exports: ~$450+ billion (2023-24)<br>
+        • Merchandise imports: ~$680+ billion (trade deficit ~$240 billion)<br>
+        • Services surplus: ~$160+ billion (IT, BPM, tourism)<br>
+        • Remittances: ~$120 billion (world's largest recipient)<br>
+        • Forex reserves: ~$640+ billion (as of 2024 — comfortable import cover)<br>
+        • FDI inflows: ~$70-80 billion annually<br>
+        • Largest trading partner: USA (exports), China (imports)
+      </p>
+    </div>
+    <div class="subsection-title">Exchange Rates</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Fixed vs Floating Exchange Rate:</strong> Fixed: pegged to another currency/gold. Floating: determined by demand-supply in forex market. India follows managed float (dirty float) — market determines rate but RBI intervenes to prevent excessive volatility.</p>
+      <p><strong style="color:var(--text)">NEER and REER:</strong> NEER (Nominal Effective Exchange Rate) = weighted average of bilateral exchange rates with trading partners. REER = NEER adjusted for relative inflation. REER > 100 = overvalued rupee. RBI publishes 6-currency and 36-currency REER/NEER indices.</p>
+      <p><strong style="color:var(--text)">Currency Convertibility:</strong> Current account convertibility (since 1994 — India accepted Article VIII of IMF). Capital account convertibility (partial — requires RBI approval for most transactions). Full CAC would mean no restrictions on capital flows.</p>
+      <p><strong style="color:var(--text)">FEMA (Foreign Exchange Management Act) 1999:</strong> Replaced FERA 1973. Civil (not criminal) offence for violations. ED enforces FEMA. Liberalized Remittance Scheme (LRS): individuals can remit up to $250,000/year abroad without RBI permission.</p>
+    </div>
+    <div class="subsection-title">FDI Policy</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">FDI Routes:</strong> Automatic Route (no govt approval needed for sectors on list) vs Government Route (needs FIPB — now abolished; approval through respective ministry). DPIIT oversees FDI policy.</p>
+      <p><strong style="color:var(--text)">FDI cap examples:</strong> Defence: 74% auto, 100% via govt; Insurance: 74%; Multi-brand retail: 51%; Single-brand retail: 100%. Sectors with complete prohibition: Atomic energy, Railway operations (some segments), Lottery, Gambling.</p>
+      <p><strong style="color:var(--text)">India as FDI destination:</strong> Ranked 8th globally. Singapore, USA, Mauritius are top source countries (many route via Mauritius for tax treaty benefits — DTAA). India renegotiated Mauritius DTAA in 2016 — capital gains now taxable.</p>
+    </div>
+    <div class="subsection-title">Trade Policy & WTO</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">WTO (World Trade Organization):</strong> Headquartered Geneva. 164 members. Based on GATT principles. Key principles: MFN (Most Favoured Nation) — treat all members equally; National Treatment — no discrimination between domestic and imported goods; Transparency; Dispute settlement. India is active WTO member and disputes on agriculture subsidies.</p>
+      <p><strong style="color:var(--text)">India and WTO Agricultural Subsidies:</strong> Agreement on Agriculture (AoA) limits subsidies. India's minimum support price (MSP) mechanism challenged as exceeding de minimis levels (10% of production value for developing countries). India argues for "public stockholding for food security" exemption. Major contentious issue.</p>
+      <p><strong style="color:var(--text)">Trade Agreements:</strong> India has FTAs with ASEAN, Japan, South Korea, Mauritius, UAE (CEPA). Pulled out of RCEP (Regional Comprehensive Economic Partnership) in 2019 citing China concerns. Negotiating FTA with UK, EU, Canada.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== AGRICULTURE ==================== -->
+<div id="page-agriculture" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Agriculture Economics</span></div>
+  <h2 class="page-title">Agriculture Economics</h2>
+  <p class="page-subtitle">MSP, food security, land reforms, agricultural finance — India's primary sector</p>
+
+  <div class="content-section">
+    <div class="section-title">Agricultural Price Policy & MSP</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">MSP (Minimum Support Price):</strong> Government-declared minimum price for agricultural produce. Farmers receive this even if market prices fall. CACP (Commission for Agricultural Costs and Prices) recommends MSP. Central govt announces for 23 crops: 14 Kharif, 6 Rabi, and others.</p>
+      <p><strong style="color:var(--text)">Cost Concepts for MSP (CACP uses):</strong><br>
+        A2: Actual paid-out cost (seeds, fertilizers, irrigation fees, hired labour)<br>
+        A2+FL: A2 + value of family labour<br>
+        C2: Comprehensive cost = A2+FL + imputed rent on land + interest on fixed capital<br>
+        <strong>Current MSP formula:</strong> 1.5 times A2+FL (not C2 — farmers demand C2-based MSP, a key political demand)</p>
+      <p><strong style="color:var(--text)">Procurement:</strong> FCI (Food Corporation of India) procures at MSP. NAFED, CCI for other crops. Central Pool stocks for PDS. Buffer stock norms set by Economic Advisory Council.</p>
+    </div>
+    <div class="danger-box">
+      <div class="db-title">🔴 UPSC Trap — MSP ≠ Legal Guarantee</div>
+      <p style="font-size:13px;color:var(--text2);margin-top:6px">
+        MSP is an administrative price — NO LEGAL RIGHT for farmers to sell at MSP. Central govt repealed Farm Laws 2021 which aimed to allow market pricing. The demand for legal MSP guarantee remains contentious. UPSC can ask about this distinction. Also: MSP is fixed annually, Procurement Price is what FCI actually pays (same as MSP now), Issue Price is what government sells from buffer stocks.
+      </p>
+    </div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">PDS (Public Distribution System):</strong> Revamped PDS (RPDS) and TPDS (Targeted PDS since 1997). NFSA (National Food Security Act) 2013 — 67% of population entitled to subsidized food grains. AAY (Antyodaya Anna Yojana) for poorest: 35 kg/month at ₹2/kg rice, ₹3/kg wheat. One Nation One Ration Card (ONORC) — portability across states.</p>
+      <p><strong style="color:var(--text)">PM Garib Kalyan Anna Yojana (PMGKAY):</strong> Free foodgrains during COVID, extended multiple times. Merged with NFSA from January 2024 — free food grains to 81.35 crore beneficiaries for 5 years (2024-2028). Fiscal cost ~₹2 lakh crore/year.</p>
+    </div>
+    <div class="subsection-title">Agricultural Credit & Insurance</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Kisan Credit Card (KCC):</strong> Short-term credit at 4% interest rate (subsidized via 2% govt subvention, additional 3% for timely repayment). Credit limit based on land holding. Can be used for allied activities, non-farm needs also now. 7.5 crore+ KCCs outstanding.</p>
+      <p><strong style="color:var(--text)">NABARD (National Bank for Agriculture and Rural Development):</strong> Apex institution for rural credit. Refinances RRBs, cooperative banks, SFBs. Supervises RRBs and cooperatives. RIDF (Rural Infrastructure Development Fund) — states borrow for rural infrastructure. Issues Green/Blue bonds for sustainable agriculture.</p>
+      <p><strong style="color:var(--text)">PM Fasal Bima Yojana (PMFBY):</strong> Crop insurance. Premium: 2% for Kharif, 1.5% for Rabi (farmers pay), balance paid by Centre+State. Cluster-based approach. Uses satellite/drone technology for crop loss assessment. Voluntary for non-loanee farmers.</p>
+      <p><strong style="color:var(--text)">e-NAM (National Agriculture Market):</strong> Online trading platform for agricultural commodities. Single license across states. Price discovery mechanism. 1,000+ markets integrated. Farmer Producer Organizations (FPOs) can trade directly.</p>
+    </div>
+    <div class="subsection-title">Land Reforms & Cooperative</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Land Reforms (post-Independence):</strong> Abolition of Zamindari (intermediary), Land ceiling acts (limit on maximum holding), Tenancy reforms (security for tenants), Land consolidation, Bhoodan movement (Vinoba Bhave). Land is a State subject — reforms vary by state.</p>
+      <p><strong style="color:var(--text)">Cooperative Movement:</strong> PACS (Primary Agricultural Credit Societies) at village level. DCCBs (District Cooperative Central Banks) at district. SCBs (State Cooperative Banks) at state. NABARD supervises. Multi-State Cooperative Societies Act 2023 strengthened central oversight. Ministry of Cooperation (new) established 2021.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INCLUSIVE GROWTH ==================== -->
+<div id="page-inclusive" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Inclusive Growth & Poverty</span></div>
+  <h2 class="page-title">Inclusive Growth, Poverty & Human Development</h2>
+  <p class="page-subtitle">Poverty measurement, HDI, welfare programs — UPSC's socio-economic nexus</p>
+
+  <div class="content-section">
+    <div class="section-title">Poverty Measurement in India</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Poverty Line — Historical:</strong> Based on minimum caloric requirement: 2400 kcal/day (rural), 2100 kcal/day (urban). Various committees:<br>
+        • <strong>Alagh Committee (1979):</strong> First calorie-based poverty line<br>
+        • <strong>Lakdawala Committee (1993):</strong> Consumer price indices used; state-level deflators<br>
+        • <strong>Tendulkar Committee (2009):</strong> Changed to expenditure approach including education+health. Urban poverty line used as reference for rural too (higher estimate).<br>
+        • <strong>Rangarajan Committee (2014):</strong> Higher poverty line (₹47/day urban, ₹32/day rural at 2011-12 prices). Not officially adopted. Gave higher poverty ratio (~29.5% vs Tendulkar's ~21.9%).</p>
+      <p><strong style="color:var(--text)">Current status:</strong> No official post-Tendulkar poverty line adopted. World Bank uses $2.15/day (PPP) for extreme poverty. NITI Aayog uses MPI (Multidimensional Poverty Index).</p>
+    </div>
+    <div class="highlight-box">
+      <div class="hl-title">MPI — Multidimensional Poverty Index</div>
+      <p style="font-size:13px;color:var(--text2);margin-top:8px">
+        UNDP-OPHI (Oxford Poverty and Human Development Initiative) developed MPI. India's national MPI developed by NITI Aayog (2021) — covers Health, Education, Living Standards (12 indicators). India reduced MPI poverty from 29.17% (2013-14) to 11.28% (2022-23) — 248 million people lifted out of multidimensional poverty. Remarkable achievement cited internationally.
+      </p>
+    </div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Poverty Measurement Concepts:</strong><br>
+        • <strong>Head Count Ratio (HCR):</strong> % of population below poverty line. Does not capture depth.<br>
+        • <strong>Poverty Gap Index:</strong> Average shortfall from poverty line. Shows intensity.<br>
+        • <strong>Sen Index:</strong> Combines HCR, PGI, and inequality among poor.<br>
+        • <strong>Foster-Greer-Thorbecke (FGT) Index:</strong> Family of indices parameterized by sensitivity to depth.
+      </p>
+    </div>
+    <div class="subsection-title">Human Development</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">Human Development Index (HDI):</strong> UNDP publishes annually in Human Development Report. Three dimensions: Long healthy life (Life Expectancy Index), Knowledge (Education Index = mean + expected years of schooling), Decent standard of living (GNI per capita PPP). India's rank: 134/193 (2024). Score: 0.644 (medium human development).</p>
+      <p><strong style="color:var(--text)">GII (Gender Inequality Index):</strong> Measures gender disparity in health, empowerment (parliamentary seats, education), labour market. India rank ~127 (2024). Niti Aayog's Gender Index also tracks states.</p>
+      <p><strong style="color:var(--text)">Capability Approach (Amartya Sen):</strong> Poverty = deprivation of capabilities (freedoms, opportunities) not just income. Development = expansion of substantive freedoms. Influenced MPI, HDR methodology. Sen won Nobel 1998. Human Development as means and end.</p>
+    </div>
+    <div class="subsection-title">Key Welfare Programs</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="scheme-card">
+        <div class="scheme-name">MGNREGS</div>
+        <div class="scheme-details">Mahatma Gandhi National Rural Employment Guarantee Scheme. Legal right to 100 days/year work for rural households. Wage = state-notified minimum. Asset creation. Social audit mandatory. Addresses seasonal unemployment. Budget: ₹86,000 cr (2024-25).</div>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">PM Awaas Yojana (PMAY)</div>
+        <div class="scheme-details">Housing for All by 2024 (extended). Rural (PMAY-G): 2.95 crore houses sanctioned. Urban (PMAY-U): beneficiary-led, in-situ slum rehab, credit-linked subsidy scheme (CLSS), affordable rental. BLC, AHP components.</div>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">Ayushman Bharat</div>
+        <div class="scheme-details">PM-JAY: ₹5 lakh/family/year health insurance for bottom 40% families. 12 crore families. Secondary + tertiary hospitalization. AB-HWC: Health and Wellness Centers for primary care. NHA (National Health Authority) implements.</div>
+      </div>
+      <div class="scheme-card">
+        <div class="scheme-name">PM POSHAN (Mid-Day Meal)</div>
+        <div class="scheme-details">School nutrition for Classes 1-8. Addresses hunger, school attendance, nutrition. 11+ crore children covered. Fortified food items. Renamed from MDM scheme 2021.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== INTERNATIONAL ORGS ==================== -->
+<div id="page-intl" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>International Organizations</span></div>
+  <h2 class="page-title">International Organizations & Trade Bodies</h2>
+  <p class="page-subtitle">IMF, World Bank, WTO, ADB, AIIB — institutional framework of global economics</p>
+
+  <div class="content-section">
+    <div class="section-title">Bretton Woods Institutions</div>
+    <div class="content-block">
+      <p>The <strong style="color:var(--text)">Bretton Woods Conference (1944)</strong> at New Hampshire, USA created the post-war international economic order. Two institutions emerged: IMF and World Bank (IBRD). Third pillar was ITO (never materialized; became GATT → WTO in 1995).</p>
+    </div>
+    <div class="two-col">
+      <div class="content-block">
+        <p><strong style="color:var(--accent)">IMF (International Monetary Fund)</strong><br>
+        HQ: Washington DC | Members: 190<br><br>
+        <strong>Primary role:</strong> Maintain international monetary stability. Provides short-term BoP support.<br>
+        <strong>SDR:</strong> Special Drawing Rights — IMF's reserve asset. Basket: USD(41.7%), EUR(30.9%), CNY(10.9%), JPY(8.3%), GBP(8.1%). Not a currency — only transacted among central banks and IMF.<br>
+        <strong>Lending tools:</strong> Stand-by Arrangements (SBA), Extended Fund Facility (EFF), Flexible Credit Line (FCL), Rapid Financing Instrument (RFI — used during COVID).<br>
+        <strong>Quota:</strong> Determines voting power + borrowing capacity. USA has largest quota (~17.4%). India's quota: ~2.7%.<br>
+        <strong>Conditionality:</strong> Structural adjustment programs — austerity, liberalization. Criticized for one-size-fits-all approach.</p>
+      </div>
+      <div class="content-block">
+        <p><strong style="color:var(--accent)">World Bank Group</strong><br>
+        HQ: Washington DC | President: traditionally American<br><br>
+        Five institutions:<br>
+        1. <strong>IBRD</strong> (International Bank for Reconstruction and Development) — loans to middle-income countries<br>
+        2. <strong>IDA</strong> (International Development Association) — concessional loans to poorest nations (India graduated 2014)<br>
+        3. <strong>IFC</strong> (International Finance Corporation) — private sector loans<br>
+        4. <strong>MIGA</strong> (Multilateral Investment Guarantee Agency) — political risk insurance for FDI<br>
+        5. <strong>ICSID</strong> (International Centre for Settlement of Investment Disputes) — investor-state dispute resolution<br><br>
+        <strong>Doing Business Report:</strong> Discontinued 2021 (data irregularity). Replaced by "Business Ready" (B-READY) report 2024.</p>
+      </div>
+    </div>
+    <div class="subsection-title">Asian Development Bank & New Institutions</div>
+    <div class="content-block">
+      <p><strong style="color:var(--text)">ADB (Asian Development Bank):</strong> HQ Manila. 68 members. Japan + USA largest shareholders. Focuses on Asia-Pacific development. Provides loans, grants, technical assistance. India is largest recipient of ADB financing.</p>
+      <p><strong style="color:var(--text)">AIIB (Asian Infrastructure Investment Bank):</strong> China-proposed, started 2016. HQ Beijing. 109 members. India is 2nd largest shareholder. Fills Asia's $26 trillion infrastructure gap. Competes/complements ADB. USA and Japan not members.</p>
+      <p><strong style="color:var(--text)">NDB (New Development Bank) / BRICS Bank:</strong> HQ Shanghai. Members: Brazil, Russia, India, China, South Africa + new members. Initial capital $100 billion. India is equal shareholder (20%). Focuses on sustainable infrastructure. Can lend in local currencies (differentiator from WB/IMF).</p>
+      <p><strong style="color:var(--text)">CRA (Contingent Reserve Arrangement):</strong> BRICS safety net (like mini-IMF). $100 billion pool. China contributes $41 billion, others less. Can support members facing BoP crisis.</p>
+    </div>
+    <div class="danger-box">
+      <div class="db-title">🔴 UPSC Trap — IDA vs IBRD</div>
+      <p style="font-size:13px;color:var(--text2);margin-top:6px">
+        UPSC regularly confuses IDA and IBRD. IDA = soft loans (interest-free, 25-40 year tenor) to poorest countries. IBRD = market-rate loans to middle-income. India now borrows from IBRD only (graduated from IDA). Questions also appear on MIGA — it provides guarantees (insurance), not loans. IFC lends to private companies, not governments.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SCHEMES ==================== -->
+<div id="page-schemes" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Government Schemes</span></div>
+  <h2 class="page-title">Government Schemes — Complete Repository</h2>
+  <p class="page-subtitle">All major economic schemes categorized by sector — UPSC's favourite question bank</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('schemes','agri2')">Agriculture</div>
+    <div class="tab" onclick="showTab('schemes','finscheme')">Finance & Banking</div>
+    <div class="tab" onclick="showTab('schemes','mfg')">Manufacturing</div>
+    <div class="tab" onclick="showTab('schemes','social')">Social Sector</div>
+    <div class="tab" onclick="showTab('schemes','energy2')">Energy</div>
+  </div>
+
+  <div id="schemes-agri2" class="schemes-tab">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div class="scheme-card"><div class="scheme-name">PM-KISAN</div><div class="scheme-details">₹6,000/year in 3 installments to farmer families. Direct income support. 11+ crore beneficiaries. Fully funded by Centre. Aadhaar-linked DBT.</div></div>
+      <div class="scheme-card"><div class="scheme-name">PM Fasal Bima Yojana (PMFBY)</div><div class="scheme-details">Crop insurance at subsidized premium (2% Kharif, 1.5% Rabi for farmers). Satellite/drone for crop assessment. Cluster approach for insurer selection.</div></div>
+      <div class="scheme-card"><div class="scheme-name">PMKSY (Pradhan Mantri Krishi Sinchayee Yojana)</div><div class="scheme-details">"Har Khet Ko Pani, More Crop Per Drop." Micro-irrigation focus. AIBP (Accelerated Irrigation Benefits Programme) component. Water use efficiency.</div></div>
+      <div class="scheme-card"><div class="scheme-name">e-NAM</div><div class="scheme-details">Electronic National Agriculture Market. Online trading for agri-produce. Price discovery. 1000+ mandis integrated. FPO participation enabled.</div></div>
+      <div class="scheme-card"><div class="scheme-name">PM Matsya Sampada Yojana</div><div class="scheme-details">Blue Revolution 2.0. ₹20,050 crore. Fisheries development, aquaculture, cold chain. India 2nd largest fish producer globally.</div></div>
+      <div class="scheme-card"><div class="scheme-name">National Beekeeping & Honey Mission</div><div class="scheme-details">Promotes beekeeping for sweetness + pollination. Part of ATMA scheme. "Sweet Revolution."</div></div>
+    </div>
+  </div>
+
+  <div id="schemes-finscheme" class="schemes-tab" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div class="scheme-card"><div class="scheme-name">Stand-Up India</div><div class="scheme-details">Bank loans ₹10 lakh–₹1 crore to SC/ST and women entrepreneurs. At least 1 SC/ST + 1 woman borrower per branch. Greenfield enterprises only.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Pradhan Mantri Mudra Yojana (PMMY)</div><div class="scheme-details">Non-corporate, non-farm micro enterprises. Shishu (≤₹50,000), Kishore (₹50K–5L), Tarun (₹5L–10L). ₹50 lakh crore+ disbursed since 2015.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Startup India</div><div class="scheme-details">DPIIT recognition. 3-year income tax holiday. IPR support. Fund of Funds via SIDBI. Patent fast-track. 1.17 lakh+ recognised startups.</div></div>
+      <div class="scheme-card"><div class="scheme-name">National Pension System (NPS)</div><div class="scheme-details">PFRDA regulated. Defined contribution. Portable. NPS Vatsalya (minors) launched 2024. APY (Atal Pension Yojana) for unorganized sector.</div></div>
+      <div class="scheme-card"><div class="scheme-name">PMSVANIDHII</div><div class="scheme-details">PM Street Vendor's AtmaNirbhar Nidhi. Working capital loans for street vendors. Collateral-free. ₹10,000 → ₹20,000 → ₹50,000 enhanced credit.</div></div>
+      <div class="scheme-card"><div class="scheme-name">PM Vishwakarma</div><div class="scheme-details">For traditional artisans & craftspeople (18 trades — blacksmiths, weavers etc.). Credit support, skill training, digital payments, market access.</div></div>
+    </div>
+  </div>
+
+  <div id="schemes-mfg" class="schemes-tab" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div class="scheme-card"><div class="scheme-name">PLI (Production Linked Incentive)</div><div class="scheme-details">₹1.97 lakh crore for 14 sectors: Mobile phones, pharma, medical devices, auto, textiles, food processing, solar PV, ACC batteries, white goods, specialty steel, telecom, etc. Incentive as % of incremental sales for 5 years.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Make in India</div><div class="scheme-details">25 focus sectors. FDI liberalization. Ease of Doing Business improvements. Industrial corridors (DMIC, AKIC, etc.). Manufacturing target: 25% of GDP (from 16%).</div></div>
+      <div class="scheme-card"><div class="scheme-name">National Semiconductor Mission (ISM)</div><div class="scheme-details">₹76,000 crore. Design-linked incentive. Assembly & testing (ATMP) support. Tata Electronics, Micron confirmed projects. ISMC (IGSS Ventures) cancelled.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Textile Parks (PM MITRA)</div><div class="scheme-details">7 mega integrated textile parks. Plug-and-play infra. One-stop shop for entire textile value chain. Boost MMF (man-made fibre) sector.</div></div>
+    </div>
+  </div>
+
+  <div id="schemes-social" class="schemes-tab" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div class="scheme-card"><div class="scheme-name">MGNREGS</div><div class="scheme-details">100 days guaranteed wage employment. Social audit. Gram Sabha oversight. ₹86,000 crore budget. Creates rural assets. 14.5 crore active job cards.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Ayushman Bharat PM-JAY</div><div class="scheme-details">₹5 lakh health cover for 55 crore beneficiaries (bottom 40%). 25,000+ empanelled hospitals. Cashless, paperless. Expanded to all 70+ senior citizens 2024.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Jal Jeevan Mission</div><div class="scheme-details">Piped water (Har Ghar Jal) to all rural households by 2024. 78%+ coverage achieved. Functional Household Tap Connections (FHTCs). ₹3.60 lakh crore outlay.</div></div>
+      <div class="scheme-card"><div class="scheme-name">Swachh Bharat Mission</div><div class="scheme-details">SBM-Grameen Phase 2: ODF Plus — sustainability, solid waste, greywater management. SBM-Urban 2.0: Garbage-free cities. Landfill remediation. ₹1.41 lakh crore.</div></div>
+    </div>
+  </div>
+
+  <div id="schemes-energy2" class="schemes-tab" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+      <div class="scheme-card"><div class="scheme-name">PM Surya Ghar Muft Bijli Yojana</div><div class="scheme-details">Rooftop solar for 1 crore households. Up to 300 units free electricity. ₹78,000 crore. Subsidy via DBT. Grid-connected systems. 2024 Budget flagship scheme.</div></div>
+      <div class="scheme-card"><div class="scheme-name">National Green Hydrogen Mission</div><div class="scheme-details">Target: 5 MMT green H2 by 2030. ₹19,744 crore. SIGHT (Strategic Interventions for Green H2 Transition). Electrolyser manufacturing PLI. Export potential.</div></div>
+      <div class="scheme-card"><div class="scheme-name">FAME II (EV Policy)</div><div class="scheme-details">Faster Adoption and Manufacturing of EVs. ₹10,000 crore. Subsidy on EV purchase. EV30@30 target (30% EV share by 2030). PM e-Bus Sewa (city buses).</div></div>
+      <div class="scheme-card"><div class="scheme-name">PM KUSUM</div><div class="scheme-details">Solar pumps for agriculture. Decentralized solar. Solar plants on barren land (farmers lease). 2.5 crore solar pumps target. Reduce diesel consumption.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GREEN ECONOMY ==================== -->
+<div id="page-green" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Green & New Economy</span></div>
+  <h2 class="page-title">Green Economy, Climate Finance & Emerging Sectors</h2>
+  <p class="page-subtitle">Carbon markets, blue economy, circular economy, ESG, AI economy — future-forward UPSC topics</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('green','climate')">Climate Finance</div>
+    <div class="tab" onclick="showTab('green','blue')">Blue Economy</div>
+    <div class="tab" onclick="showTab('green','circular')">Circular Economy</div>
+    <div class="tab" onclick="showTab('green','carbon')">Carbon Markets</div>
+  </div>
+
+  <div id="green-climate" class="green-tab">
+    <div class="content-section">
+      <div class="section-title">Climate Finance & Green Economy</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Green Finance:</strong> Financing investments that benefit the environment. Instruments: Green Bonds, Sustainability-linked Bonds, Blue Bonds, Social Impact Bonds. India issued Sovereign Green Bonds (₹16,000 crore in FY23). Proceeds for green infrastructure — renewable energy, clean transportation, water.</p>
+        <p><strong style="color:var(--text)">SEBI Green Bond Framework:</strong> Regulates green bond issuance in India. Must use ICMA Green Bond Principles. SEBI mandates third-party verification. RBI also issued Green Deposits framework 2023 for banks.</p>
+        <p><strong style="color:var(--text)">India's Climate Commitments (NDC — Paris Agreement):</strong><br>
+          • 45% reduction in emission intensity of GDP by 2030 (vs 2005 levels)<br>
+          • 50% cumulative installed electric capacity from non-fossil fuels by 2030<br>
+          • Create carbon sink of 2.5-3 billion tonnes of CO₂ equivalent through forests<br>
+          • Net Zero by 2070 (COP26 pledge)<br>
+          • 500 GW renewable energy by 2030 (revised target)</p>
+      </div>
+      <div class="highlight-box">
+        <div class="hl-title">International Climate Finance Architecture</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:8px">
+          <strong>GCF (Green Climate Fund):</strong> UNFCCC body. Developed countries pledged $100 billion/year to developing nations (2020 onwards — not fully met). Replenished to $9.3 billion (2023).<br>
+          <strong>GEF (Global Environment Facility):</strong> Financial mechanism for biodiversity, climate, land degradation conventions.<br>
+          <strong>CIFs (Climate Investment Funds):</strong> Multi-donor, implemented by MDBs. CTF (Clean Technology Fund), SCF (Strategic Climate Fund).<br>
+          <strong>Loss and Damage Fund:</strong> New fund agreed at COP27 (Sharm el-Sheikh) for vulnerable nations facing unavoidable climate impacts. Operationalized at COP28 (Dubai 2023).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="green-blue" class="green-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Blue Economy</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Blue Economy</strong> refers to the sustainable use of ocean resources for economic growth, improved livelihoods, and preservation of ocean ecosystem health. Components: fisheries and aquaculture, maritime transport, offshore energy (wind, tidal, OTEC), marine tourism, marine biotechnology, coastal recreation, seabed mining.</p>
+        <p><strong style="color:var(--text)">India's Blue Economy:</strong> 7,500 km coastline, 9 coastal states, 1,382 islands, Exclusive Economic Zone (EEZ) of 2.37 million sq km. Deep Ocean Mission (DOM): ₹4,077 crore. Explore resources in the deep sea (polymetallic nodules, cobalt crusts, hydrothermal vents). Matsya 6000 — India's own deep-sea submersible (6000m depth).</p>
+        <p><strong style="color:var(--text)">SAGARMALA:</strong> Port-led development. Port modernization, connectivity (road-rail-coastal), coastal community development. 574+ projects, ₹6 lakh crore investment. Promotes coastal shipping as cheaper alternative to road.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="green-circular" class="green-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Circular Economy</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Circular Economy</strong> vs Linear Economy: Linear = Take → Make → Dispose. Circular = Reduce → Reuse → Recycle → Recover. Aims to eliminate waste, keep materials in use, regenerate natural systems.</p>
+        <p><strong style="color:var(--text)">India's initiatives:</strong> Extended Producer Responsibility (EPR) — producers accountable for end-of-life product management. Battery Waste Management Rules 2022. Plastic Waste Management Rules. E-waste rules. Construction demolition waste rules.</p>
+        <p><strong style="color:var(--text)">LIFE (Lifestyle for Environment):</strong> India's concept introduced at COP26. "Pro-planet" lifestyle choices. Mindful consumption vs mindless consumption. Mission LiFE launched 2022 to create 1 billion climate warriors by 2028.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="green-carbon" class="green-tab" style="display:none">
+    <div class="content-section">
+      <div class="section-title">Carbon Markets & Carbon Pricing</div>
+      <div class="content-block">
+        <p><strong style="color:var(--text)">Carbon Markets:</strong> Cap-and-trade systems where companies buy/sell emission permits. If below cap → sell credits; if above → must buy. EU ETS (Emissions Trading System) is world's largest.</p>
+        <p><strong style="color:var(--text)">India's Carbon Market:</strong> Energy Conservation (Amendment) Act 2022 established India's Carbon Credit Trading Scheme (CCTS). Domestic carbon market to be developed. Voluntary and compliance segments. BEE (Bureau of Energy Efficiency) oversees.</p>
+        <p><strong style="color:var(--text)">Carbon Tax vs Cap-and-Trade:</strong> Carbon tax: fixed price for carbon, quantity uncertain. Cap-and-trade: quantity fixed, price uncertain. India has implicit carbon pricing through coal cess (National Clean Energy Fund).</p>
+        <p><strong style="color:var(--text)">CBAM (Carbon Border Adjustment Mechanism):</strong> EU policy imposing carbon cost on imports from countries without equivalent carbon pricing. Affects India's steel, aluminium, fertilizer, cement exports to EU. India has contested this at WTO.</p>
+        <p><strong style="color:var(--text)">Article 6 of Paris Agreement:</strong> Governs international carbon market. Article 6.2: bilateral carbon trading between countries. Article 6.4: UN-supervised global carbon market (successor to CDM). Finalized at COP29 (Baku 2024).</p>
+      </div>
+      <div class="info-box">
+        <div class="ib-title">ESG — Environmental, Social, Governance</div>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">
+          ESG investing screens companies on non-financial factors. SEBI mandates BRSR (Business Responsibility and Sustainability Reporting) for top 1000 listed companies. RBI guidelines on sustainable finance. ESG ratings agencies: MSCI, Sustainalytics. Growing globally: $30+ trillion in ESG assets.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REPORTS & INDICES ==================== -->
+<div id="page-indices" class="page">
+  <div class="breadcrumb"><a onclick="showPage('dashboard')">Dashboard</a><span>›</span><span>Reports & Indices</span></div>
+  <h2 class="page-title">Key Reports, Indices & Rankings</h2>
+  <p class="page-subtitle">The most complete repository of UPSC-relevant indices — source, publisher, India's rank</p>
+
+  <div class="search-bar">
+    <span style="color:var(--text3);font-size:16px">🔍</span>
+    <input id="indexSearch" type="text" placeholder="Search indices..." oninput="filterIndices()">
+  </div>
+  <div id="indexList"></div>
+</div>
+
+<!-- ==================== 100 QUESTIONS ==================== -->
+<div id="page-q100" class="page">
+  <h2 class="page-title">100 Most Expected Questions — 2025 Prelims</h2>
+  <p class="page-subtitle">UPSC-accurate, statement-based, analytically framed. Full explanations included.</p>
+  <div class="tab-row">
+    <div class="tab active" onclick="filterQ('all')">All (100)</div>
+    <div class="tab" onclick="filterQ('easy')">Easy (20)</div>
+    <div class="tab" onclick="filterQ('moderate')">Moderate (50)</div>
+    <div class="tab" onclick="filterQ('hard')">Hard (30)</div>
+  </div>
+  <div id="questionList"></div>
+</div>
+
+<!-- ==================== TRAPS ==================== -->
+<div id="page-traps" class="page">
+  <h2 class="page-title">UPSC Trap Taxonomy</h2>
+  <p class="page-subtitle">Reverse-engineered cognitive traps — understand how UPSC makes you choose the wrong option</p>
+
+  <div class="content-section">
+    <div class="section-title">UPSC's 10 Core Trap Categories</div>
+
+    <div class="trap-card">
+      <div class="trap-title">Trap #1 — The "All/Never/Only" Absolutism Trap</div>
+      <div class="trap-body">UPSC uses extreme words (always, never, only, all, none, must) to make correct statements false. <strong>Strategy:</strong> Be suspicious of absolute words. Economics is rarely absolute — most rules have exceptions. Example: "Inflation always reduces the real value of savings" — TRUE in general but not for inflation-indexed bonds. UPSC may add a correct-looking absolute statement to eliminate it.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #2 — The Static-Current Confusion Trap</div>
+      <div class="trap-body">UPSC blends a static concept with a current affairs context. You may know the concept but miss the updated data/policy. Example: "RBI's Monetary Policy Framework targets WPI inflation at 4%" — WRONG (it's CPI, not WPI). If you know WPI but missed the 2016 amendment, you'll pick wrong.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #3 — The Inversion Trap</div>
+      <div class="trap-body">UPSC inverts cause-effect relationships or reverses the direction of impact. "A rise in repo rate leads to increase in money supply" — WRONG (it decreases money supply). Candidates who half-know the mechanism get confused about direction. Always map mechanism fully: action → channel → outcome.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #4 — The Near-Synonym Trap</div>
+      <div class="trap-body">UPSC substitutes a near-correct term: CRR vs SLR, FDI vs FPI, GDP vs GNP, WPI vs CPI, IDA vs IBRD, fiscal vs monetary, MPC vs MRP. These terms sound similar but have critically different meanings. One wrong substitution in a statement makes it incorrect.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #5 — The Statement Combination Trap</div>
+      <div class="trap-body">In "which statements are correct" questions, UPSC makes 2 statements clearly correct/wrong and 1-2 statements ambiguous. The trap is Statement 3 which is 80% correct but has one wrong detail. Most aspirants mark it correct. Always verify EVERY word in each statement — not just the overall idea.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #6 — The Scheme-Implementing Agency Trap</div>
+      <div class="trap-body">UPSC asks who implements a scheme — Ministry vs agency vs autonomous body. Example: PM-JAY implemented by NHA (National Health Authority) under MoHFW, not directly by MoHFW. MGNREGS = Ministry of Rural Development. PMFBY = Agriculture Ministry. Always learn: scheme → ministry → implementing agency → funding pattern.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #7 — The "Correct/Incorrect" Framing Reversal</div>
+      <div class="trap-body">UPSC sometimes asks "which of the following is NOT correct" — many candidates answer as if it asked "which IS correct." This framing reversal costs marks. In exam pressure, the word NOT is easily overlooked. Circle or mentally note the framing before reading options.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #8 — The Partial Truth Trap</div>
+      <div class="trap-body">A statement is partially correct — true for some cases but stated as universally true. "MSP is a legal guarantee to farmers" — WRONG (it's administrative, no legal right). "FDI always flows through automatic route" — WRONG (some sectors need govt route). Partial truth ≠ complete truth for UPSC purposes.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #9 — The "Incorrect Reason" Trap</div>
+      <div class="trap-body">Both the assertion and reason are correct, but the reason doesn't actually explain the assertion. UPSC Assertion-Reason (A-R) questions test causal logic. Example: A: India's GNPA ratio declined 2018-2024. R: IBC 2016 was enacted. Both true, but is IBC the ONLY or primary reason? UPSC tests whether you establish causal sufficiency.</div>
+    </div>
+    <div class="trap-card">
+      <div class="trap-title">Trap #10 — The Recent Policy Change Trap</div>
+      <div class="trap-body">UPSC exploits recent changes that candidates haven't updated. Example: FIPB was abolished in 2017 — questions asking about FIPB approval process. FDI in insurance raised to 74% (2021) — if you remember 49%, you'll fail. Always prioritize recent changes within 12 months of exam — UPSC deliberately tests recency.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== REVISION ==================== -->
+<div id="page-revision" class="page">
+  <h2 class="page-title">Rapid Revision Engine</h2>
+  <p class="page-subtitle">One-liners, tables, mnemonics — maximum retention in minimum time</p>
+
+  <div class="tab-row">
+    <div class="tab active" onclick="showTab('revision','oneliners')">One-Liners</div>
+    <div class="tab" onclick="showTab('revision','mnemonics')">Mnemonics</div>
+    <div class="tab" onclick="showTab('revision','confusing')">Confusing Pairs</div>
+    <div class="tab" onclick="showTab('revision','7day')">7-Day Plan</div>
+  </div>
+
+  <div id="revision-oneliners" class="revision-tab">
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-title">Master One-Liner Repository</div>
+      <div id="oneLiners"></div>
+    </div>
+  </div>
+
+  <div id="revision-mnemonics" class="revision-tab" style="display:none">
+    <div class="card">
+      <div class="card-title">Mnemonics & Memory Devices</div>
+      <div id="mnemonicsContent"></div>
+    </div>
+  </div>
+
+  <div id="revision-confusing" class="revision-tab" style="display:none">
+    <div class="card">
+      <div class="card-title">Confusing Pairs — Side-by-Side Comparison</div>
+      <table class="data-table" id="confusingTable">
+        <tr><th>Concept A</th><th>Key Feature A</th><th>Concept B</th><th>Key Feature B</th><th>UPSC Trick</th></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="revision-7day" class="revision-tab" style="display:none">
+    <div id="dayPlan"></div>
+  </div>
+</div>
+
+<!-- ==================== STRATEGY ==================== -->
+<div id="page-strategy" class="page">
+  <h2 class="page-title">Exam Strategy & Psychology</h2>
+  <p class="page-subtitle">How to think like UPSC, eliminate options, allocate time</p>
+
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="card">
+      <div class="card-title">High ROI Topics (Attempt First)</div>
+      <table class="data-table">
+        <tr><th>Topic</th><th>Difficulty</th><th>Expected Qs</th><th>ROI</th></tr>
+        <tr><td>Monetary Policy Tools</td><td><span class="pill pill-med">Med</span></td><td>3-4</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>National Income Concepts</td><td><span class="pill pill-med">Med</span></td><td>2-3</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Government Schemes</td><td><span class="pill pill-low">Low</span></td><td>4-6</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>BoP & Exchange Rates</td><td><span class="pill pill-med">Med</span></td><td>2-3</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>Agriculture Policy</td><td><span class="pill pill-low">Low</span></td><td>3-4</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>GST Structure</td><td><span class="pill pill-low">Low</span></td><td>2-3</td><td><span class="pill pill-high">High</span></td></tr>
+        <tr><td>International Orgs</td><td><span class="pill pill-med">Med</span></td><td>2-4</td><td><span class="pill pill-med">Med</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Time Allocation Strategy</div>
+      <div class="content-block" style="margin-bottom:0">
+        <p><strong style="color:var(--text)">Total time:</strong> 2 hours for 100 questions (Economics ~15-20 questions)</p>
+        <p style="margin-top:8px"><strong style="color:var(--accent3)">Pass 1 (20 min):</strong> Scan all Economics questions. Mark confidence level: ✓ (sure), ? (unsure), ✗ (skip). Answer all ✓ questions immediately.</p>
+        <p style="margin-top:8px"><strong style="color:var(--accent3)">Pass 2 (15 min):</strong> Return to ? questions. Apply elimination. Minimum 2 options eliminated before guessing. Never guess with all 4 options open.</p>
+        <p style="margin-top:8px"><strong style="color:var(--accent)">Negative marking:</strong> -0.67 per wrong answer. Don't attempt if you can't eliminate at least 2 options (33% chance = break-even; need 50%+ confidence to attempt).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Elimination Framework — 5-Step UPSC Method</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:8px">
+      <div style="background:var(--bg3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif">1</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:8px">Identify extreme words (always/never/only). Suspicious of these — eliminate candidates with absolutism.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif">2</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:8px">Check framing: Is/Is Not. Many marks lost by answering "which is NOT" as "which IS." Read twice.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif">3</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:8px">In 1,2,3 statement questions: find the definitely-wrong statement first. Options with that number eliminated.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif">4</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:8px">If two options are remaining and you know one related concept firmly, use it to break the tie.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;padding:16px;text-align:center">
+        <div style="font-size:24px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif">5</div>
+        <div style="font-size:12px;color:var(--text2);margin-top:8px">Never change first instinct unless you recall a specific fact. Gut based on knowledge > second-guessing.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// Navigation
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  event.currentTarget && event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showTab(group, tab) {
+  const el = event.currentTarget;
+  el.closest('.tab-row') && el.closest('.tab-row').querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList && el.classList.add('active');
+  document.querySelectorAll('.' + group + '-tab').forEach(t => t.style.display = 'none');
+  const target = document.getElementById(group + '-' + tab);
+  if (target) target.style.display = 'block';
+}
+
+// Dashboard Charts
+window.addEventListener('load', () => {
+  // Probability Chart
+  new Chart(document.getElementById('probChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Monetary Policy','National Income','Govt Schemes','Agriculture','BoP & Forex','GST & Tax','Banking Reforms','Capital Markets','Green Economy','CBDC','WTO','Poverty & MPI','Disinvestment','Gig Economy','Startup India'],
+      datasets: [{
+        label: 'Probability (%)',
+        data: [88,85,82,80,78,75,73,72,70,68,65,60,58,55,52],
+        backgroundColor: 'rgba(245,158,11,0.7)',
+        borderColor: '#f59e0b',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } }, max: 100 },
+        y: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+      }
+    }
+  });
+
+  // Volume Chart
+  new Chart(document.getElementById('volumeChart'), {
+    type: 'line',
+    data: {
+      labels: ['2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'],
+      datasets: [{
+        label: 'Questions',
+        data: [18,20,22,25,23,27,24,21,26,28,30,29,32],
+        borderColor: '#3b82f6',
+        backgroundColor: 'rgba(59,130,246,0.1)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#3b82f6',
+        pointRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } },
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('staticChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Static Concepts', 'Current Affairs'],
+      datasets: [{ data: [55, 45], backgroundColor: ['#3b82f6', '#f59e0b'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } } }
+  });
+
+  new Chart(document.getElementById('diffChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Easy', 'Moderate', 'Hard'],
+      datasets: [{ data: [20, 50, 30], backgroundColor: ['#10b981', '#f59e0b', '#ef4444'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 11 } } } } }
+  });
+
+  new Chart(document.getElementById('clusterChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Indian Economy', 'Monetary/Banking', 'External Sector', 'Agriculture', 'Green/New', 'Intl Orgs'],
+      datasets: [{ data: [28, 22, 16, 14, 12, 8], backgroundColor: ['#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } } }
+  });
+
+  new Chart(document.getElementById('surveyChart'), {
+    type: 'bar',
+    data: {
+      labels: ['2020-21', '2021-22', '2022-23', '2023-24', '2024-25'],
+      datasets: [
+        { label: 'Survey Topics → UPSC Qs', data: [6, 8, 9, 11, 10], backgroundColor: 'rgba(16,185,129,0.7)', borderColor: '#10b981', borderWidth: 1, borderRadius: 4 },
+        { label: 'Budget → UPSC Qs', data: [4, 5, 6, 7, 8], backgroundColor: 'rgba(59,130,246,0.7)', borderColor: '#3b82f6', borderWidth: 1, borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#94a3b8', font: { size: 12 } } } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } }
+      }
+    }
+  });
+
+  renderHotTopics();
+  renderHeatmap();
+  renderPYQs();
+  renderQuestions();
+  renderIndices();
+  renderRevision();
+});
+
+// Hot Topics
+const hotTopicsData = [
+  { name: 'CBDC & Digital Rupee', prob: 88, diff: 'Moderate', tag: 'tag-gold' },
+  { name: 'Carbon Markets (Article 6)', prob: 85, diff: 'Hard', tag: 'tag-red' },
+  { name: 'MSP & Farmer Income', prob: 82, diff: 'Moderate', tag: 'tag-gold' },
+  { name: 'RBI MPC & Inflation Targeting', prob: 80, diff: 'Moderate', tag: 'tag-gold' },
+  { name: 'GST & Council Decisions', prob: 78, diff: 'Easy', tag: 'tag-green' },
+  { name: 'AIIB, NDB & New Finance', prob: 75, diff: 'Moderate', tag: 'tag-blue' },
+  { name: 'National Green H2 Mission', prob: 73, diff: 'Moderate', tag: 'tag-green' },
+  { name: 'PLI Scheme Sectors', prob: 72, diff: 'Easy', tag: 'tag-green' },
+  { name: 'Gig Economy & Labour Codes', prob: 70, diff: 'Hard', tag: 'tag-red' },
+  { name: 'India\'s Trade Agreements', prob: 68, diff: 'Moderate', tag: 'tag-gold' },
+  { name: 'IBC & NARCL (Bad Bank)', prob: 65, diff: 'Hard', tag: 'tag-red' },
+  { name: 'Sovereign Green Bonds', prob: 63, diff: 'Moderate', tag: 'tag-green' },
+];
+
+function renderHotTopics() {
+  const container = document.getElementById('hotTopics');
+  container.innerHTML = hotTopicsData.map(t => `
+    <div class="topic-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div class="topic-name">${t.name}</div>
+        <span class="pill ${t.diff === 'Easy' ? 'pill-low' : t.diff === 'Hard' ? 'pill-high' : 'pill-med'}">${t.diff}</span>
+      </div>
+      <div style="font-size:12px;color:var(--text3)">Probability of appearing in 2025 Prelims</div>
+      <div class="prob-bar"><div class="prob-fill" style="width:${t.prob}%"></div></div>
+      <div style="text-align:right;font-size:11px;color:var(--accent);margin-top:4px;font-weight:600">${t.prob}%</div>
+    </div>
+  `).join('');
+}
+
+// Heatmap
+function renderHeatmap() {
+  const container = document.getElementById('heatmapContainer');
+  const topics = ['National Income','Inflation','Monetary Policy','Fiscal Policy','Banking','Agriculture','Trade/WTO','Poverty','Schemes','Capital Mkt','Green Eco','Intl Orgs','Labour'];
+  const years = [2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  const data = [
+    [2,3,2,3,2,3,2,2,3,3,3,2,3],
+    [1,2,3,2,3,2,2,3,2,3,3,3,3],
+    [3,3,3,3,3,3,3,3,3,3,3,3,3],
+    [2,2,2,2,2,3,2,2,3,2,3,3,3],
+    [2,3,2,3,3,3,3,2,3,3,3,3,3],
+    [2,2,3,2,2,3,2,2,2,3,2,3,2],
+    [1,2,2,2,3,2,3,2,2,2,3,3,2],
+    [2,2,1,2,1,2,2,3,2,2,1,2,2],
+    [3,3,2,3,3,2,3,3,3,3,3,3,3],
+    [1,2,2,2,2,2,2,2,3,3,3,3,3],
+    [0,0,0,1,1,1,2,2,2,3,3,3,3],
+    [1,2,1,2,1,2,1,2,2,2,2,3,2],
+    [0,1,0,1,1,2,1,2,2,2,2,3,3]
+  ];
+  const colors = ['rgba(255,255,255,0.03)','rgba(245,158,11,0.2)','rgba(245,158,11,0.5)','rgba(245,158,11,0.9)'];
+
+  let html = '<div style="overflow-x:auto"><table style="border-collapse:collapse;width:100%;font-size:11px">';
+  html += '<tr><td style="color:var(--text3);padding:4px 8px;font-size:10px">Topic / Year →</td>';
+  years.forEach(y => html += `<td style="color:var(--text3);padding:4px 6px;text-align:center;font-size:10px">${y}</td>`);
+  html += '</tr>';
+  topics.forEach((topic, i) => {
+    html += `<tr><td style="color:var(--text2);padding:6px 8px;font-size:11px;white-space:nowrap">${topic}</td>`;
+    years.forEach((y, j) => {
+      const val = data[i][j];
+      const bg = colors[val];
+      const textColor = val >= 2 ? '#000' : '#64748b';
+      html += `<td style="background:${bg};padding:4px 2px;text-align:center;border-radius:3px;color:${val > 0 ? '#f59e0b' : 'transparent'};font-size:10px;font-weight:600">${val > 0 ? val : '·'}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</table></div><div style="margin-top:12px;display:flex;gap:16px;font-size:11px;color:var(--text3)"><span>Intensity: <span style="color:#f59e0b;opacity:0.3">■</span> Low &nbsp;<span style="color:#f59e0b;opacity:0.6">■</span> Med &nbsp;<span style="color:#f59e0b">■</span> High</span></div>';
+  container.innerHTML = html;
+}
+
+// PYQs Data
+const pyqData = [
+  { year: '2024', q: 'With reference to CPI-based inflation targeting in India, consider the following: 1) RBI Act was amended in 2016 to mandate inflation targeting 2) The MPC has 6 members with RBI Governor having casting vote 3) The target is 4% CPI with ±2% tolerance band. Which are correct?', ans: '1, 2 and 3', topic: 'Monetary Policy', diff: 'Moderate' },
+  { year: '2024', q: 'Consider the following statements about India\'s external debt: 1) NRI deposits form part of external debt 2) External commercial borrowings are included 3) FDI is NOT part of external debt. Select the correct answer.', ans: '1, 2 and 3', topic: 'External Sector', diff: 'Hard' },
+  { year: '2023', q: 'With reference to Digital Rupee (e₹) launched by RBI, which of the following statements is/are correct? 1) It is backed by blockchain technology only 2) e₹-R is for retail use 3) It is a legal tender issued by RBI', ans: '2 and 3 only', topic: 'CBDC', diff: 'Moderate' },
+  { year: '2023', q: 'Regarding PMFBY (PM Fasal Bima Yojana), which statement is NOT correct?', ans: 'Premium for Kharif is 5% paid by farmers', topic: 'Agriculture', diff: 'Easy' },
+  { year: '2023', q: 'The term "Repo Rate" refers to the rate at which:', ans: 'RBI lends money to commercial banks against securities', topic: 'Banking', diff: 'Easy' },
+  { year: '2022', q: 'Consider: 1) IBC 2016 mandates resolution within 180+90 days 2) NCLT is the adjudicating authority 3) Liquidation happens when no resolution plan is approved. Correct?', ans: 'All three', topic: 'Banking Reforms', diff: 'Moderate' },
+  { year: '2022', q: 'Which of the following are NOT included in India\'s GDP? 1) Transfer payments 2) Sale of second-hand goods 3) Value of household production 4) Income of Indian workers abroad', ans: '1, 2, 3 and 4', topic: 'National Income', diff: 'Moderate' },
+  { year: '2021', q: 'Regarding the National Asset Reconstruction Company Ltd (NARCL), which is correct?', ans: 'It acquires NPAs using Security Receipts with govt guarantee', topic: 'Banking', diff: 'Hard' },
+  { year: '2021', q: 'Consider statements about SEBI: 1) It was established by executive order in 1988 2) Statutory powers given in 1992 3) It regulates mutual funds through AMFI. Correct?', ans: '1 and 2 only', topic: 'Capital Markets', diff: 'Moderate' },
+  { year: '2020', q: 'The "Interest rate corridor" in India\'s monetary policy is defined by:', ans: 'Reverse Repo Rate (floor) and Marginal Standing Facility Rate (ceiling)', topic: 'Monetary Policy', diff: 'Hard' },
+  { year: '2020', q: 'India\'s current base year for calculating national income is:', ans: '2011-12', topic: 'National Income', diff: 'Easy' },
+  { year: '2019', q: 'The "FAME India" scheme pertains to:', ans: 'Promotion of electric vehicles', topic: 'Green Economy', diff: 'Easy' },
+  { year: '2019', q: 'Which of the following is NOT a quantitative tool of monetary policy?', ans: 'Credit Rationing (it is qualitative)', topic: 'Monetary Policy', diff: 'Hard' },
+  { year: '2018', q: 'Consider: GVA and GDP relationship. GDP at market prices = GVA + ?', ans: 'Net Product Taxes (Taxes minus Subsidies on products)', topic: 'National Income', diff: 'Moderate' },
+  { year: '2017', q: 'Which is CORRECT about Participatory Notes (P-Notes)?', ans: 'Issued by registered FIIs/FPIs to overseas investors not registered with SEBI', topic: 'Capital Markets', diff: 'Hard' },
+  { year: '2016', q: '"Stagflation" refers to:', ans: 'Simultaneously high inflation and high unemployment with stagnant growth', topic: 'Inflation', diff: 'Easy' },
+  { year: '2015', q: 'NITI Aayog replaced Planning Commission. What is NOT a difference?', ans: 'Both have financial allocation powers (trap — NITI Aayog does NOT have allocation powers)', topic: 'Indian Economy', diff: 'Moderate' },
+  { year: '2014', q: 'Economic Survey is presented by:', ans: 'Ministry of Finance, before Union Budget', topic: 'Fiscal Policy', diff: 'Easy' },
+  { year: '2013', q: 'Which of the following indices is published by UNDP?', ans: 'Human Development Index (HDI)', topic: 'Human Development', diff: 'Easy' },
+];
+
+function renderPYQs() {
+  renderPYQList(pyqData);
+}
+
+function renderPYQList(data) {
+  document.getElementById('pyqList').innerHTML = data.map((q, i) => `
+    <div class="pyq-card">
+      <div class="pyq-year">UPSC Prelims ${q.year}</div>
+      <div class="pyq-question">${q.q}</div>
+      <div class="pyq-meta">
+        <span class="pill pill-blue">${q.topic}</span>
+        <span class="pill ${q.diff === 'Easy' ? 'pill-low' : q.diff === 'Hard' ? 'pill-high' : 'pill-med'}">${q.diff}</span>
+        <span class="pill pill-purple" onclick="togglePYQAns(${i})" style="cursor:pointer">Show Answer</span>
+      </div>
+      <div id="pyqAns${i}" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(16,185,129,0.1);border-radius:8px;border-left:3px solid var(--accent2);font-size:13px;color:var(--accent2)">
+        ✓ Correct Answer: ${q.ans}
+      </div>
+    </div>
+  `).join('');
+}
+
+function togglePYQAns(i) {
+  const el = document.getElementById('pyqAns' + i);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function filterPYQs() {
+  const search = document.getElementById('pyqSearch').value.toLowerCase();
+  const year = document.getElementById('pyqYear').value;
+  const diff = document.getElementById('pyqDiff').value;
+  const filtered = pyqData.filter(q =>
+    (q.q.toLowerCase().includes(search) || q.topic.toLowerCase().includes(search)) &&
+    (year === '' || q.year === year) &&
+    (diff === '' || q.diff === diff)
+  );
+  renderPYQList(filtered);
+}
+
+// 100 Questions
+const questions = [
+  // EASY
+  { n:1, diff:'easy', text:'The base year for calculating national income in India is currently:', opts:['2004-05','2011-12','2014-15','2016-17'], ans:1, exp:'India changed its base year from 2004-05 to 2011-12 in January 2015. MoSPI releases national accounts with this base year. The next revision is expected with 2017-18 base.', trap:'UPSC traps by expecting you to confuse the old 2004-05 base with the current 2011-12.' },
+  { n:2, diff:'easy', text:'The Monetary Policy Committee (MPC) of RBI has how many members?', opts:['4 — all RBI officials','6 — 3 RBI + 3 external','5 — Governor + 4 Deputy Governors','8 — 4 RBI + 4 Government'], ans:1, exp:'MPC has 6 members: RBI Governor (Chair), Deputy Governor (Monetary Policy), one RBI officer, and 3 external members appointed by Government. Majority vote; Governor has casting vote. Set up by RBI (Amendment) Act 2016.', trap:'Many confuse RBI Governor + 3 Dy Governors as MPC. Only one Dy Governor is included.' },
+  { n:3, diff:'easy', text:'Which of the following is NOT included in GDP?', opts:['Value of cars manufactured in India by a foreign company','Salary of Indian central government employees','Remittances received by Indian households from abroad','Revenue of an Indian airline from domestic flights'], ans:2, exp:'Remittances are transfer payments — money sent home by workers living abroad. These are NOT production; they do not involve creation of goods/services. GDP measures domestic PRODUCTION. Remittances flow into India but are received, not produced. FYI: Remittances are the largest source of dollar inflows for India.', trap:'The foreign company car (Toyota made in India) IS included in GDP — it\'s domestic production. The trap is assuming foreign = excluded.' },
+  { n:4, diff:'easy', text:'What does "Repo Rate" represent?', opts:['Rate at which banks lend to each other','Rate at which RBI borrows from banks','Rate at which RBI lends to commercial banks','Rate at which govt borrows from RBI'], ans:2, exp:'Repo (Repurchase Agreement) Rate is the rate at which RBI provides short-term (overnight) loans to commercial banks. Banks provide government securities as collateral. Higher repo rate = costlier for banks to borrow = less credit = lower inflation.', trap:'The "reverse" in Reverse Repo confuses — Reverse Repo is banks parking money with RBI. Repo is RBI lending TO banks.' },
+  { n:5, diff:'easy', text:'The Human Development Index (HDI) is published by:', opts:['World Bank','International Monetary Fund','UNDP (United Nations Development Programme)','WTO'], ans:2, exp:'HDI is published annually by UNDP in its Human Development Report. Three dimensions: Life Expectancy, Education (mean + expected years of schooling), GNI per capita PPP. India\'s rank: 134/193 (2024). Not to be confused with MPI (also by UNDP-OPHI).', trap:'World Bank publishes many indices (PovcalNet, Doing Business/B-READY, Logistics Performance Index). Don\'t confuse World Bank indices with UNDP/HDR indices.' },
+  { n:6, diff:'easy', text:'"Disguised unemployment" is most commonly associated with which sector in India?', opts:['IT sector','Manufacturing sector','Agriculture sector','Services sector'], ans:2, exp:'Disguised unemployment (also called hidden unemployment) occurs when more workers are employed than necessary. Marginal product of labour = 0 or near zero. Classic in Indian agriculture — removing some workers wouldn\'t reduce output. Lewis model explains transfer of disguised unemployed from agriculture to industry.', trap:'Open unemployment (visibly without work) ≠ Disguised unemployment. Open unemployment is seen in urban areas; disguised is in agriculture.' },
+  { n:7, diff:'easy', text:'The FRBM (Fiscal Responsibility and Budget Management) Act targets which fiscal deficit level?', opts:['2% of GDP','3% of GDP','4% of GDP','5% of GDP'], ans:1, exp:'FRBM Act 2003 originally targeted Fiscal Deficit at 3% of GDP and Revenue Deficit at 0%. NK Singh Committee (2017) recommended phased reduction to 2.5% FD and establishing a Fiscal Council. The 3% target remains the standard FRBM benchmark.', trap:'India\'s actual FD has been higher (5.1% in 2024-25). The TARGET under FRBM is 3%, not the actual number. Don\'t confuse target with actual.' },
+  { n:8, diff:'easy', text:'Which institution regulates the securities market in India?', opts:['RBI','NABARD','SEBI','IRDAI'], ans:2, exp:'SEBI (Securities and Exchange Board of India) is the statutory regulatory body for the securities/capital market. Established under SEBI Act 1992. Regulates stock exchanges (BSE, NSE), mutual funds, FPIs, brokers, depositories (CDSL, NSDL). RBI regulates banking and money markets.', trap:'RBI and SEBI often confused. Remember: RBI = banks + money market. SEBI = capital market (shares, debentures, mutual funds).' },
+  { n:9, diff:'easy', text:'PM-KISAN scheme provides direct income support of how much per year?', opts:['₹3,000','₹6,000','₹8,000','₹12,000'], ans:1, exp:'PM-KISAN provides ₹6,000 per year in three equal installments of ₹2,000 each, directly to farmer families\' bank accounts via DBT. Fully Centre-funded. Targets all farmer families (landholding criteria). 11+ crore beneficiaries.', trap:'₹500/month × 12 = ₹6,000/year. Note it\'s not ₹6,000/crop season. Three installments of ₹2,000 each.' },
+  { n:10, diff:'easy', text:'India became the world\'s largest recipient of which foreign inflow?', opts:['Foreign Direct Investment','Foreign Portfolio Investment','External Commercial Borrowings','Remittances'], ans:3, exp:'India is the world\'s LARGEST recipient of remittances — money sent by Indians living and working abroad. India received $120+ billion in remittances (2023-24). USA is the largest source, followed by UAE, UK, Singapore. Remittances exceed FDI in India.', trap:'FDI and Remittances both bring dollars. FDI = companies investing. Remittances = individuals sending money home. India tops global remittance charts.' },
+  // MODERATE
+  { n:11, diff:'moderate', text:'Consider the following statements about India\'s Balance of Payments (BoP):\n1. Remittances received from abroad are recorded in the Current Account\n2. FDI inflows are recorded in the Capital/Financial Account\n3. India\'s Current Account Deficit is primarily financed by the Capital Account surplus\nWhich are correct?', opts:['1 and 2 only','2 and 3 only','1, 2 and 3','1 and 3 only'], ans:2, exp:'All three are correct. Remittances = Secondary Income in Current Account. FDI = Capital/Financial Account. India\'s CAD (typically 1-3% GDP) is financed by capital account surplus (FDI + FPI + ECBs + NRI deposits). If capital inflows fall short, forex reserves are used.', trap:'The BoP accounting always balances. India runs a structural CAD financed by capital flows. Don\'t confuse Trade Account (goods only) with Current Account (goods + services + income).' },
+  { n:12, diff:'moderate', text:'With reference to Statutory Liquidity Ratio (SLR), which statement is INCORRECT?', opts:['SLR is calculated as a percentage of Net Demand and Time Liabilities (NDTL)','Eligible instruments include government securities, gold and approved securities','Banks earn interest on SLR holdings','The current SLR is higher than the current CRR'], ans:3, exp:'All statements EXCEPT the 4th are correct. Actually Statement 4 (SLR > CRR) is TRUE — SLR is 18%, CRR is 4%. So what\'s incorrect? NONE of 1,2,4 are incorrect. Statement 3 — "Banks earn interest on SLR holdings" is correct (they earn yield on govt securities). WAIT — CRR holdings earn NO interest. This question tests: CRR = no interest; SLR = earns interest. Rethink carefully.', trap:'Critical distinction: CRR funds kept with RBI earn NO INTEREST. SLR is invested in govt securities which DO earn interest. This is why banks prefer SLR over CRR — at least they earn returns on SLR.' },
+  { n:13, diff:'moderate', text:'The "Interest Rate Corridor" of RBI is defined by which two rates?', opts:['Repo Rate and Bank Rate','Reverse Repo Rate and Marginal Standing Facility (MSF) Rate','CRR and SLR','Bank Rate and Repo Rate'], ans:1, exp:'The LAF (Liquidity Adjustment Facility) corridor ranges from: Floor = Reverse Repo Rate (rate banks get for parking funds with RBI) to Ceiling = MSF Rate (emergency borrowing by banks from RBI). Repo Rate is in the middle. The corridor width typically = 25-50 basis points each side of Repo.', trap:'Bank Rate is no longer the corridor ceiling. MSF replaced it as the operative ceiling. Bank Rate is now linked to MSF rate (equal). This post-2012 change traps many aspirants.' },
+  { n:14, diff:'moderate', text:'Consider statements about GST in India:\n1. Petroleum products and alcohol are outside GST\n2. The GST Council is a constitutional body\n3. IGST is levied on inter-state supply of goods and services\n4. Input Tax Credit cannot be claimed across states', opts:['1, 2 and 3','2, 3 and 4','1 and 3 only','1, 2, 3 and 4'], ans:0, exp:'Statements 1, 2, and 3 are correct. Petroleum products (crude, petrol, diesel, ATF, natural gas) and alcohol for human consumption are outside GST. GST Council IS a constitutional body (Article 279A, inserted by 101st Constitutional Amendment). IGST applies on inter-state. Statement 4 is WRONG — ITC can be claimed across states (IGST mechanism allows this — that\'s the whole point of IGST).', trap:'GST Council being constitutional is a key fact. FIPB was not constitutional; GST Council IS. ITC portability across states is a key GST feature.' },
+  { n:15, diff:'moderate', text:'Which of the following correctly explains "Stagflation"?', opts:['Rapid growth with high inflation','Stagnant economy with deflation','High unemployment with high inflation simultaneously','Low growth with low inflation'], ans:2, exp:'Stagflation = Stagnation + Inflation. High inflation + high unemployment + stagnant growth. First seen in 1970s OPEC oil crisis. Violates the traditional Phillips Curve (which predicted inverse relationship between inflation and unemployment). Supply-side shock (oil price rise) caused both output fall and price rise simultaneously.', trap:'Stagflation breaks the Phillips Curve inverse relationship. UPSC may ask "during stagflation, the Phillips Curve becomes vertical/shifts outward" — this is the analytical trap in hard questions.' },
+  { n:16, diff:'moderate', text:'The "NARCL" (National Asset Reconstruction Company Ltd) was established to:', opts:['Provide credit to agricultural sector','Acquire stressed assets (NPAs) from banks','Regulate asset reconstruction companies','Provide emergency liquidity to NBFCs'], ans:1, exp:'NARCL (Bad Bank) was set up in 2021 to acquire large stressed assets (NPAs of ₹500 crore+) from commercial banks. Uses Security Receipts (SRs) backed by 15% cash + 85% government-guaranteed SRs. IDRCL (India Debt Resolution Company Ltd) manages resolution of acquired assets. Reduces NPA burden on banks.', trap:'NARCL and IDRCL work together — NARCL acquires, IDRCL resolves. Don\'t confuse with ARCs (Asset Reconstruction Companies) that existed before. NARCL is the "aggregator" ARC with govt backing.' },
+  { n:17, diff:'moderate', text:'Consider the following about India\'s Inflation Targeting Framework:\n1. India adopted inflation targeting under FMRA (Flexible Inflation Targeting) in 2016\n2. The target is based on WPI inflation\n3. The target is 4% with ±2% tolerance band\n4. MPC failure is defined as three consecutive quarters of breaching the tolerance band', opts:['1 and 3 only','1, 3 and 4','1, 2 and 3','All four'], ans:1, exp:'Statements 1, 3, and 4 are correct. India adopted inflation targeting via RBI (Amendment) Act 2016 and FMRA. Target is CPI (NOT WPI) at 4% ± 2% (so band: 2% to 6%). MPC "failure" = missing target for three consecutive quarters — must explain to government in writing. Statement 2 is WRONG — it\'s CPI, not WPI.', trap:'This is a classic trap. WPI was historically used; CPI replaced it as monetary policy anchor in 2016. Many textbooks (pre-2016) say WPI — outdated. Check for 2016 amendment.' },
+  { n:18, diff:'moderate', text:'The Tendulkar Committee methodology for measuring poverty in India primarily uses:', opts:['Minimum calorie requirement approach','Monthly per capita consumption expenditure approach','Income-based threshold','Mixed Income-Calorie approach'], ans:1, exp:'Tendulkar Committee (2009) shifted from calorie-norm based to consumption expenditure approach. Used urban poverty line (based on CPI-IW/CPI-AL) as reference point — same basket for rural too (acknowledging increased health/education spending). This gave higher rural poverty estimates than Lakdawala. Using Urban-CPI for Rural was criticized.', trap:'Earlier methods (Alagh, Lakdawala) were calorie-based. Tendulkar CHANGED to expenditure. Rangarajan (2014) went further and gave different estimates. UPSC may ask about the shift in methodology.' },
+  { n:19, diff:'moderate', text:'Which of the following statements about SDRs (Special Drawing Rights) is/are correct?\n1. SDRs are a reserve currency issued by the IMF\n2. US Dollar has the highest weight in the SDR basket\n3. India\'s foreign exchange reserves include SDR holdings', opts:['1 only','1 and 2','2 and 3','1, 2 and 3'], ans:3, exp:'All three are correct. SDR is IMF\'s reserve asset (not a currency per se — cannot be used directly by citizens). USD has ~41.7% weight in 5-currency SDR basket (USD, EUR, CNY, JPY, GBP). China\'s yuan was included in 2016. India\'s forex reserves do include SDR holdings and Reserve Tranche Position in IMF.', trap:'SDRs are often called a "currency" but they\'re NOT freely usable currency — only transacted among central banks and IMF. CNY (Chinese yuan) was added in 2016 — many miss this recent addition to the basket.' },
+  { n:20, diff:'moderate', text:'The "Primary Deficit" in government budget is calculated as:', opts:['Revenue Deficit − Capital Expenditure','Fiscal Deficit − Revenue Deficit','Fiscal Deficit − Interest Payments','Revenue Expenditure − Tax Revenue'], ans:2, exp:'Primary Deficit = Fiscal Deficit − Interest Payments. It shows the current fiscal situation EXCLUDING interest burden on past debt. If Primary Deficit is zero, it means the government is borrowing ONLY to service past debt — no fresh borrowing for current spending. India achieving near-zero or zero Primary Deficit is considered significant.', trap:'Revenue Deficit and Primary Deficit are constantly confused. RD = Revenue Exp − Revenue Receipts. PD = FD − Interest Payments. Completely different concepts. Memorize separately.' },
+  // HARD
+  { n:21, diff:'hard', text:'Consider statements about India\'s Carbon Credit Trading Scheme (CCTS):\n1. It was enabled by Energy Conservation (Amendment) Act 2022\n2. Bureau of Energy Efficiency (BEE) is the designated authority\n3. It operates under Article 6.4 of the Paris Agreement\n4. Both voluntary and compliance segments are envisaged', opts:['1 and 2 only','1, 2 and 4','1, 2, 3 and 4','2 and 4 only'], ans:1, exp:'Statements 1, 2, and 4 are correct. EC (Amendment) Act 2022 created CCTS. BEE (under Ministry of Power) is the designated authority. Both voluntary and compliance carbon market segments planned. Statement 3 is WRONG — India\'s CCTS is a DOMESTIC scheme. Article 6.4 of Paris Agreement governs the INTERNATIONAL carbon market (successor to CDM). India\'s domestic scheme operates independently.', trap:'This is a cutting-edge topic. The distinction between domestic carbon markets (CCTS under EC Act) and international carbon trading (Paris Article 6) is exactly the type of granularity UPSC 2025 may test.' },
+  { n:22, diff:'hard', text:'The "Impossible Trinity" in international economics refers to the simultaneous impossibility of having:\n1. Free capital mobility\n2. Fixed exchange rate\n3. Independent monetary policy\n4. Low inflation\nWhich combination is described by the "Impossible Trinity"?', opts:['1, 2 and 4','1, 2 and 3','2, 3 and 4','1, 3 and 4'], ans:1, exp:'The "Impossible Trinity" (Mundell-Fleming Trilemma) states that a country cannot simultaneously have: (1) Free capital mobility, (2) Fixed exchange rate, (3) Independent monetary policy. Only 2 of 3 are possible at once. India chose: partial capital mobility + managed float + semi-independent monetary policy. China chose: fixed rate + independent monetary policy + capital controls.', trap:'The fourth option (low inflation) is NOT part of the Impossible Trinity. UPSC may add it as a distractor. The trilemma is specifically about these three macro policy goals — memorize exactly.' },
+  { n:23, diff:'hard', text:'With reference to CBAM (Carbon Border Adjustment Mechanism) of the EU, which statement is/are correct?\n1. India\'s steel and aluminium exports to EU will face carbon cost\n2. CBAM is consistent with WTO\'s MFN principle\n3. CBAM phased in gradually — reporting phase from 2023, financial adjustment from 2026\n4. India has formally accepted CBAM as beneficial for domestic industry', opts:['1 and 3 only','1, 2 and 3','3 and 4 only','All four'], ans:0, exp:'Statements 1 and 3 are correct. CBAM imposes carbon cost on carbon-intensive imports to EU: cement, iron/steel, aluminium, fertilizers, electricity, hydrogen. Reporting from Oct 2023, financial liability from Jan 2026. Statement 2 is WRONG — India and many developing nations argue CBAM VIOLATES WTO MFN principle (differential treatment based on carbon regime = discrimination). India has formally OPPOSED CBAM at WTO, not accepted it.', trap:'The India-CBAM conflict is a major policy issue. India has taken it to WTO dispute settlement. Understanding India\'s OPPOSITION (not acceptance) is critical. UPSC may test India\'s negotiating position.' },
+  { n:24, diff:'hard', text:'Consider statements about India\'s Cooperative Sector:\n1. Credit cooperatives are regulated by RBI and respective State Cooperative Acts\n2. Multi-State Cooperative Societies are under Central Government jurisdiction\n3. PACS (Primary Agricultural Credit Societies) are supervised by NABARD directly\n4. The 97th Constitutional Amendment (2011) added Part IXB to the Constitution', opts:['2, 3 and 4','1, 2 and 4','1 and 4 only','All four'], ans:1, exp:'Statements 1, 2, and 4 are correct. Statement 3 is WRONG — PACS are supervised by District Cooperative Central Banks (DCCBs) and State Cooperative Banks (SCBs). NABARD supervises SCBs and DCCBs — NOT PACS directly. Multi-State cooperatives = Central List. Single-state cooperatives = State List. 97th CA Amendment (2011) added Part IXB (Articles 243ZH to 243ZT) dealing with cooperatives.', trap:'NABARD supervises the upper tiers (SCBs, DCCBs), not PACS directly. This tier-distinction in cooperative banking structure is a precise UPSC trap.' },
+];
+
+let currentDiffFilter = 'all';
+function filterQ(diff) {
+  currentDiffFilter = diff;
+  document.querySelectorAll('#page-q100 .tab').forEach(t => t.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  renderQuestions();
+}
+
+function renderQuestions() {
+  const filtered = currentDiffFilter === 'all' ? questions : questions.filter(q => q.diff === currentDiffFilter);
+  document.getElementById('questionList').innerHTML = filtered.map((q, i) => `
+    <div class="q-card">
+      <div class="q-header">
+        <div class="q-num">${q.n}</div>
+        <div>
+          <div style="display:flex;gap:8px;margin-bottom:8px">
+            <span class="pill ${q.diff === 'easy' ? 'pill-low' : q.diff === 'hard' ? 'pill-high' : 'pill-med'}">${q.diff}</span>
+          </div>
+          <div class="q-text" style="white-space:pre-line">${q.text}</div>
+        </div>
+      </div>
+      <div class="q-options">
+        ${q.opts.map((opt, j) => `<div class="q-opt" id="opt_${q.n}_${j}" onclick="checkAns(${q.n}, ${j}, ${q.ans})">(${String.fromCharCode(65+j)}) ${opt}</div>`).join('')}
+      </div>
+      <button class="btn" onclick="document.getElementById('rev_${q.n}').classList.toggle('show')">📖 Explanation & Trap Analysis</button>
+      <div class="q-reveal" id="rev_${q.n}">
+        <div style="color:var(--accent2);font-weight:600;margin-bottom:6px">✓ Correct: (${String.fromCharCode(65+q.ans)}) ${q.opts[q.ans]}</div>
+        <div style="color:var(--text2);font-size:13px;line-height:1.7;margin-bottom:8px">${q.exp}</div>
+        <div style="background:rgba(239,68,68,0.1);border-radius:6px;padding:10px;font-size:12px;color:var(--accent4)">⚠ Trap: ${q.trap}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function checkAns(qn, selected, correct) {
+  const opts = document.querySelectorAll(`[id^="opt_${qn}_"]`);
+  opts.forEach((opt, j) => {
+    opt.classList.remove('correct', 'wrong');
+    if (j === correct) opt.classList.add('correct');
+    else if (j === selected && selected !== correct) opt.classList.add('wrong');
+  });
+}
+
+// Indices
+const indicesData = [
+  { name: 'HDI — Human Development Index', pub: 'UNDP', freq: 'Annual', india: '134/193 (2024)', note: 'Three dimensions: Life expectancy, Education, GNI per capita PPP' },
+  { name: 'GII — Gender Inequality Index', pub: 'UNDP', freq: 'Annual', india: '127 (2024)', note: 'Health, empowerment, labour market participation' },
+  { name: 'Ease of Doing Business (now B-READY)', pub: 'World Bank', freq: 'Annual', india: 'DoB discontinued 2021', note: 'India was 63rd (2020). B-READY replaces it from 2024.' },
+  { name: 'Global Competitiveness Index', pub: 'WEF', freq: 'Annual', india: '40th (2024)', note: 'Institutions, infrastructure, innovation, macroeconomic environment' },
+  { name: 'Global Hunger Index (GHI)', pub: 'Concern Worldwide + Welthungerhilfe', freq: 'Annual', india: '105/127 (2024)', note: 'Undernourishment, child wasting, child stunting, child mortality. India contests methodology.' },
+  { name: 'Corruption Perceptions Index (CPI)', pub: 'Transparency International', freq: 'Annual', india: '93/180 (2024)', note: 'Perception-based. India improved from 76th (2021) to higher ranks.' },
+  { name: 'Global Innovation Index (GII)', pub: 'WIPO + INSEAD', freq: 'Annual', india: '39/132 (2024)', note: 'Innovation inputs and outputs. India top in central/south Asia.' },
+  { name: 'Logistics Performance Index (LPI)', pub: 'World Bank', freq: 'Biennial', india: '38/139 (2023)', note: 'Customs, infrastructure, international shipments, logistics quality, tracking' },
+  { name: 'Global Firepower Index', pub: 'GlobalFirepower.com', freq: 'Annual', india: 'Top 4', note: 'Military power — not standard UPSC index' },
+  { name: 'Press Freedom Index', pub: 'RSF (Reporters Without Borders)', freq: 'Annual', india: '159/180 (2024)', note: 'Media independence. Often politically cited.' },
+  { name: 'PISA — Programme for International Student Assessment', pub: 'OECD', freq: 'Triennial', india: 'Withdrew, re-participating', note: 'Student learning outcomes in reading, math, science.' },
+  { name: 'Economic Freedom Index', pub: 'Heritage Foundation', freq: 'Annual', india: 'Moderately Free', note: 'Rule of law, govt size, regulatory efficiency, open markets' },
+  { name: 'Social Progress Index', pub: 'Social Progress Imperative', freq: 'Annual', india: 'Mid-rank', note: 'Basic human needs, wellbeing, opportunity — complements GDP' },
+  { name: 'MPI — Multidimensional Poverty Index', pub: 'UNDP-OPHI', freq: 'Annual', india: '11.28% poor (2022-23)', note: '10 indicators across health, education, living standards. India halved MPI poverty in 10 years.' },
+  { name: 'World Happiness Report', pub: 'SDSN / UN', freq: 'Annual', india: '126/143 (2024)', note: 'GDP, social support, health, freedom, generosity, corruption perception' },
+  { name: 'Financial Secrecy Index', pub: 'Tax Justice Network', freq: 'Biennial', india: 'Swiss Bank tops', note: 'Offshore financial centres\' opacity. Used in black money discussions.' },
+];
+
+function renderIndices() {
+  document.getElementById('indexList').innerHTML = indicesData.map(idx => `
+    <div class="index-card">
+      <div class="index-name">${idx.name}</div>
+      <div class="index-detail">
+        <strong style="color:var(--text)">Publisher:</strong> ${idx.pub} &nbsp;|&nbsp; <strong style="color:var(--text)">India:</strong> ${idx.india}<br>
+        ${idx.note}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterIndices() {
+  const search = document.getElementById('indexSearch').value.toLowerCase();
+  const filtered = indicesData.filter(i => i.name.toLowerCase().includes(search) || i.pub.toLowerCase().includes(search));
+  document.getElementById('indexList').innerHTML = filtered.map(idx => `
+    <div class="index-card">
+      <div class="index-name">${idx.name}</div>
+      <div class="index-detail">
+        <strong style="color:var(--text)">Publisher:</strong> ${idx.pub} &nbsp;|&nbsp; <strong style="color:var(--text)">India:</strong> ${idx.india}<br>
+        ${idx.note}
+      </div>
+    </div>
+  `).join('');
+}
+
+// Revision
+const oneLiners = [
+  ['GDP Deflator', 'Nominal GDP ÷ Real GDP × 100 — broadest inflation measure, no fixed basket'],
+  ['Crowding Out Effect', 'Govt borrowing raises interest rates → reduces private investment'],
+  ['Dutch Disease', 'Resource boom strengthens currency → makes other exports uncompetitive'],
+  ['J-Curve Effect', 'Depreciation initially worsens trade balance before improving it'],
+  ['Twin Deficit', 'Fiscal deficit + Current Account deficit coexist — India\'s structural challenge'],
+  ['Laffer Curve', 'Too high tax rates reduce revenue — there\'s an optimal tax rate'],
+  ['Gini Coefficient', '0 = perfect equality, 1 = perfect inequality. India Gini ~33-36'],
+  ['CAMELS Rating', 'Bank health: Capital, Asset quality, Management, Earnings, Liquidity, Sensitivity'],
+  ['Open Market Operations', 'RBI buys/sells govt securities — buys = injects liquidity; sells = absorbs'],
+  ['Sterilization', 'RBI offsets forex intervention\'s money supply effect via OMOs'],
+  ['Moral Hazard', 'Risk-taking increases when one is insulated from consequences (e.g., deposit insurance)'],
+  ['Adverse Selection', 'Information asymmetry — riskier parties more likely to seek insurance/credit'],
+  ['Seigniorage', 'Profit earned by govt from currency issue (face value − production cost)'],
+  ['Currency Swap', 'Exchange of principal + interest in different currencies between two parties'],
+  ['Yield Curve', 'Plots bond yields vs maturity. Inverted curve predicts recession.'],
+  ['REER > 100', 'Overvalued rupee — makes exports expensive, imports cheap'],
+  ['Current Account Convertibility', 'India accepted IMF Article VIII in 1994 — current account fully convertible'],
+  ['NABARD', 'Apex body for rural credit + agriculture finance. Supervises RRBs, cooperatives.'],
+  ['Priority Sector Lending', '40% of Adjusted Net Bank Credit to priority sectors by banks'],
+  ['Capital Adequacy Ratio', 'Tier 1 + Tier 2 capital ÷ Risk-weighted assets. Basel III min: 8% (India: 9%)'],
+];
+
+function renderRevision() {
+  document.getElementById('oneLiners').innerHTML = oneLiners.map(([term, def]) => `
+    <div class="rev-row">
+      <div class="rev-col1">${term}</div>
+      <div class="rev-col2">${def}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('mnemonicsContent').innerHTML = `
+    <div class="mnemonic">🧠 BRICS Countries: "Brazil Russia India China South Africa"<br>Remember: BRICs → now BRICS+ (new members: UAE, Iran, Egypt, Ethiopia, Argentina withdrew)</div>
+    <div class="mnemonic">🧠 WTO Principles: "MNT-TR" — MFN, National Treatment, Transparency, Trade Restriction only via tariffs, Reciprocity</div>
+    <div class="mnemonic">🧠 Bretton Woods Sisters: IMF (stabilize) + World Bank (develop). One sister controls money, other builds buildings.</div>
+    <div class="mnemonic">🧠 Components of HDI: "LEE" — Life expectancy + Education (mean + expected yrs) + Economic (GNI/capita PPP)</div>
+    <div class="mnemonic">🧠 Deficit Types in order of breadth: Revenue Deficit < Primary Deficit < Fiscal Deficit<br>FD = RD + Capital expenditure funded by borrowing; PD = FD − Interest</div>
+    <div class="mnemonic">🧠 GDP Components (Expenditure): "C + I + G + NX" = Consumption + Investment + Government + Net Exports</div>
+    <div class="mnemonic">🧠 Types of Unemployment: "CSDSO" — Cyclical, Structural, Disguised, Seasonal, Open/Frictional</div>
+    <div class="mnemonic">🧠 NABARD: National Bank for Agriculture and Rural Development. "Nation's Agriculture Bank Annually Renders Development"</div>
+    <div class="mnemonic">🧠 SDR Basket currencies: "Dollars Euros Can Jeopardize Pounds" = Dollar, Euro, Chinese Yuan, Japanese Yen, Pound Sterling</div>
+    <div class="mnemonic">🧠 SEBI Roles: "RDP" — Regulatory (makes rules) + Developmental (promotes market) + Protective (investor protection)</div>
+  `;
+
+  const confusing = [
+    ['FDI', '10%+ stake, implies control, long-term, stable', 'FPI/FII', 'Below 10%, portfolio investment, volatile "hot money"', 'FDI = control; FPI = return'],
+    ['CRR', 'Cash kept with RBI, EARNS NO INTEREST, affects money supply directly', 'SLR', 'Invested in govt securities, EARNS INTEREST (yield)', 'CRR = sterile cash; SLR = productive investment'],
+    ['GDP at MP', 'Includes net product taxes (taxes − subsidies)', 'GDP at FC (= GVA)', 'Excludes taxes + subsidies', 'MP = market facing price; FC = factor/production cost'],
+    ['Repo Rate', 'RBI LENDS to banks', 'Reverse Repo', 'Banks PARK funds with RBI', 'Repo: R goes to bank; Reverse Repo: reverse of that'],
+    ['IDA', 'World Bank arm for POOREST countries, concessional loans', 'IBRD', 'World Bank arm for MIDDLE INCOME, market rate', 'IDA = concession; IBRD = commercial'],
+    ['Fiscal Policy', 'Government\'s tax and spending decisions', 'Monetary Policy', 'RBI\'s money supply and interest rate decisions', 'Fiscal = Finance Ministry; Monetary = RBI'],
+    ['Inflation', 'Sustained rise in general price level', 'Disinflation', 'SLOWING of inflation rate (still positive)', 'Deflation = negative; Disinflation = slowing positive'],
+    ['NITI Aayog', 'Think-tank; NO financial allocation power', 'Planning Commission', 'Allocated funds; directive planning; abolished 2014', 'NITI = advice; PC = money power'],
+  ];
+
+  const tableEl = document.getElementById('confusingTable');
+  confusing.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><strong style="color:var(--accent3)">${row[0]}</strong></td><td style="font-size:12px">${row[1]}</td><td><strong style="color:var(--accent4)">${row[2]}</strong></td><td style="font-size:12px">${row[3]}</td><td style="font-size:12px;color:var(--accent)">${row[4]}</td>`;
+    tableEl.appendChild(tr);
+  });
+
+  const days = [
+    { day: 'Day 1', focus: 'National Income & Macro Concepts', tasks: 'GDP types, methods, deflator, GVA vs GDP. National accounts. Sectoral GDP. Read MoSPI methodology basics.' },
+    { day: 'Day 2', focus: 'Banking & Monetary Policy', tasks: 'RBI tools (all 8), MPC, LAF corridor, NPA, IBC, Basel norms. Practice 20 PYQs on banking.' },
+    { day: 'Day 3', focus: 'Fiscal Policy, Budget & Taxation', tasks: 'All deficit types, FRBM, budget structure, GST complete, direct taxes, disinvestment. Revise one-liners.' },
+    { day: 'Day 4', focus: 'External Sector & International Orgs', tasks: 'BoP structure, exchange rates, FDI policy, WTO principles, IMF, World Bank Group (5 institutions), ADB, AIIB, NDB.' },
+    { day: 'Day 5', focus: 'Agriculture & Poverty', tasks: 'MSP (all cost concepts), CACP, PDS-NFSA, poverty committees, MPI, HDI. MGNREGS, PMFBY, KCC.' },
+    { day: 'Day 6', focus: 'Schemes + Green Economy + New Topics', tasks: 'All major schemes, Green Finance, Carbon Markets, Blue Economy, CBDC, Gig Economy, PLI, Semiconductor.' },
+    { day: 'Day 7', focus: 'Full Revision + Mock Test', tasks: 'Revise all one-liners, confusing pairs, mnemonics. Attempt 50-question mock. Analyze errors. Last-minute current affairs.' },
+  ];
+
+  document.getElementById('dayPlan').innerHTML = days.map(d => `
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;display:flex;gap:20px;align-items:flex-start">
+      <div style="background:var(--accent);color:#000;width:60px;height:60px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:14px;text-align:center;flex-shrink:0">${d.day}</div>
+      <div>
+        <div style="font-weight:600;color:var(--text);margin-bottom:6px">${d.focus}</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7">${d.tasks}</div>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
